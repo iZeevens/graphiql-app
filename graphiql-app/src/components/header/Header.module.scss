@@ -1,0 +1,14 @@
+.header {
+  position: sticky;
+  height: 60px;
+  top: 0;
+  z-index: 10;
+  transition: 0.3s;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
