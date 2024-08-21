@@ -2,6 +2,8 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from '@/utils/validationSchema';
 import Inputs from '@/types/formsType';
 
 const SignUpForm = () => {
@@ -9,7 +11,7 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ resolver: yupResolver(schema), mode: 'onChange' });
   const onSubmit: SubmitHandler<Inputs> = data => {
     console.log(data);
   };
@@ -51,7 +53,7 @@ const SignUpForm = () => {
           label='Password'
           {...register('password')}
           error={!!errors.password}
-          helperText={errors.email?.message}
+          helperText={errors.password?.message}
         />
         <Button type='submit' size='large' variant='contained'>
           {SERVICE_MESSAGES.signUpText}
