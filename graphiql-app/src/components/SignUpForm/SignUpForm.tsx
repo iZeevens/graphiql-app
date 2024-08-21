@@ -2,11 +2,7 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import { useForm, SubmitHandler } from 'react-hook-form';
-
-interface Inputs {
-  email: string;
-  password: string;
-}
+import Inputs from '@/types/formsType';
 
 const SignUpForm = () => {
   const {
