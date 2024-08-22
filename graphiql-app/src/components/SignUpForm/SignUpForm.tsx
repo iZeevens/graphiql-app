@@ -1,10 +1,21 @@
 'use client';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/utils/fireBaseConfig';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '@/utils/validationSchema';
 import Inputs from '@/types/formsType';
+
+const registerWithEmailAndPassword = async ({ email, password }: Inputs) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    console.log(res);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 const SignUpForm = () => {
   const {
@@ -12,8 +23,10 @@ const SignUpForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(schema), mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  const onSubmit: SubmitHandler<Inputs> = async data => {
+    const { email, password } = data;
     console.log(data);
+    await registerWithEmailAndPassword({ email, password });
   };
 
   return (
