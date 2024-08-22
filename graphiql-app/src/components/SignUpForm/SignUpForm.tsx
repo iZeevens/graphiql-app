@@ -1,5 +1,6 @@
 'use client';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/utils/fireBaseConfig';
@@ -8,18 +9,23 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '@/utils/validationSchema';
 import Inputs from '@/types/formsType';
 
-// Добавить отображение Ошибок при Регистрации
-const registerWithEmailAndPassword = async ({ email, password }: Inputs) => {
+const registerWithEmailAndPassword = async (
+  { email, password }: Inputs,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     document.cookie = `userid=${res.user.uid}}`;
     console.log(res);
   } catch (err) {
-    console.error(err);
+    if (err instanceof Error) {
+      setError(err.message);
+    }
   }
 };
 
 const SignUpForm = () => {
+  const [error, setError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -28,7 +34,8 @@ const SignUpForm = () => {
   const onSubmit: SubmitHandler<Inputs> = async data => {
     const { email, password } = data;
     console.log(data);
-    await registerWithEmailAndPassword({ email, password });
+    setError(null);
+    await registerWithEmailAndPassword({ email, password }, setError);
   };
 
   return (
@@ -73,6 +80,11 @@ const SignUpForm = () => {
         <Button type='submit' size='large' variant='contained'>
           {SERVICE_MESSAGES.signUpText}
         </Button>
+        {error && (
+          <Alert severity='error' sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
       </Box>
     </Box>
   );
