@@ -78,7 +78,7 @@ const SignUpForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <TextField
-          id='form-email'
+          id='form-name'
           label='UserName'
           {...register('name')}
           error={!!errors.name}
