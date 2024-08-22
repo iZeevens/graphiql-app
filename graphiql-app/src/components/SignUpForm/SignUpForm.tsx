@@ -21,8 +21,7 @@ const registerWithEmailAndPassword = async (
       await updateProfile(auth.currentUser, { displayName: name });
     }
 
-    document.cookie = `userid=${res.user.uid}}`;
-    console.log(res);
+    document.cookie = `userid=${res.user.uid}`;
   } catch (err) {
     if (err instanceof Error) {
       setError(err.message);
@@ -79,7 +78,7 @@ const SignUpForm = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <TextField
-          id='form-email'
+          id='form-name'
           label='UserName'
           {...register('name')}
           error={!!errors.name}
