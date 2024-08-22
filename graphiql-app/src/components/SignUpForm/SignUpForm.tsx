@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaSignUp } from '@/utils/validationSchema';
 import { ISignUpFormData } from '@/types/formsType';
+import PasswordStrength from '../passwordStrength/passwordStrength';
 
 const registerWithEmailAndPassword = async (
   { name, email, password }: ISignUpFormData,
@@ -34,11 +35,13 @@ const SignUpForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ISignUpFormData>({
     resolver: yupResolver(schemaSignUp),
     mode: 'onChange',
   });
+  const password = watch('password');
   const onSubmit: SubmitHandler<ISignUpFormData> = async data => {
     const { name, email, password } = data;
     console.log(data);
@@ -97,6 +100,7 @@ const SignUpForm = () => {
           error={!!errors.password}
           helperText={errors.password?.message}
         />
+        <PasswordStrength password={password} />
         <Button type='submit' size='large' variant='contained'>
           {SERVICE_MESSAGES.signUpText}
         </Button>
