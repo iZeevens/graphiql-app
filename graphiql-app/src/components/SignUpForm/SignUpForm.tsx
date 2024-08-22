@@ -2,19 +2,24 @@
 import { useState } from 'react';
 import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '@/utils/fireBaseConfig';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import schema from '@/utils/validationSchema';
-import Inputs from '@/types/formsType';
+import { schemaSignUp } from '@/utils/validationSchema';
+import { ISignUpFormData } from '@/types/formsType';
 
 const registerWithEmailAndPassword = async (
-  { email, password }: Inputs,
+  { name, email, password }: ISignUpFormData,
   setError: React.Dispatch<React.SetStateAction<string | null>>,
 ) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
+
+    if (auth.currentUser) {
+      await updateProfile(auth.currentUser, { displayName: name });
+    }
+
     document.cookie = `userid=${res.user.uid}}`;
     console.log(res);
   } catch (err) {
@@ -30,12 +35,20 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ resolver: yupResolver(schema), mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = async data => {
-    const { email, password } = data;
+  } = useForm<ISignUpFormData>({
+    resolver: yupResolver(schemaSignUp),
+    mode: 'onChange',
+  });
+  const onSubmit: SubmitHandler<ISignUpFormData> = async data => {
+    const { name, email, password } = data;
     console.log(data);
     setError(null);
-    await registerWithEmailAndPassword({ email, password }, setError);
+    const userCredential = await registerWithEmailAndPassword(
+      { name, email, password },
+      setError,
+    );
+
+    console.log(userCredential);
   };
 
   return (
@@ -62,6 +75,13 @@ const SignUpForm = () => {
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <TextField
+          id='form-email'
+          label='UserName'
+          {...register('name')}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+        />
         <TextField
           id='form-email'
           label='Email'

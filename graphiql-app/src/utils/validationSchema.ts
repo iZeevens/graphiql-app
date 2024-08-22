@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-const schema = yup.object({
+const schemaSignIn = yup.object().shape({
   email: yup
     .string()
     .required('Please Enter your email')
@@ -20,4 +20,8 @@ const schema = yup.object({
     ),
 });
 
-export default schema;
+const schemaSignUp = schemaSignIn.shape({
+  name: yup.string().required('Please Enter your name'),
+});
+
+export { schemaSignIn, schemaSignUp };

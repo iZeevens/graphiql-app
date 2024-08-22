@@ -1,6 +1,12 @@
-interface Inputs {
+interface ISignUpFormData {
+  name: string;
   email: string;
   password: string;
 }
 
-export default Inputs;
+interface ISignInFormData {
+  email: string;
+  password: string;
+}
+
+export type { ISignUpFormData, ISignInFormData };
