@@ -11,6 +11,7 @@ import Inputs from '@/types/formsType';
 const registerWithEmailAndPassword = async ({ email, password }: Inputs) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
+    document.cookie = `userid=${res.user.uid}}`;
     console.log(res);
   } catch (err) {
     console.error(err);
