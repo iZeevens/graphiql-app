@@ -4,7 +4,11 @@ import type { NextRequest } from 'next/server';
 export function middleware(req: NextRequest) {
   const userId = req.cookies.get('userid');
 
-  if (userId?.value && req.nextUrl.pathname === '/signup') {
+  console.log(req.nextUrl.pathname);
+  if (
+    userId?.value &&
+    (req.nextUrl.pathname === '/signup' || req.nextUrl.pathname === '/signin')
+  ) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
@@ -12,5 +16,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/signup'],
+  matcher: ['/signup', '/signin'],
 };
