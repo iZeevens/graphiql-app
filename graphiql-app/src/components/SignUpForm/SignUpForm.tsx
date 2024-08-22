@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import schema from '@/utils/validationSchema';
 import Inputs from '@/types/formsType';
 
+// Добавить отображение Ошибок при Регистрации
 const registerWithEmailAndPassword = async ({ email, password }: Inputs) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);

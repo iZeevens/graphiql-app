@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+// Переместить в .env
 const firebaseConfig = {
   apiKey: 'AIzaSyBdhSVKREBwBFiKGlYru3lFfTNiIpQk_No',
   authDomain: 'graphql-app-def25.firebaseapp.com',
