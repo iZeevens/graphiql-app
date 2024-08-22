@@ -82,7 +82,9 @@ const SignUpForm = () => {
         </Button>
         {error && (
           <Alert severity='error' sx={{ mt: 2 }}>
-            {error}
+            {error === 'Firebase: Error (auth/wrong-password).'
+              ? SERVICE_MESSAGES.wrongPassword
+              : SERVICE_MESSAGES.wrongEmail}
           </Alert>
         )}
       </Box>
