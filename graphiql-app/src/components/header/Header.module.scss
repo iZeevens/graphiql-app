@@ -1,8 +1,7 @@
 .header {
-  position: sticky;
-  height: 60px;
-  top: 0;
-  z-index: 10;
+  display: flex;
+  justify-content: center;
+  min-height: 60px;
   transition: 0.3s;
 }
 

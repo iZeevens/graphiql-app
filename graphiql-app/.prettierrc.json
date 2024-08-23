@@ -7,6 +7,15 @@
   "printWidth": 80,
   "tabWidth": 2,
   "arrowParens": "avoid",
-  "endOfLine": "auto",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "endOfLine": "lf",
+  "importOrder": [
+    "^@mui/(.*)$",
+    "^react(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^[./](?!.*module\\.scss$)",
+    "^.*module\\.scss$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"]
 }

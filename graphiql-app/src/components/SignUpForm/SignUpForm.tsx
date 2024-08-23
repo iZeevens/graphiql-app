@@ -1,13 +1,18 @@
 'use client';
+
+import { Alert, Box, Button, TextField, Typography } from '@mui/material';
+
 import { useState } from 'react';
-import { Box, Button, TextField, Typography, Alert } from '@mui/material';
-import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '@/utils/fireBaseConfig';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { schemaSignUp } from '@/utils/validationSchema';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
 import { ISignUpFormData } from '@/types/formsType';
+import { auth } from '@/utils/fireBaseConfig';
+import { schemaSignUp } from '@/utils/validationSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { useTranslations } from 'next-intl';
+
+import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import PasswordStrength from '../passwordStrength/passwordStrength';
 
 const registerWithEmailAndPassword = async (
@@ -54,6 +59,8 @@ const SignUpForm = () => {
     console.log(userCredential);
   };
 
+  const t = useTranslations('signUp');
+
   return (
     <Box
       component='div'
@@ -66,7 +73,7 @@ const SignUpForm = () => {
       }}
     >
       <Typography component='h1' variant='h4'>
-        {SERVICE_MESSAGES.signUpText}
+        {t('title')}
       </Typography>
       <Box
         component='form'

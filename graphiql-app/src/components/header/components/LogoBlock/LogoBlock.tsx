@@ -1,14 +1,17 @@
-import { Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
 import Logo from '@/components/UI/icons/Logo';
+import { useTranslations } from 'next-intl';
 
 import styles from '@/components/header/components/LogoBlock/LogoBlock.module.scss';
 
 const LogoBlock = () => {
+  const t = useTranslations('logo');
   return (
-    <Stack className={styles.logo}>
+    <Stack direction='row' className={styles.logo}>
       <Logo />
-      <Typography variant='h1'>Girrit</Typography>
+      <Typography variant='h2'>{t('logo')}</Typography>
     </Stack>
   );
 };
