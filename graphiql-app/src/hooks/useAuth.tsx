@@ -11,7 +11,7 @@ export function useAuth() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
-        document.cookie = `userid=${user.uid}`;
+        document.cookie = `userid=${user.uid};path=/`;
       } else {
         document.cookie = '';
       }

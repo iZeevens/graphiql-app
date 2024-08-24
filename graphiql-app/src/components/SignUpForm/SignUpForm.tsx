@@ -5,6 +5,7 @@ import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { useAuth } from '@/hooks/useAuth';
 import { ISignUpFormData } from '@/types/formsType';
 import { auth } from '@/utils/fireBaseConfig';
 import { schemaSignUp } from '@/utils/validationSchema';
@@ -48,6 +49,7 @@ const SignUpForm = () => {
     mode: 'onChange',
   });
   const router = useRouter();
+  const { user } = useAuth();
   const password = watch('password');
   const onSubmit: SubmitHandler<ISignUpFormData> = async data => {
     setError(null);
@@ -61,6 +63,10 @@ const SignUpForm = () => {
   };
 
   const t = useTranslations('signUp');
+
+  if (user) {
+    router.push('/');
+  }
 
   return (
     <Box
