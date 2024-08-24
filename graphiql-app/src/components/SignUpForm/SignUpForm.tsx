@@ -11,6 +11,7 @@ import { schemaSignUp } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import PasswordStrength from '../passwordStrength/passwordStrength';
@@ -24,6 +25,7 @@ const registerWithEmailAndPassword = async (
 
     if (auth.currentUser) {
       await updateProfile(auth.currentUser, { displayName: name });
+      return true;
     }
 
     document.cookie = `userid=${res.user.uid}`;
@@ -45,17 +47,17 @@ const SignUpForm = () => {
     resolver: yupResolver(schemaSignUp),
     mode: 'onChange',
   });
+  const router = useRouter();
   const password = watch('password');
   const onSubmit: SubmitHandler<ISignUpFormData> = async data => {
-    const { name, email, password } = data;
-    console.log(data);
     setError(null);
+    const { name, email, password } = data;
     const userCredential = await registerWithEmailAndPassword(
       { name, email, password },
       setError,
     );
 
-    console.log(userCredential);
+    if (userCredential === true) router.push('/');
   };
 
   const t = useTranslations('signUp');
@@ -81,6 +83,7 @@ const SignUpForm = () => {
           display: 'flex',
           flexDirection: 'column',
           rowGap: '25px',
+          width: '320px',
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
