@@ -2,6 +2,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
+import Footer from '@/components/footer/Footer';
 import Header from '@/components/header/Header';
 import { theme } from '@/theme';
 import type { Metadata } from 'next';
@@ -27,11 +28,12 @@ export default async function RootLayout({
     <html lang={locale}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <body>
+        <body className='flex flex-col min-h-screen'>
           <AppRouterCacheProvider>
             <NextIntlClientProvider messages={messages}>
               <Header />
-              {children}
+              <main className='flex-grow'>{children}</main>
+              <Footer />
             </NextIntlClientProvider>
           </AppRouterCacheProvider>
         </body>
