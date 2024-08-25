@@ -39,7 +39,24 @@ export const theme = createTheme({
         },
       },
     },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          alignItems: 'start',
+          paddingLeft: '0px',
+          width: 'auto',
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          minWidth: '0px',
+        },
+      },
+    },
   },
+
   typography: {
     fontFamily: ['Roboto', 'sans-serif'].join(','),
     h1: {

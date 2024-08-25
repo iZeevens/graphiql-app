@@ -4,5 +4,12 @@
   },
   "signUp": {
     "title": "Sign Up"
+  },
+  "footer": {
+    "copyright": "© 2024 You've reached the end! Extra points for you!",
+    "Denis": "Denis",
+    "Kirill": "Kirill",
+    "Nastia": "Nastia",
+    "joinCommunity": "Join our community"
   }
 }

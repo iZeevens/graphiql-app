@@ -8,10 +8,5 @@ export default function Home() {
 
   console.log(user, loading);
 
-  return (
-    <main className='flex'>
-      {/* <p>GraphiQL app</p> */}
-      <SignUpForm />
-    </main>
-  );
+  return <SignUpForm />;
 }
