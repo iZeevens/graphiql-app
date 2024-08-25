@@ -18,8 +18,6 @@ function testingPasswordStrength(password: string): PasswordStrengthConst {
   if (/\d/.test(password)) strength += 1;
   if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
 
-  console.log(strength);
-
   if (strength >= 4) return PasswordStrengthConst.STRONG;
   if (strength >= 2) return PasswordStrengthConst.MEDIUM;
 

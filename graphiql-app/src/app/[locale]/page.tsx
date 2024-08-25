@@ -1,7 +1,12 @@
+'use client';
+
+import { SignUpForm } from '@/components/SignUpForm/SignUpForm';
+import { useAuth } from '@/hooks/useAuth';
+
 export default function Home() {
-  return (
-    <main className='flex'>
-      <p>GraphiQL app</p>
-    </main>
-  );
+  const { user, loading } = useAuth();
+
+  console.log(user, loading);
+
+  return <SignUpForm />;
 }
