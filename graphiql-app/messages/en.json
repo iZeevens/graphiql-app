@@ -11,5 +11,15 @@
     "Kirill": "Kirill",
     "Nastia": "Nastia",
     "joinCommunity": "Join our community"
+  },
+  "main": {
+    "greetingAuth": "Welcome back,",
+    "greetingUnAuth": "Welcome! Explore",
+    "greetingAccent": "APIs",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "rest": "REST Client",
+    "graphiql": "GraphiQL Client",
+    "history": "History"
   }
 }

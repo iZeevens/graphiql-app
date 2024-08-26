@@ -1,12 +1,12 @@
 'use client';
 
-import { SignUpForm } from '@/components/SignUpForm/SignUpForm';
+import Container from '@mui/material/Container';
+
+import Greeting from '@/components/greeting/Greeting';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Home() {
   const { user, loading } = useAuth();
 
-  console.log(user, loading);
-
-  return <SignUpForm />;
+  return loading ? <Container>Loading...</Container> : <Greeting user={user} />;
 }

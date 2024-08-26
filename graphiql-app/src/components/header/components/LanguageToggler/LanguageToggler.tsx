@@ -5,6 +5,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Typography from '@mui/material/Typography';
 
+import { useCurrentLanguage } from '@/hooks/useCurrentLanguage';
 import { theme } from '@/theme';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -14,10 +15,6 @@ const LanguageToggler = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  const getActiveLanguage = () => {
-    return pathname?.split('/')[1] || 'en';
-  };
 
   const handleChange = (locale: string) => {
     const newPath = pathname.replace(/^\/(ru|en)/, `/${locale}`);
@@ -32,7 +29,7 @@ const LanguageToggler = () => {
       <RadioGroup
         aria-labelledby='language'
         row
-        value={getActiveLanguage()}
+        value={useCurrentLanguage()}
         onChange={e => handleChange(e.target.value)}
         className={styles.language}
       >
@@ -43,7 +40,7 @@ const LanguageToggler = () => {
             <Typography
               sx={{
                 color:
-                  getActiveLanguage() === 'en'
+                  useCurrentLanguage() === 'en'
                     ? theme.palette.secondary.main
                     : '',
               }}
@@ -60,7 +57,7 @@ const LanguageToggler = () => {
             <Typography
               sx={{
                 color:
-                  getActiveLanguage() === 'ru'
+                  useCurrentLanguage() === 'ru'
                     ? theme.palette.secondary.main
                     : '',
               }}
