@@ -7,6 +7,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import LanguageToggler from '@/components/header/components/LanguageToggler/LanguageToggler';
 import LogoBlock from '@/components/header/components/LogoBlock/LogoBlock';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { theme } from '@/theme';
 import Link from 'next/link';
 
@@ -34,7 +35,7 @@ const Header = () => {
           justifyContent='space-between'
           alignItems='center'
         >
-          <Link href='/'>
+          <Link href={useLocalizedPath('/')}>
             <LogoBlock />
           </Link>
           <LanguageToggler />
