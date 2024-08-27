@@ -59,7 +59,7 @@ const Restfull = () => {
                   Add Header
                 </Button>
               </Box>
-              <Box mt={2}>
+              {/* <Box mt={2}>
                 <TextField
                   label='Header Key'
                   fullWidth
@@ -67,7 +67,7 @@ const Restfull = () => {
                   sx={{ mb: 2 }}
                 />
                 <TextField label='Header Value' fullWidth variant='outlined' />
-              </Box>
+              </Box> */}
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
