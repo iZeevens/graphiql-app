@@ -4,6 +4,8 @@ import {
   Card,
   CardContent,
   Grid,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
@@ -23,7 +25,22 @@ const Restfull = () => {
 
               <Grid container spacing={2}>
                 <Grid item xs={4}>
-                  <TextField label='Method' fullWidth variant='outlined' />
+                  <Select label='Method' fullWidth variant='outlined'>
+                    {[
+                      'GET',
+                      'PUT',
+                      'POST',
+                      'DELETE',
+                      'PATCH',
+                      'HEAD',
+                      'OPTIONS',
+                      'TRACE',
+                    ].map(option => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </Grid>
                 <Grid item xs={8}>
                   <TextField
