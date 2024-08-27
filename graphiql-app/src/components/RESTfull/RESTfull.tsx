@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import JSONPretty from 'react-json-pretty';
+// import JSONPretty from 'react-json-pretty';
 
 // Базовая разметка, она скоро поменяется
 
@@ -106,7 +106,7 @@ const Restfull = () => {
                 }}
               />
 
-              <JSONPretty />
+              {/* <JSONPretty /> */}
             </CardContent>
           </Card>
         </Grid>
