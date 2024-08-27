@@ -1,5 +1,6 @@
 'use client';
 
+import { Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -12,6 +13,7 @@ import { theme } from '@/theme';
 import Link from 'next/link';
 
 import { useAuth } from '../../hooks/useAuth';
+import { SignButton } from './components/SignButton/SignButton';
 import { SignOutButton } from './components/SignOutButton/SignOutButton';
 
 import styles from '@/components/header/Header.module.scss';
@@ -45,7 +47,14 @@ const Header = () => {
           <LanguageToggler />
           {/* <BurgerMenu /> */}
           {/* <NavMenu /> */}
-          {user ? <SignOutButton /> : ''}
+          {user ? (
+            <SignOutButton />
+          ) : (
+            <Box component='div' sx={{ display: 'flex', columnGap: '10px' }}>
+              <SignButton buttonName={'SignIn'} path={'/signin'} />
+              <SignButton buttonName={'SignUp'} path={'/signup'} />
+            </Box>
+          )}
         </Stack>
       </Container>
     </AppBar>
