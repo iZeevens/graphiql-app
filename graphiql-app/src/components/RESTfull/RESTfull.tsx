@@ -77,6 +77,12 @@ const Restfull = () => {
                   rows={4}
                 />
               </Box>
+
+              <Box mt={2}>
+                <Button variant='contained' color='primary'>
+                  Send Request
+                </Button>
+              </Box>
             </CardContent>
           </Card>
         </Grid>
