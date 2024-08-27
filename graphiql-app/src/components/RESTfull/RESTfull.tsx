@@ -10,6 +10,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import JSONPretty from 'react-json-pretty';
+
 // Базовая разметка, она скоро поменяется
 
 const Restfull = () => {
@@ -99,15 +101,12 @@ const Restfull = () => {
                 fullWidth
                 variant='outlined'
                 sx={{ mb: 3 }}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
 
-              <TextField
-                label='Read-Only JSON Viewer'
-                fullWidth
-                variant='outlined'
-                multiline
-                rows={4}
-              />
+              <JSONPretty />
             </CardContent>
           </Card>
         </Grid>
