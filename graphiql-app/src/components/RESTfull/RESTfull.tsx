@@ -8,6 +8,8 @@ import {
   Typography,
 } from '@mui/material';
 
+// Базовая разметка, она скоро поменяется
+
 const Restfull = () => {
   return (
     <Box sx={{ p: 3 }}>
