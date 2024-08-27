@@ -62,7 +62,6 @@ const Restfull = () => {
           </Card>
         </Grid>
 
-        {/* Response */}
         <Grid item xs={12}>
           <Card>
             <CardContent>
@@ -70,7 +69,6 @@ const Restfull = () => {
                 Response
               </Typography>
 
-              {/* Status */}
               <TextField
                 label='Status'
                 fullWidth
@@ -78,7 +76,6 @@ const Restfull = () => {
                 sx={{ mb: 3 }}
               />
 
-              {/* Response Body */}
               <TextField
                 label='Read-Only JSON Viewer'
                 fullWidth
