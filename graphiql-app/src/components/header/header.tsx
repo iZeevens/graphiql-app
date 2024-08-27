@@ -11,6 +11,9 @@ import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { theme } from '@/theme';
 import Link from 'next/link';
 
+import { useAuth } from '../../hooks/useAuth';
+import { SignOutButton } from './components/SignOutButton/SignOutButton';
+
 import styles from '@/components/header/Header.module.scss';
 
 const Header = () => {
@@ -18,6 +21,7 @@ const Header = () => {
     disableHysteresis: true,
     threshold: 0,
   });
+  const { user } = useAuth();
 
   return (
     <AppBar
@@ -41,6 +45,7 @@ const Header = () => {
           <LanguageToggler />
           {/* <BurgerMenu /> */}
           {/* <NavMenu /> */}
+          {user ? <SignOutButton /> : ''}
         </Stack>
       </Container>
     </AppBar>

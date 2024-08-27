@@ -3,6 +3,7 @@ import { FirebaseError } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
 } from 'firebase/auth';
 
@@ -45,4 +46,9 @@ const logInWithEmailAndPassword = async (
   }
 };
 
-export { registerWithEmailAndPassword, logInWithEmailAndPassword };
+const logout = async () => {
+  await signOut(auth);
+  document.cookie = 'userid=';
+};
+
+export { registerWithEmailAndPassword, logInWithEmailAndPassword, logout };

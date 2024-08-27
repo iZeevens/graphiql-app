@@ -2,8 +2,8 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
-import Footer from '@/components/footer/Footer';
-import Header from '@/components/header/Header';
+import Footer from '@/components/footer/footer';
+import Header from '@/components/header/header';
 import { theme } from '@/theme';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
