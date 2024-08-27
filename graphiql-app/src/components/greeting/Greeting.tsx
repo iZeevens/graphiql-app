@@ -12,8 +12,6 @@ import { useTranslations } from 'next-intl';
 
 import styles from '@/components/greeting/Greeting.module.scss';
 
-const NAME_MOCK = 'Phantom';
-
 const Greeting = ({ user }: { user: User | null }) => {
   const t = useTranslations('main');
   return (
@@ -29,7 +27,9 @@ const Greeting = ({ user }: { user: User | null }) => {
           <Typography
             className={`${styles.greeting__title} ${styles.greeting__title_accent}`}
           >
-            {user ? formatName(NAME_MOCK) : t('greetingAccent')}
+            {user
+              ? formatName(user.displayName ? user.displayName : '')
+              : t('greetingAccent')}
           </Typography>
         </Stack>
         <Grid container className={styles.greeting__links}>
