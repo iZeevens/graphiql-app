@@ -1,6 +1,12 @@
 import * as yup from 'yup';
 
-const schemaSignIn = yup.object().shape({
+const schemaSignIn = yup.object({
+  email: yup.string().required('Please Enter your email'),
+  password: yup.string().required('Please Enter your password'),
+});
+
+const schemaSignUp = schemaSignIn.shape({
+  name: yup.string().required('Please Enter your name'),
   email: yup
     .string()
     .required('Please Enter your email')
@@ -18,10 +24,6 @@ const schemaSignIn = yup.object().shape({
       /[!@#$%^&*(),.?":{}|<>]/,
       'Password must contain at least one special character',
     ),
-});
-
-const schemaSignUp = schemaSignIn.shape({
-  name: yup.string().required('Please Enter your name'),
 });
 
 export { schemaSignIn, schemaSignUp };
