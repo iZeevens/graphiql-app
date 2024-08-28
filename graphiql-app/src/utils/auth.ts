@@ -1,5 +1,11 @@
-import { ISignUpFormData } from '@/types/formsType';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { ISignInFormData, ISignUpFormData } from '@/types/formsType';
+import { FirebaseError } from 'firebase/app';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from 'firebase/auth';
 
 import { auth } from './fireBaseConfig';
 
@@ -23,4 +29,26 @@ const registerWithEmailAndPassword = async (
   }
 };
 
-export { registerWithEmailAndPassword };
+const logInWithEmailAndPassword = async (
+  { email, password }: ISignInFormData,
+  setError: React.Dispatch<React.SetStateAction<string | null>>,
+) => {
+  try {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+
+    if (auth.currentUser) return true;
+
+    document.cookie = `userid=${res.user.uid}`;
+  } catch (err) {
+    if (err instanceof FirebaseError) {
+      setError(err.message);
+    }
+  }
+};
+
+const logout = async () => {
+  await signOut(auth);
+  document.cookie = 'userid=';
+};
+
+export { registerWithEmailAndPassword, logInWithEmailAndPassword, logout };
