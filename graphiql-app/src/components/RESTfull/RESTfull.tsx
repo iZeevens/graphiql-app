@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Box,
   Button,
@@ -12,11 +14,22 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useCallback, useState } from 'react';
+
+import CodePreview from '../CodeMirror/CodeMirror';
+
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
 // Базовая разметка, она скоро поменяется
 
 const Restfull = () => {
+  const [body, setBody] = useState('');
+
+  const onChange = useCallback((val: string) => {
+    console.log('val:', val);
+    setBody(val);
+  }, []);
+
   return (
     <Box sx={{ p: 3 }} className={styles['restfull-client']}>
       <Grid container spacing={2}>
@@ -39,6 +52,7 @@ const Restfull = () => {
                       label='Method'
                       fullWidth
                       variant='outlined'
+                      defaultValue=''
                     >
                       {[
                         'GET',
@@ -93,13 +107,7 @@ const Restfull = () => {
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
-                <TextField
-                  label='JSON/Text Editor'
-                  fullWidth
-                  variant='outlined'
-                  multiline
-                  rows={4}
-                />
+                <CodePreview body={body} onChange={onChange} />
               </Box>
             </CardContent>
           </Card>
