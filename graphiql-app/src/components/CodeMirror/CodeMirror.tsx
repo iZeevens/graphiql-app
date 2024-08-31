@@ -31,27 +31,31 @@ const CodePreview = ({ body, onChange, readonly }: ICodePreviewProps) => {
 
   return (
     <>
-      <FormControl fullWidth sx={{ width: '20%', marginBottom: '10px' }}>
-        <InputLabel id='lang-label'>Language</InputLabel>
-        <Select
-          labelId='lang-label'
-          label='Language'
-          fullWidth
-          variant='outlined'
-          defaultValue='text'
-          onChange={handleChange}
-        >
-          <MenuItem value='text'>Text</MenuItem>
-          <MenuItem value='json'>Json</MenuItem>
-        </Select>
-      </FormControl>
+      {readonly ? (
+        ''
+      ) : (
+        <FormControl fullWidth sx={{ width: '20%', marginBottom: '10px' }}>
+          <InputLabel id='lang-label'>Language</InputLabel>
+          <Select
+            labelId='lang-label'
+            label='Language'
+            fullWidth
+            variant='outlined'
+            defaultValue='text'
+            onChange={handleChange}
+          >
+            <MenuItem value='text'>Text</MenuItem>
+            <MenuItem value='json'>Json</MenuItem>
+          </Select>
+        </FormControl>
+      )}
       <CodeMirror
         value={body}
         onChange={onChange}
         extensions={
           lang === 'json' ? [json(), linter(jsonParseLinter())] : [basicSetup]
         }
-        editable={readonly ? false : true}
+        editable={!readonly}
       />
     </>
   );
