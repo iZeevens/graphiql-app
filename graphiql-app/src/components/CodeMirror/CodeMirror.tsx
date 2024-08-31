@@ -48,7 +48,7 @@ const CodePreview: React.FC<ICodePreviewProps> = ({
       )}
 
       <CodeMirror
-        value={body ? body : ''}
+        value={body ?? ''}
         onChange={onChange}
         extensions={
           lang === 'json' ? [json(), linter(jsonParseLinter())] : [basicSetup]
