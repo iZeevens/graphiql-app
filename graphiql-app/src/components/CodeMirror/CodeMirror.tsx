@@ -14,20 +14,20 @@ import CodeMirror from '@uiw/react-codemirror';
 import { basicSetup } from 'codemirror';
 
 interface ICodePreviewProps {
-  body: string;
+  body?: string;
   onChange?: (value: string) => void;
   lang?: string;
   onLang?: (value: string) => void;
   readonly?: boolean;
 }
 
-const CodePreview = ({
+const CodePreview: React.FC<ICodePreviewProps> = ({
   body,
-  onLang,
-  lang,
   onChange,
+  lang,
+  onLang,
   readonly,
-}: ICodePreviewProps) => {
+}) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
     if (onLang) onLang(event.target.value);
     console.log(event.target.value);
@@ -53,8 +53,9 @@ const CodePreview = ({
           </Select>
         </FormControl>
       )}
+
       <CodeMirror
-        value={body}
+        value={body ? body : ''}
         onChange={onChange}
         extensions={
           lang === 'json' ? [json(), linter(jsonParseLinter())] : [basicSetup]

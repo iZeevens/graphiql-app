@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IRestFullFormData } from '@/types/formsType';
@@ -30,30 +30,37 @@ const Restfull = () => {
     register,
     handleSubmit,
     setValue,
-    // formState: { errors },
+    setError,
+    reset,
+    formState: { errors },
   } = useForm<IRestFullFormData>({
     resolver: yupResolver(schemaRestFull),
     mode: 'onChange',
   });
-  const [body, setBody] = useState('');
   const [lang, setLang] = useState('text');
-
-  const onChange = useCallback(
-    (val: string) => {
-      console.log('val:', val);
-      setValue('body', val);
-      setBody(val);
-    },
-    [setValue],
-  );
 
   const onSumbit: SubmitHandler<IRestFullFormData> = data => {
     const { url, method, body } = data;
 
+    setError('body', { message: '' });
+
     if (body && lang === 'json') {
-      console.log(url, method, JSON.parse(body));
+      try {
+        const json = JSON.parse(body) as object;
+        console.log(url, method, json);
+        reset();
+      } catch (err) {
+        if (err instanceof SyntaxError) {
+          setError('body', { message: err.message });
+          console.log(err.message);
+        }
+      }
     } else if (body && lang === 'text') {
       console.log(url, method, body);
+      reset();
+    } else {
+      console.log(url, method, body);
+      reset();
     }
   };
 
@@ -97,6 +104,7 @@ const Restfull = () => {
                         </MenuItem>
                       ))}
                     </Select>
+                    <span>{errors.method?.message}</span>
                   </FormControl>
                 </Grid>
                 <Grid className={styles['restfull-client__url']} item xs>
@@ -106,6 +114,7 @@ const Restfull = () => {
                     variant='outlined'
                     {...register('url')}
                   />
+                  <span>{errors.url?.message}</span>
                 </Grid>
                 <Grid item>
                   <Button
@@ -138,11 +147,11 @@ const Restfull = () => {
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
                 <CodePreview
-                  body={body}
-                  onChange={onChange}
+                  onChange={value => setValue('body', value)}
                   onLang={setLang}
                   lang={lang}
                 />
+                <span>{errors.body?.message}</span>
               </Box>
             </CardContent>
           </Card>
