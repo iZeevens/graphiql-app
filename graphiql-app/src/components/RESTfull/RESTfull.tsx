@@ -104,7 +104,9 @@ const Restfull = () => {
                         </MenuItem>
                       ))}
                     </Select>
-                    <span>{errors.method?.message}</span>
+                    <span className={styles.error}>
+                      {errors.method?.message}
+                    </span>
                   </FormControl>
                 </Grid>
                 <Grid className={styles['restfull-client__url']} item xs>
@@ -114,7 +116,7 @@ const Restfull = () => {
                     variant='outlined'
                     {...register('url')}
                   />
-                  <span>{errors.url?.message}</span>
+                  <span className={styles.error}>{errors.url?.message}</span>
                 </Grid>
                 <Grid item>
                   <Button
@@ -151,7 +153,7 @@ const Restfull = () => {
                   onLang={setLang}
                   lang={lang}
                 />
-                <span>{errors.body?.message}</span>
+                <span className={styles.error}>{errors.body?.message}</span>
               </Box>
             </CardContent>
           </Card>
