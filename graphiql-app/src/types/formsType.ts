@@ -9,4 +9,10 @@ interface ISignInFormData {
   password: string;
 }
 
-export type { ISignUpFormData, ISignInFormData };
+interface IRestFullFormData {
+  method: string;
+  url: string;
+  body?: string;
+}
+
+export type { ISignUpFormData, ISignInFormData, IRestFullFormData };

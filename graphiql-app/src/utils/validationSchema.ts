@@ -26,4 +26,10 @@ const schemaSignUp = schemaSignIn.shape({
     ),
 });
 
-export { schemaSignIn, schemaSignUp };
+const schemaRestFull = yup.object({
+  method: yup.string().required('Please Enter Method'),
+  url: yup.string().required('Please Enter Endpoint URL'),
+  body: yup.string(),
+});
+
+export { schemaSignIn, schemaSignUp, schemaRestFull };

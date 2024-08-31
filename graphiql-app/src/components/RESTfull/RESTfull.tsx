@@ -15,26 +15,53 @@ import {
 } from '@mui/material';
 
 import { useCallback, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { IRestFullFormData } from '@/types/formsType';
+import { schemaRestFull } from '@/utils/validationSchema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import CodePreview from '../CodeMirror/CodeMirror';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
-// Базовая разметка, она скоро поменяется
-
 const Restfull = () => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    // formState: { errors },
+  } = useForm<IRestFullFormData>({
+    resolver: yupResolver(schemaRestFull),
+    mode: 'onChange',
+  });
   const [body, setBody] = useState('');
+  const [lang, setLang] = useState('text');
 
-  const onChange = useCallback((val: string) => {
-    console.log('val:', val);
-    setBody(val);
-  }, []);
+  const onChange = useCallback(
+    (val: string) => {
+      console.log('val:', val);
+      setValue('body', val);
+      setBody(val);
+    },
+    [setValue],
+  );
+
+  const onSumbit: SubmitHandler<IRestFullFormData> = data => {
+    const { url, method, body } = data;
+
+    if (body && lang === 'json') {
+      console.log(url, method, JSON.parse(body));
+    } else if (body && lang === 'text') {
+      console.log(url, method, body);
+    }
+  };
 
   return (
     <Box sx={{ p: 3 }} className={styles['restfull-client']}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Card component='form'>
+          <Card component='form' onSubmit={handleSubmit(onSumbit)}>
             <CardContent>
               <Typography variant='h6' gutterBottom>
                 REST Client
@@ -53,6 +80,7 @@ const Restfull = () => {
                       fullWidth
                       variant='outlined'
                       defaultValue=''
+                      {...register('method')}
                     >
                       {[
                         'GET',
@@ -76,6 +104,7 @@ const Restfull = () => {
                     label='Endpoint URL'
                     fullWidth
                     variant='outlined'
+                    {...register('url')}
                   />
                 </Grid>
                 <Grid item>
@@ -83,6 +112,7 @@ const Restfull = () => {
                     className={styles['restfull-client__button']}
                     variant='contained'
                     color='primary'
+                    type='submit'
                   >
                     Send Request
                   </Button>
@@ -107,7 +137,12 @@ const Restfull = () => {
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
-                <CodePreview body={body} onChange={onChange} />
+                <CodePreview
+                  body={body}
+                  onChange={onChange}
+                  onLang={setLang}
+                  lang={lang}
+                />
               </Box>
             </CardContent>
           </Card>
@@ -129,7 +164,7 @@ const Restfull = () => {
                   readOnly: true,
                 }}
               />
-              <CodePreview body={body} onChange={onChange} readonly={true} />
+              <CodePreview body={''} readonly={true} />
             </CardContent>
           </Card>
         </Grid>

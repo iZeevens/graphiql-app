@@ -8,8 +8,6 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
-import { useState } from 'react';
-
 import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { linter } from '@codemirror/lint';
 import CodeMirror from '@uiw/react-codemirror';
@@ -18,14 +16,20 @@ import { basicSetup } from 'codemirror';
 interface ICodePreviewProps {
   body: string;
   onChange?: (value: string) => void;
+  lang?: string;
+  onLang?: (value: string) => void;
   readonly?: boolean;
 }
 
-const CodePreview = ({ body, onChange, readonly }: ICodePreviewProps) => {
-  const [lang, setLang] = useState('text');
-
+const CodePreview = ({
+  body,
+  onLang,
+  lang,
+  onChange,
+  readonly,
+}: ICodePreviewProps) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
-    setLang(event.target.value);
+    if (onLang) onLang(event.target.value);
     console.log(event.target.value);
   };
 
