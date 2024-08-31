@@ -129,6 +129,7 @@ const Restfull = () => {
                   readOnly: true,
                 }}
               />
+              <CodePreview body={body} onChange={onChange} readonly={true} />
             </CardContent>
           </Card>
         </Grid>

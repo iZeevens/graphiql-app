@@ -17,10 +17,11 @@ import { basicSetup } from 'codemirror';
 
 interface ICodePreviewProps {
   body: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
+  readonly?: boolean;
 }
 
-const CodePreview = ({ body, onChange }: ICodePreviewProps) => {
+const CodePreview = ({ body, onChange, readonly }: ICodePreviewProps) => {
   const [lang, setLang] = useState('text');
 
   const handleChange = (event: SelectChangeEvent<string>) => {
@@ -50,6 +51,7 @@ const CodePreview = ({ body, onChange }: ICodePreviewProps) => {
         extensions={
           lang === 'json' ? [json(), linter(jsonParseLinter())] : [basicSetup]
         }
+        editable={readonly ? false : true}
       />
     </>
   );
