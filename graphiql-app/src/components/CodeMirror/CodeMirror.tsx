@@ -8,18 +8,11 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
+import { ICodePreviewProps } from '@/types/codeMirrorType';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { linter } from '@codemirror/lint';
 import CodeMirror from '@uiw/react-codemirror';
 import { basicSetup } from 'codemirror';
-
-interface ICodePreviewProps {
-  body?: string;
-  onChange?: (value: string) => void;
-  lang?: string;
-  onLang?: (value: string) => void;
-  readonly?: boolean;
-}
 
 const CodePreview: React.FC<ICodePreviewProps> = ({
   body,
