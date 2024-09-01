@@ -14,10 +14,11 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IRestFullFormData } from '@/types/formsType';
+import { IHeader } from '@/types/formsType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -38,30 +39,39 @@ const Restfull = () => {
     resolver: yupResolver(schemaRestFull),
     mode: 'onChange',
   });
+  const [headers, setHeaders] = useState<IHeader[]>([]);
   const [lang, setLang] = useState('text');
+
+  const addHeader = () => {
+    setHeaders([...headers, { key: '', value: '' }]);
+  };
+
+  const updateHeader = (index: number, key: string, value: string) => {
+    const newHeaders = headers.map((header, i) =>
+      i === index ? { key, value } : header,
+    );
+    setHeaders(newHeaders);
+  };
+
+  useEffect(() => {
+    setValue('headers', headers);
+    console.log(headers);
+  }, [headers, setValue]);
 
   const onSumbit: SubmitHandler<IRestFullFormData> = data => {
     const { url, method, body } = data;
-
     setError('body', { message: '' });
 
-    if (body && lang === 'json') {
-      try {
-        const json = JSON.parse(body) as object;
-        console.log(url, method, json);
-        reset();
-      } catch (err) {
-        if (err instanceof SyntaxError) {
-          setError('body', { message: err.message });
-          console.log(err.message);
-        }
+    try {
+      const parsedBody =
+        lang === 'json' && body ? (JSON.parse(body) as object) : body;
+      console.log(url, method, parsedBody);
+      reset();
+    } catch (err) {
+      if (err instanceof SyntaxError) {
+        setError('body', { message: err.message });
+        console.log(err.message);
       }
-    } else if (body && lang === 'text') {
-      console.log(url, method, body);
-      reset();
-    } else {
-      console.log(url, method, body);
-      reset();
     }
   };
 
@@ -133,19 +143,31 @@ const Restfull = () => {
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Headers:</Typography>
-                <Button variant='contained' color='primary'>
+                <Button variant='contained' color='primary' onClick={addHeader}>
                   Add Header
                 </Button>
               </Box>
-              {/* <Box mt={2}>
-                <TextField
-                  label='Header Key'
-                  fullWidth
-                  variant='outlined'
-                  sx={{ mb: 2 }}
-                />
-                <TextField label='Header Value' fullWidth variant='outlined' />
-              </Box> */}
+              {headers.map((header, i) => (
+                <Box mt={2} key={i}>
+                  <TextField
+                    label='Header Key'
+                    fullWidth
+                    variant='outlined'
+                    value={header.key}
+                    onChange={e =>
+                      updateHeader(i, e.target.value, header.value)
+                    }
+                    sx={{ mb: 2 }}
+                  />
+                  <TextField
+                    label='Header Value'
+                    fullWidth
+                    variant='outlined'
+                    value={header.value}
+                    onChange={e => updateHeader(i, header.key, e.target.value)}
+                  />
+                </Box>
+              ))}
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
