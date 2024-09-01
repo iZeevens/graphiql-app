@@ -16,6 +16,7 @@ import {
 
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { IoMdClose } from 'react-icons/io';
 
 import { IRestFullFormData } from '@/types/formsType';
 import { IHeader } from '@/types/formsType';
@@ -40,6 +41,8 @@ const Restfull = () => {
     mode: 'onChange',
   });
   const [headers, setHeaders] = useState<IHeader[]>([]);
+  const [status, setStatus] = useState<string>();
+  const [textResponse, setTextResponse] = useState<string>();
   const [lang, setLang] = useState('text');
 
   const addHeader = () => {
@@ -50,6 +53,7 @@ const Restfull = () => {
     const newHeaders = headers.map((header, i) =>
       i === index ? { key, value } : header,
     );
+    setError('headers', { message: '' });
     setHeaders(newHeaders);
   };
 
@@ -58,19 +62,45 @@ const Restfull = () => {
     console.log(headers);
   }, [headers, setValue]);
 
-  const onSumbit: SubmitHandler<IRestFullFormData> = data => {
+  const onSumbit: SubmitHandler<IRestFullFormData> = async data => {
     const { url, method, body } = data;
-    setError('body', { message: '' });
 
     try {
       const parsedBody =
         lang === 'json' && body ? (JSON.parse(body) as object) : body;
-      console.log(url, method, parsedBody);
+
+      const options: RequestInit = {
+        method,
+        headers: headers.reduce(
+          (acc, { key, value }) => {
+            if (key) acc[key] = value;
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
+        body:
+          method !== 'GET' && parsedBody
+            ? JSON.stringify(parsedBody)
+            : undefined,
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const text = await response.text();
+
+        setStatus(String(response.status));
+        setTextResponse(text);
+        console.log(text);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError('root', { message: err.message });
+          console.log(errors.root?.message);
+        }
+      }
       reset();
     } catch (err) {
       if (err instanceof SyntaxError) {
         setError('body', { message: err.message });
-        console.log(err.message);
       }
     }
   };
@@ -146,9 +176,17 @@ const Restfull = () => {
                 <Button variant='contained' color='primary' onClick={addHeader}>
                   Add Header
                 </Button>
+                <span className={styles.error}>{errors.headers?.message}</span>
               </Box>
               {headers.map((header, i) => (
                 <Box mt={2} key={i}>
+                  <IoMdClose
+                    onClick={() =>
+                      setHeaders(headers =>
+                        headers.filter((_, index) => i !== index),
+                      )
+                    }
+                  />
                   <TextField
                     label='Header Key'
                     fullWidth
@@ -173,7 +211,10 @@ const Restfull = () => {
                 <Typography variant='subtitle1'>Body:</Typography>
                 <CodePreview
                   body={getValues('body')}
-                  onChange={value => setValue('body', value)}
+                  onChange={value => {
+                    setError('body', { message: '' });
+                    setValue('body', value);
+                  }}
                   onLang={setLang}
                   lang={lang}
                 />
@@ -198,8 +239,9 @@ const Restfull = () => {
                 InputProps={{
                   readOnly: true,
                 }}
+                defaultValue={status}
               />
-              <CodePreview body={''} readonly={true} />
+              <CodePreview body={textResponse} readonly />
             </CardContent>
           </Card>
         </Grid>
