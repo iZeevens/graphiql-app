@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
@@ -16,6 +17,7 @@ import { schemaSignIn } from '../../utils/validationSchema';
 const SignInForm = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const translation = useTranslations('signIn');
   const {
     register,
     handleSubmit,
@@ -48,7 +50,7 @@ const SignInForm = () => {
       }}
     >
       <Typography component='h1' variant='h4'>
-        {SERVICE_MESSAGES.signInText}
+        {translation('title')}
       </Typography>
       <Box
         component='form'
@@ -62,7 +64,7 @@ const SignInForm = () => {
       >
         <TextField
           id='form-email'
-          label='Email'
+          label={translation('emailPlaceholder')}
           {...register('email')}
           error={!!errors.email}
           helperText={errors.email?.message}
@@ -70,13 +72,13 @@ const SignInForm = () => {
         <TextField
           type='password'
           id='form-password'
-          label='Password'
+          label={translation('passwordPlaceholder')}
           {...register('password')}
           error={!!errors.password}
           helperText={errors.password?.message}
         />
         <Button type='submit' size='large' variant='contained'>
-          {SERVICE_MESSAGES.signInText}
+          {translation('signInBtn')}
         </Button>
         {error && (
           <Alert severity='error' sx={{ mt: 2 }}>

@@ -9,6 +9,12 @@
     "emailPlaceholder": "Электронная почта",
     "passwordPlaceholder": "Пароль"
   },
+  "signIn": {
+    "title": "Вход",
+    "signInBtn": "Войти",
+    "emailPlaceholder": "Электронная почта",
+    "passwordPlaceholder": "Пароль"
+  },
   "footer": {
     "copyright": "© 2024 Спасибо, что дошли до конца! Надеемся, вам понравилось!",
     "Denis": "Денис",
