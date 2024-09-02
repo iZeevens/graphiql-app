@@ -2,6 +2,13 @@
   "logo": {
     "logo": "Logo"
   },
+  "headerBtns": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "signOutBtn": {
+    "signOutBtn": "Sign Out"
+  },
   "signUp": {
     "title": "Sign Up",
     "signUpBtn": "Sign Up",

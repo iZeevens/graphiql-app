@@ -2,6 +2,13 @@
   "logo": {
     "logo": "Лого"
   },
+  "headerBtns": {
+    "signIn": "Вход",
+    "signUp": "Регистрация"
+  },
+  "signOutBtn": {
+    "signOutBtn": "Выход"
+  },
   "signUp": {
     "title": "Регистрация",
     "signUpBtn": "Регистрация",
@@ -11,7 +18,7 @@
   },
   "signIn": {
     "title": "Вход",
-    "signInBtn": "Войти",
+    "signInBtn": "Вход",
     "emailPlaceholder": "Электронная почта",
     "passwordPlaceholder": "Пароль"
   },
