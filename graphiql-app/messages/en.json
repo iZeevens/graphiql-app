@@ -3,7 +3,11 @@
     "logo": "Logo"
   },
   "signUp": {
-    "title": "Sign Up"
+    "title": "Sign Up",
+    "signUpBtn": "Sign Up",
+    "userNamePlaceholder": "UserName",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password"
   },
   "footer": {
     "copyright": "© 2024 You've reached the end! Extra points for you!",

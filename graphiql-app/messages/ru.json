@@ -3,7 +3,11 @@
     "logo": "Лого"
   },
   "signUp": {
-    "title": "Регистрация"
+    "title": "Регистрация",
+    "signUpBtn": "Регистрация",
+    "userNamePlaceholder": "Имя Пользователя",
+    "emailPlaceholder": "Электронная почта",
+    "passwordPlaceholder": "Пароль"
   },
   "footer": {
     "copyright": "© 2024 Спасибо, что дошли до конца! Надеемся, вам понравилось!",
