@@ -10,6 +10,7 @@ import LanguageToggler from '@/components/header/components/LanguageToggler/Lang
 import LogoBlock from '@/components/header/components/LogoBlock/LogoBlock';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { theme } from '@/theme';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -24,6 +25,7 @@ const Header = () => {
     threshold: 0,
   });
   const { user } = useAuth();
+  const translation = useTranslations('headerBtns');
 
   return (
     <AppBar
@@ -51,8 +53,8 @@ const Header = () => {
             <SignOutButton />
           ) : (
             <Box component='div' sx={{ display: 'flex', columnGap: '10px' }}>
-              <SignButton buttonName={'SignIn'} path={'/signin'} />
-              <SignButton buttonName={'SignUp'} path={'/signup'} />
+              <SignButton buttonName={translation('signIn')} path={'/signin'} />
+              <SignButton buttonName={translation('signUp')} path={'/signup'} />
             </Box>
           )}
         </Stack>

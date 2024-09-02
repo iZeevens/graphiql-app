@@ -2,8 +2,25 @@
   "logo": {
     "logo": "Logo"
   },
+  "headerBtns": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "signOutBtn": {
+    "signOutBtn": "Sign Out"
+  },
   "signUp": {
-    "title": "Sign Up"
+    "title": "Sign Up",
+    "signUpBtn": "Sign Up",
+    "userNamePlaceholder": "UserName",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password"
+  },
+  "signIn": {
+    "title": "Sign In",
+    "signInBtn": "Sign In",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password"
   },
   "footer": {
     "copyright": "© 2024 You've reached the end! Extra points for you!",

@@ -77,14 +77,14 @@ const SignUpForm = () => {
       >
         <TextField
           id='form-name'
-          label='UserName'
+          label={t('userNamePlaceholder')}
           {...register('name')}
           error={!!errors.name}
           helperText={errors.name?.message}
         />
         <TextField
           id='form-email'
-          label='Email'
+          label={t('emailPlaceholder')}
           {...register('email')}
           error={!!errors.email}
           helperText={errors.email?.message}
@@ -92,14 +92,14 @@ const SignUpForm = () => {
         <TextField
           type='password'
           id='form-password'
-          label='Password'
+          label={t('passwordPlaceholder')}
           {...register('password')}
           error={!!errors.password}
           helperText={errors.password?.message}
         />
         <PasswordStrength password={password} />
         <Button type='submit' size='large' variant='contained'>
-          {SERVICE_MESSAGES.signUpText}
+          {t('signUpBtn')}
         </Button>
         {error && (
           <Alert severity='error' sx={{ mt: 2 }}>
