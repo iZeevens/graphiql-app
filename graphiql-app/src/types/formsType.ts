@@ -1,3 +1,5 @@
+import { IHeader } from './restFullType';
+
 interface ISignUpFormData {
   name: string;
   email: string;
@@ -9,10 +11,6 @@ interface ISignInFormData {
   password: string;
 }
 
-interface IHeader {
-  key: string;
-  value: string;
-}
 interface IRestFullFormData {
   method: string;
   url: string;
@@ -20,4 +18,4 @@ interface IRestFullFormData {
   body?: string;
 }
 
-export type { ISignUpFormData, ISignInFormData, IRestFullFormData, IHeader };
+export type { ISignUpFormData, ISignInFormData, IRestFullFormData };

@@ -14,16 +14,16 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IoMdClose } from 'react-icons/io';
 
 import { IRestFullFormData } from '@/types/formsType';
-import { IHeader } from '@/types/formsType';
+import { IHeader } from '@/types/restFullType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import CodePreview from '../CodeMirror/CodeMirror';
+import HeadersRestfull from './components/HeadersRESTfull';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
@@ -44,23 +44,6 @@ const Restfull = () => {
   const [status, setStatus] = useState<string>();
   const [textResponse, setTextResponse] = useState<string>();
   const [lang, setLang] = useState('text');
-
-  const addHeader = () => {
-    setHeaders([...headers, { key: '', value: '' }]);
-  };
-
-  const updateHeader = (index: number, key: string, value: string) => {
-    const newHeaders = headers.map((header, i) =>
-      i === index ? { key, value } : header,
-    );
-    setError('headers', { message: '' });
-    setHeaders(newHeaders);
-  };
-
-  useEffect(() => {
-    setValue('headers', headers);
-    console.log(headers);
-  }, [headers, setValue]);
 
   const onSumbit: SubmitHandler<IRestFullFormData> = async data => {
     const { url, method, body } = data;
@@ -94,7 +77,6 @@ const Restfull = () => {
       } catch (err) {
         if (err instanceof Error) {
           setError('root', { message: err.message });
-          console.log(errors.root?.message);
         }
       }
       reset();
@@ -171,41 +153,13 @@ const Restfull = () => {
                 </Grid>
               </Grid>
 
-              <Box mt={3}>
-                <Typography variant='subtitle1'>Headers:</Typography>
-                <Button variant='contained' color='primary' onClick={addHeader}>
-                  Add Header
-                </Button>
-                <span className={styles.error}>{errors.headers?.message}</span>
-              </Box>
-              {headers.map((header, i) => (
-                <Box mt={2} key={i}>
-                  <IoMdClose
-                    onClick={() =>
-                      setHeaders(headers =>
-                        headers.filter((_, index) => i !== index),
-                      )
-                    }
-                  />
-                  <TextField
-                    label='Header Key'
-                    fullWidth
-                    variant='outlined'
-                    value={header.key}
-                    onChange={e =>
-                      updateHeader(i, e.target.value, header.value)
-                    }
-                    sx={{ mb: 2 }}
-                  />
-                  <TextField
-                    label='Header Value'
-                    fullWidth
-                    variant='outlined'
-                    value={header.value}
-                    onChange={e => updateHeader(i, header.key, e.target.value)}
-                  />
-                </Box>
-              ))}
+              <HeadersRestfull
+                headers={headers}
+                setHeaders={setHeaders}
+                setValue={setValue}
+                setError={setError}
+                errors={errors}
+              />
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
