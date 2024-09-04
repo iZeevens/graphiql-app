@@ -220,7 +220,7 @@ const Restfull = () => {
                 InputProps={{
                   readOnly: true,
                 }}
-                defaultValue={status}
+                value={status ?? ''}
               />
               <CodePreview body={response} readonly />
             </CardContent>
