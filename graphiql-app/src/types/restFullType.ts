@@ -14,6 +14,7 @@ interface IRestFullFormData {
 
 interface IHeadersRestfull {
   control: Control<IRestFullFormData>;
+  urlChanged: () => void;
   errors: FieldErrors<IRestFullFormData>;
 }
 

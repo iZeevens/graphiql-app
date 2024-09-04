@@ -43,6 +43,38 @@ const Restfull = () => {
   const [textResponse, setTextResponse] = useState<string>();
   const [lang, setLang] = useState('text');
 
+  const urlChanged = () => {
+    const { url, body, method, headers } = getValues();
+
+    const encodedUrl = btoa(url);
+    const encodedBody = body ? btoa(JSON.stringify(body)) : '';
+
+    const quearyParams = headers
+      ?.filter(header => header.key && header.value)
+      .map(
+        header =>
+          `${encodeURIComponent(header.key)}=${encodeURIComponent(header.value)}`,
+      )
+      .join('&');
+
+    let newUrl = '';
+
+    if (method) {
+      newUrl += `/${method}`;
+    }
+    if (encodedUrl) {
+      newUrl += `/${encodedUrl}`;
+    }
+    if (encodedBody) {
+      newUrl += `/${encodedBody}`;
+    }
+    if (quearyParams) {
+      newUrl += `?${quearyParams}`;
+    }
+
+    window.history.pushState({}, '', newUrl);
+  };
+
   const onSumbit: SubmitHandler<IRestFullFormData> = async data => {
     const { url, method, body, headers } = data;
 
@@ -108,7 +140,7 @@ const Restfull = () => {
                       fullWidth
                       variant='outlined'
                       defaultValue=''
-                      {...register('method')}
+                      {...register('method', { onBlur: urlChanged })}
                     >
                       {[
                         'GET',
@@ -135,7 +167,7 @@ const Restfull = () => {
                     label='Endpoint URL'
                     fullWidth
                     variant='outlined'
-                    {...register('url')}
+                    {...register('url', { onBlur: urlChanged })}
                   />
                   <span className={styles.error}>{errors.url?.message}</span>
                 </Grid>
@@ -151,7 +183,11 @@ const Restfull = () => {
                 </Grid>
               </Grid>
 
-              <HeadersRestfull control={control} errors={errors} />
+              <HeadersRestfull
+                urlChanged={urlChanged}
+                control={control}
+                errors={errors}
+              />
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
@@ -160,6 +196,7 @@ const Restfull = () => {
                   control={control}
                   onLang={setLang}
                   lang={lang}
+                  urlChanged={urlChanged}
                 />
                 <span className={styles.error}>{errors.body?.message}</span>
               </Box>

@@ -22,6 +22,7 @@ const CodePreview = ({
   lang,
   onLang,
   readonly,
+  urlChanged,
 }: ICodePreviewProps) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
     if (onLang) onLang(event.target.value);
@@ -52,12 +53,16 @@ const CodePreview = ({
         <Controller
           name='body'
           control={control}
-          render={({ field: { onChange, onBlur, ref } }) => (
+          render={({ field }) => (
             <CodeMirror
+              {...field}
               value={body ?? ''}
-              onChange={onChange}
-              onBlur={onBlur}
-              ref={ref}
+              onBlur={() => {
+                field.onBlur();
+                if (urlChanged) {
+                  urlChanged();
+                }
+              }}
               extensions={
                 lang === 'json'
                   ? [json(), linter(jsonParseLinter())]

@@ -7,7 +7,7 @@ import { IHeadersRestfull } from '@/types/restFullType';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
-const HeadersRestfull = ({ control, errors }: IHeadersRestfull) => {
+const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'headers',
@@ -40,6 +40,10 @@ const HeadersRestfull = ({ control, errors }: IHeadersRestfull) => {
                 fullWidth
                 variant='outlined'
                 sx={{ mb: 2 }}
+                onBlur={() => {
+                  field.onBlur();
+                  urlChanged();
+                }}
               />
             )}
           />
@@ -53,6 +57,10 @@ const HeadersRestfull = ({ control, errors }: IHeadersRestfull) => {
                 fullWidth
                 variant='outlined'
                 sx={{ mb: 2 }}
+                onBlur={() => {
+                  field.onBlur();
+                  urlChanged();
+                }}
               />
             )}
           />
