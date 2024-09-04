@@ -41,7 +41,7 @@ const Restfull = () => {
     mode: 'onChange',
   });
   const [status, setStatus] = useState<string>();
-  const [textResponse, setTextResponse] = useState<string>();
+  const [response, setResponse] = useState<string>();
   const [lang, setLang] = useState('text');
   const pathname = usePathname();
 
@@ -101,11 +101,10 @@ const Restfull = () => {
 
       try {
         const response = await fetch(url, options);
-        const text = await response.text();
+        const dataJson = (await response.json()) as object;
 
         setStatus(String(response.status));
-        setTextResponse(text);
-        console.log(text);
+        setResponse(JSON.stringify(dataJson, null, 2));
       } catch (err) {
         if (err instanceof Error) {
           setError('root', { message: err.message });
@@ -223,7 +222,7 @@ const Restfull = () => {
                 }}
                 defaultValue={status}
               />
-              <CodePreview body={textResponse} readonly />
+              <CodePreview body={response} readonly />
             </CardContent>
           </Card>
         </Grid>
