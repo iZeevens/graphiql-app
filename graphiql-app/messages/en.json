@@ -29,7 +29,7 @@
     "Nastia": "Nastia",
     "joinCommunity": "Join our community"
   },
-  "main": {
+  "greeting": {
     "greetingAuth": "Welcome back,",
     "greetingUnAuth": "Welcome! Explore",
     "greetingAccent": "APIs",
@@ -42,5 +42,9 @@
   "notFound": {
     "message": "Oops! The page you are looking for does not exist...",
     "button": "Return Home"
-  }
+  },
+    "projectInfo": {
+      "title": "Project: What and Why",
+      "info":  "We are pleased to introduce a powerful and user-friendly application that combines the functionalities of Postman and GraphiQL. This tool is designed for developers who need flexible and easy-to-use resources for working with APIs.\n\nWith our application, you can effortlessly send requests to RESTful and GraphQL APIs, select methods, configure headers, and instantly view responses.\n\nThe built-in request history will help you revisit and manage previously executed operations.\n\nAccess to the application is secured with authorization and authentication, ensuring a safe working environment.\n\nUse our application to streamline your API work and make the process more convenient and efficient!"
+    }
 }
