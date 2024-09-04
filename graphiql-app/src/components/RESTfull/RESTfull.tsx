@@ -23,7 +23,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
-import HeadersRestfull from './components/HeadersRESTfull';
+import HeadersRestfull from './components/HeadersRESTfull/HeadersRESTfull';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
