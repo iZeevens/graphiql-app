@@ -17,7 +17,7 @@ import {
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { IRestFullFormData } from '@/types/formsType';
+import { IRestFullFormData } from '@/types/restFullType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 
