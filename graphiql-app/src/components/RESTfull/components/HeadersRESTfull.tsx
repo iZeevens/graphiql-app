@@ -1,66 +1,60 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 
-import { useEffect } from 'react';
+import { Controller, useFieldArray } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 
 import { IHeadersRestfull } from '@/types/restFullType';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
-const HeadersRestfull = ({
-  headers,
-  errors,
-  setHeaders,
-  setValue,
-  setError,
-}: IHeadersRestfull) => {
-  const addHeader = () => {
-    setHeaders([...headers, { key: '', value: '' }]);
-  };
-
-  const updateHeader = (index: number, key: string, value: string) => {
-    const newHeaders = headers.map((header, i) =>
-      i === index ? { key, value } : header,
-    );
-    setError('headers', { message: '' });
-    setHeaders(newHeaders);
-  };
-
-  const removeHeader = (index: number) => {
-    setHeaders(prevHeaders => prevHeaders.filter((_, i) => i !== index));
-  };
-
-  useEffect(() => {
-    setValue('headers', headers);
-    console.log(headers);
-  }, [headers, setValue]);
+const HeadersRestfull = ({ control, errors }: IHeadersRestfull) => {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'headers',
+  });
 
   return (
     <>
       <Box mt={3}>
         <Typography variant='subtitle1'>Headers:</Typography>
-        <Button variant='contained' color='primary' onClick={addHeader}>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => append({ key: '', value: '' })}
+        >
           Add Header
         </Button>
         <span className={styles.error}>{errors.headers?.message}</span>
       </Box>
-      {headers.map((header, i) => (
-        <Box mt={2} key={i}>
-          <IoMdClose onClick={() => removeHeader} />
-          <TextField
-            label='Header Key'
-            fullWidth
-            variant='outlined'
-            value={header.key}
-            onChange={e => updateHeader(i, e.target.value, header.value)}
-            sx={{ mb: 2 }}
+
+      {fields.map((header, index) => (
+        <Box mt={2} key={header.id}>
+          <IoMdClose onClick={() => remove(index)} />
+          <Controller
+            name={`headers.${index}.key`}
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Header Key'
+                fullWidth
+                variant='outlined'
+                sx={{ mb: 2 }}
+              />
+            )}
           />
-          <TextField
-            label='Header Value'
-            fullWidth
-            variant='outlined'
-            value={header.value}
-            onChange={e => updateHeader(i, header.key, e.target.value)}
+          <Controller
+            name={`headers.${index}.value`}
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Header Value'
+                fullWidth
+                variant='outlined'
+                sx={{ mb: 2 }}
+              />
+            )}
           />
         </Box>
       ))}

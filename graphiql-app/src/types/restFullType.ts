@@ -1,6 +1,6 @@
-import { FieldErrors, UseFormSetError, UseFormSetValue } from 'react-hook-form';
+import { Control, FieldErrors } from 'react-hook-form';
 
-import { IRestFullFormData } from './formsType';
+import { IRestFullFormData } from '@/types/formsType';
 
 interface IHeader {
   key: string;
@@ -8,11 +8,11 @@ interface IHeader {
 }
 
 interface IHeadersRestfull {
-  headers: IHeader[];
+  control: Control<IRestFullFormData>;
   errors: FieldErrors<IRestFullFormData>;
-  setHeaders: (arg: IHeader[] | ((prevVal: IHeader[]) => IHeader[])) => void;
-  setValue: UseFormSetValue<IRestFullFormData>;
-  setError: UseFormSetError<IRestFullFormData>;
+  // setHeaders: (arg: IHeader[] | ((prevVal: IHeader[]) => IHeader[])) => void;
+  // setValue: UseFormSetValue<IRestFullFormData>;
+  // setError: UseFormSetError<IRestFullFormData>;
 }
 
 export type { IHeadersRestfull, IHeader };

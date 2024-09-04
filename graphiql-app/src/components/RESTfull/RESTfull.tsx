@@ -18,7 +18,6 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IRestFullFormData } from '@/types/formsType';
-import { IHeader } from '@/types/restFullType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -33,7 +32,6 @@ const Restfull = () => {
     handleSubmit,
     control,
     getValues,
-    setValue,
     setError,
     reset,
     formState: { errors },
@@ -41,7 +39,6 @@ const Restfull = () => {
     resolver: yupResolver(schemaRestFull),
     mode: 'onChange',
   });
-  const [headers, setHeaders] = useState<IHeader[]>([]);
   const [status, setStatus] = useState<string>();
   const [textResponse, setTextResponse] = useState<string>();
   const [lang, setLang] = useState('text');
@@ -55,13 +52,13 @@ const Restfull = () => {
 
       const options: RequestInit = {
         method,
-        headers: headers.reduce(
-          (acc, { key, value }) => {
-            if (key) acc[key] = value;
-            return acc;
-          },
-          {} as Record<string, string>,
-        ),
+        // headers: headers.reduce(
+        //   (acc, { key, value }) => {
+        //     if (key) acc[key] = value;
+        //     return acc;
+        //   },
+        //   {} as Record<string, string>,
+        // ),
         body:
           method !== 'GET' && parsedBody
             ? JSON.stringify(parsedBody)
@@ -154,13 +151,7 @@ const Restfull = () => {
                 </Grid>
               </Grid>
 
-              <HeadersRestfull
-                headers={headers}
-                setHeaders={setHeaders}
-                setValue={setValue}
-                setError={setError}
-                errors={errors}
-              />
+              <HeadersRestfull control={control} errors={errors} />
 
               <Box mt={3}>
                 <Typography variant='subtitle1'>Body:</Typography>
