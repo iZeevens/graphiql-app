@@ -8,19 +8,21 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
+import { Controller } from 'react-hook-form';
+
 import { ICodePreviewProps } from '@/types/codeMirrorType';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { linter } from '@codemirror/lint';
 import CodeMirror from '@uiw/react-codemirror';
 import { basicSetup } from 'codemirror';
 
-const CodePreview: React.FC<ICodePreviewProps> = ({
+const CodePreview = ({
   body,
-  onChange,
+  control,
   lang,
   onLang,
   readonly,
-}) => {
+}: ICodePreviewProps) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
     if (onLang) onLang(event.target.value);
     console.log(event.target.value);
@@ -47,13 +49,23 @@ const CodePreview: React.FC<ICodePreviewProps> = ({
         </FormControl>
       )}
 
-      <CodeMirror
-        value={body ?? ''}
-        onChange={onChange}
-        extensions={
-          lang === 'json' ? [json(), linter(jsonParseLinter())] : [basicSetup]
-        }
-        editable={!readonly}
+      <Controller
+        name='body'
+        control={control}
+        render={({ field: { onChange, onBlur, ref } }) => (
+          <CodeMirror
+            value={body ?? ''}
+            onChange={onChange}
+            onBlur={onBlur}
+            ref={ref}
+            extensions={
+              lang === 'json'
+                ? [json(), linter(jsonParseLinter())]
+                : [basicSetup]
+            }
+            editable={!readonly}
+          />
+        )}
       />
     </>
   );

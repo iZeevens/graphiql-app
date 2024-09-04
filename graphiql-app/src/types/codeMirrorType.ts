@@ -1,6 +1,10 @@
+import { Control } from 'react-hook-form';
+
+import { IRestFullFormData } from '@/types/formsType';
+
 interface ICodePreviewProps {
   body?: string;
-  onChange?: (value: string) => void;
+  control?: Control<IRestFullFormData>;
   lang?: string;
   onLang?: (value: string) => void;
   readonly?: boolean;

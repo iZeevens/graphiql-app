@@ -31,6 +31,7 @@ const Restfull = () => {
   const {
     register,
     handleSubmit,
+    control,
     getValues,
     setValue,
     setError,
@@ -165,10 +166,7 @@ const Restfull = () => {
                 <Typography variant='subtitle1'>Body:</Typography>
                 <CodePreview
                   body={getValues('body')}
-                  onChange={value => {
-                    setError('body', { message: '' });
-                    setValue('body', value);
-                  }}
+                  control={control}
                   onLang={setLang}
                   lang={lang}
                 />
