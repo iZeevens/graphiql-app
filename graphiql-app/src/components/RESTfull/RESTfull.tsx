@@ -44,7 +44,7 @@ const Restfull = () => {
   const [lang, setLang] = useState('text');
 
   const onSumbit: SubmitHandler<IRestFullFormData> = async data => {
-    const { url, method, body } = data;
+    const { url, method, body, headers } = data;
 
     try {
       const parsedBody =
@@ -52,13 +52,13 @@ const Restfull = () => {
 
       const options: RequestInit = {
         method,
-        // headers: headers.reduce(
-        //   (acc, { key, value }) => {
-        //     if (key) acc[key] = value;
-        //     return acc;
-        //   },
-        //   {} as Record<string, string>,
-        // ),
+        headers: headers?.reduce(
+          (acc, { key, value }) => {
+            if (key) acc[key] = value;
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
         body:
           method !== 'GET' && parsedBody
             ? JSON.stringify(parsedBody)
