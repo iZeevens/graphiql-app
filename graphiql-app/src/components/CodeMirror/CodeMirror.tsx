@@ -25,7 +25,6 @@ const CodePreview = ({
 }: ICodePreviewProps) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
     if (onLang) onLang(event.target.value);
-    console.log(event.target.value);
   };
 
   return (
@@ -49,24 +48,35 @@ const CodePreview = ({
         </FormControl>
       )}
 
-      <Controller
-        name='body'
-        control={control}
-        render={({ field: { onChange, onBlur, ref } }) => (
-          <CodeMirror
-            value={body ?? ''}
-            onChange={onChange}
-            onBlur={onBlur}
-            ref={ref}
-            extensions={
-              lang === 'json'
-                ? [json(), linter(jsonParseLinter())]
-                : [basicSetup]
-            }
-            editable={!readonly}
-          />
-        )}
-      />
+      {control ? (
+        <Controller
+          name='body'
+          control={control}
+          render={({ field: { onChange, onBlur, ref } }) => (
+            <CodeMirror
+              value={body ?? ''}
+              onChange={onChange}
+              onBlur={onBlur}
+              ref={ref}
+              extensions={
+                lang === 'json'
+                  ? [json(), linter(jsonParseLinter())]
+                  : [basicSetup]
+              }
+              editable={!readonly}
+            />
+          )}
+        />
+      ) : (
+        <CodeMirror
+          value={body ?? ''}
+          onChange={value => console.log(value)}
+          extensions={
+            lang === 'json' ? [json(), linter(jsonParseLinter())] : [basicSetup]
+          }
+          editable={!readonly}
+        />
+      )}
     </>
   );
 };
