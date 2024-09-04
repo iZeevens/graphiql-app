@@ -21,5 +21,9 @@
     "rest": "REST Client",
     "graphiql": "GraphiQL Client",
     "history": "History"
+  },
+  "notFound": {
+    "message": "Oops! The page you are looking for does not exist...",
+    "button": "Return Home"
   }
 }
