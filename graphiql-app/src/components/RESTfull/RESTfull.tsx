@@ -20,6 +20,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IRestFullFormData } from '@/types/restFullType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
 import HeadersRestfull from './components/HeadersRESTfull';
@@ -42,6 +43,7 @@ const Restfull = () => {
   const [status, setStatus] = useState<string>();
   const [textResponse, setTextResponse] = useState<string>();
   const [lang, setLang] = useState('text');
+  const pathname = usePathname();
 
   const urlChanged = () => {
     const { url, body, method, headers } = getValues();
@@ -57,7 +59,7 @@ const Restfull = () => {
       )
       .join('&');
 
-    let newUrl = '';
+    let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
 
     if (method) {
       newUrl += `/${method}`;
