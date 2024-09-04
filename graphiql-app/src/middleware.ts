@@ -2,9 +2,10 @@ import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const i18nMiddleware = createMiddleware({
-  locales: ['en', 'ru'],
-  defaultLocale: 'en',
+import { routing } from './i18n/routing';
+
+const i18nMiddleware = createMiddleware(routing, {
+  localeDetection: false,
 });
 
 export function middleware(req: NextRequest) {
@@ -26,5 +27,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/ru/:path*', '/en/:path*', '/'],
+  matcher: ['/ru/:path*', '/en/:path*', '/', '/((?!_next|_vercel|./..).*)'],
 };
