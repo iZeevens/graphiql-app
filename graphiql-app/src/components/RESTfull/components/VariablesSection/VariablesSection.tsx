@@ -12,13 +12,14 @@ const VariablesSection = ({ control }: IVariablesFormData) => {
     name: 'variables',
   });
 
-  const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState(true);
 
   return (
     <>
       <Button
         variant='contained'
         color='primary'
+        sx={{ mt: '10px' }}
         onClick={() => setHide(prev => !prev)}
       >
         {hide ? 'Show' : 'Hide'}
@@ -26,15 +27,16 @@ const VariablesSection = ({ control }: IVariablesFormData) => {
       {!hide && (
         <>
           {fields.map((varibale, index) => (
-            <Box mt={2} key={varibale.id}>
+            <Box key={varibale.id}>
               <IoMdClose onClick={() => remove(index)} />
-              <TextField {...varibale} label='name' />
+              <TextField {...varibale} label='name' sx={{ mr: '10px' }} />
               <TextField {...varibale} label='value' />
             </Box>
           ))}
           <Button
             variant='contained'
             color='primary'
+            sx={{ mt: '10px' }}
             onClick={() => append({ name: '', value: '' })}
           >
             Add variables
