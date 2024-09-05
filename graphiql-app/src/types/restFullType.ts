@@ -5,10 +5,16 @@ interface IHeader {
   value: string;
 }
 
+interface IVariables {
+  name: string;
+  value: string;
+}
+
 interface IRestFullFormData {
   method: string;
   url: string;
   headers?: IHeader[];
+  variables?: IVariables[];
   body?: string;
 }
 
@@ -18,4 +24,13 @@ interface IHeadersRestfull {
   errors: FieldErrors<IRestFullFormData>;
 }
 
-export type { IRestFullFormData, IHeadersRestfull, IHeader };
+interface IVariablesFormData {
+  control: Control<IRestFullFormData>;
+}
+
+export type {
+  IRestFullFormData,
+  IHeadersRestfull,
+  IVariablesFormData,
+  IHeader,
+};

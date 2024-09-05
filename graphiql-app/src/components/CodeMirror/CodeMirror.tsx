@@ -16,6 +16,8 @@ import { linter } from '@codemirror/lint';
 import CodeMirror from '@uiw/react-codemirror';
 import { basicSetup } from 'codemirror';
 
+import VariablesSection from '../RESTfull/components/VariablesSection/VariablesSection';
+
 const CodePreview = ({
   body,
   control,
@@ -30,9 +32,7 @@ const CodePreview = ({
 
   return (
     <>
-      {readonly ? (
-        ''
-      ) : (
+      {!readonly && (
         <FormControl fullWidth sx={{ width: '20%', marginBottom: '10px' }}>
           <InputLabel id='lang-label'>Language</InputLabel>
           <Select
@@ -82,6 +82,7 @@ const CodePreview = ({
           editable={!readonly}
         />
       )}
+      {control && <VariablesSection control={control} />}
     </>
   );
 };
