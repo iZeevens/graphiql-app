@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IRestFullFormData, IVariables } from '@/types/restFullType';
@@ -54,6 +54,10 @@ const Restfull = () => {
     return interpolatedBody;
   };
 
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
   const urlChanged = () => {
     const { url, body, method, headers } = getValues();
 
@@ -70,6 +74,7 @@ const Restfull = () => {
 
     let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
 
+    // Refactoring
     if (method) {
       newUrl += `/${method}`;
     }
@@ -118,13 +123,17 @@ const Restfull = () => {
         setResponse(JSON.stringify(dataJson, null, 2));
       } catch (err) {
         if (err instanceof Error) {
-          setError('root', { message: err.message });
+          setError('root.responseError', {
+            type: 'custom',
+            message:
+              'An error occurred while sending data, check the data, please try again',
+          });
         }
       }
       reset();
     } catch (err) {
-      if (err instanceof SyntaxError) {
-        setError('body', { message: err.message });
+      if (err instanceof Error) {
+        setError('body', { message: 'An error occurred, please try again' });
       }
     }
   };
@@ -211,6 +220,7 @@ const Restfull = () => {
                   urlChanged={urlChanged}
                 />
                 <span className={styles.error}>{errors.body?.message}</span>
+                {/* <span className={styles.error}>{errors.root?.message}</span> */}
               </Box>
             </CardContent>
           </Card>

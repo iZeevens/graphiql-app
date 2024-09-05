@@ -27,20 +27,30 @@ const VariablesSection = ({ control }: IVariablesFormData) => {
       {!hide && (
         <>
           {fields.map((variable, index) => (
-            <Box key={variable.id}>
+            <Box
+              key={variable.id}
+              mt={2}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                justifyContent: 'space-between',
+              }}
+            >
               <IoMdClose onClick={() => remove(index)} />
+
               <Controller
                 name={`variables.${index}.name`}
                 control={control}
                 render={({ field }) => (
-                  <TextField {...field} label='name' sx={{ mr: '10px' }} />
+                  <TextField {...field} fullWidth label='Name' sx={{ mb: 2 }} />
                 )}
               />
               <Controller
                 name={`variables.${index}.value`}
                 control={control}
                 render={({ field }) => (
-                  <TextField {...field} label='value' sx={{ mr: '10px' }} />
+                  <TextField {...field} fullWidth label='Value' />
                 )}
               />
             </Box>

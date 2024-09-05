@@ -28,7 +28,16 @@ const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
       </Box>
 
       {fields.map((header, index) => (
-        <Box mt={2} key={header.id}>
+        <Box
+          mt={2}
+          key={header.id}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+          }}
+        >
           <IoMdClose onClick={() => remove(index)} />
           <Controller
             name={`headers.${index}.key`}
