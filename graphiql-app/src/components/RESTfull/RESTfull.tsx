@@ -17,7 +17,7 @@ import {
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { IRestFullFormData } from '@/types/restFullType';
+import { IRestFullFormData, IVariables } from '@/types/restFullType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname } from 'next/navigation';
@@ -44,6 +44,15 @@ const Restfull = () => {
   const [response, setResponse] = useState<string>();
   const [lang, setLang] = useState('text');
   const pathname = usePathname();
+
+  const interpolateVariables = (body: string, variables: IVariables[]) => {
+    let interpolatedBody = body;
+    variables.forEach(({ name, value }) => {
+      const regex = new RegExp(`{{${name}}}`, 'g');
+      interpolatedBody = interpolatedBody.replace(regex, value);
+    });
+    return interpolatedBody;
+  };
 
   const urlChanged = () => {
     const { url, body, method, headers } = getValues();
@@ -78,11 +87,13 @@ const Restfull = () => {
   };
 
   const onSumbit: SubmitHandler<IRestFullFormData> = async data => {
-    const { url, method, body, headers } = data;
+    const { url, method, body, headers, variables } = data;
 
     try {
+      const finalBody =
+        variables && body ? interpolateVariables(body, variables) : '';
       const parsedBody =
-        lang === 'json' && body ? (JSON.parse(body) as object) : body;
+        lang === 'json' && body ? (JSON.parse(finalBody) as object) : body;
 
       const options: RequestInit = {
         method,

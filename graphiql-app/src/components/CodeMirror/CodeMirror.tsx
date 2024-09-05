@@ -82,7 +82,7 @@ const CodePreview = ({
           editable={!readonly}
         />
       )}
-      {control && <VariablesSection control={control} />}
+      {control && lang === 'json' && <VariablesSection control={control} />}
     </>
   );
 };
