@@ -23,9 +23,7 @@ const VariablesSection = ({ control }: IVariablesFormData) => {
       >
         {hide ? 'Show' : 'Hide'}
       </Button>
-      {hide ? (
-        ''
-      ) : (
+      {!hide && (
         <>
           {fields.map((varibale, index) => (
             <Box mt={2} key={varibale.id}>
