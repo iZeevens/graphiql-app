@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IRestFullFormData, IVariables } from '@/types/restFullType';
@@ -54,11 +54,9 @@ const Restfull = () => {
     return interpolatedBody;
   };
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
   const urlChanged = () => {
+    setError('body', { message: '' });
+
     const { url, body, method, headers } = getValues();
 
     const encodedUrl = btoa(url);
@@ -121,16 +119,15 @@ const Restfull = () => {
 
         setStatus(String(response.status));
         setResponse(JSON.stringify(dataJson, null, 2));
+        reset();
       } catch (err) {
         if (err instanceof Error) {
-          setError('root.responseError', {
-            type: 'custom',
+          setError('body', {
             message:
               'An error occurred while sending data, check the data, please try again',
           });
         }
       }
-      reset();
     } catch (err) {
       if (err instanceof Error) {
         setError('body', { message: 'An error occurred, please try again' });
@@ -220,7 +217,6 @@ const Restfull = () => {
                   urlChanged={urlChanged}
                 />
                 <span className={styles.error}>{errors.body?.message}</span>
-                {/* <span className={styles.error}>{errors.root?.message}</span> */}
               </Box>
             </CardContent>
           </Card>
