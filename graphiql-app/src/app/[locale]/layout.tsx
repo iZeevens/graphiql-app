@@ -2,14 +2,13 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
+import '@/app/globals.scss';
 import Footer from '@/components/footer/footer';
 import Header from '@/components/header/header';
 import { theme } from '@/theme';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-
-import './globals.css';
 
 export const metadata: Metadata = {
   title: 'GraphiQL App',

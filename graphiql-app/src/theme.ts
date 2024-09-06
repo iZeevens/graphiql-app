@@ -55,6 +55,25 @@ export const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+        size: 'small',
+      },
+      styleOverrides: {
+        root: {
+          backgroundColor: '#FF3C82',
+          transition: 'opacity 0.3s',
+          padding: '4px 16px',
+          '@media (any-hover: hover)': {
+            '&:hover': {
+              backgroundColor: '#FF3C82',
+              opacity: 0.8,
+            },
+          },
+        },
+      },
+    },
   },
 
   typography: {
