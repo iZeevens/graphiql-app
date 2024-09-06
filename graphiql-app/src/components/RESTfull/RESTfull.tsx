@@ -59,6 +59,7 @@ const Restfull = () => {
 
     const { url, body, method, headers } = getValues();
 
+    let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
     const encodedUrl = btoa(url);
     const encodedBody = body ? btoa(JSON.stringify(body)) : '';
 
@@ -70,9 +71,6 @@ const Restfull = () => {
       )
       .join('&');
 
-    let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
-
-    // Refactoring
     if (method) {
       newUrl += `/${method}`;
     }
