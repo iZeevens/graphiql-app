@@ -1,9 +1,7 @@
 {
-  "headerBtns": {
-    "signIn": "Sign In",
-    "signUp": "Sign Up"
-  },
-  "signOutBtn": {
+  "header": {
+    "signInBtn": "Sign In",
+    "signUpBtn": "Sign Up",
     "signOutBtn": "Sign Out"
   },
   "signUp": {

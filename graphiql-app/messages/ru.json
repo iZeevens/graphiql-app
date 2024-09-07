@@ -1,7 +1,8 @@
 {
-  "headerBtns": {
-    "signIn": "Вход",
-    "signUp": "Регистрация"
+  "header": {
+    "signInBtn": "Вход",
+    "signUpBtn": "Регистрация",
+    "signOutBtn": "Выход"
   },
   "signOutBtn": {
     "signOutBtn": "Выход"
