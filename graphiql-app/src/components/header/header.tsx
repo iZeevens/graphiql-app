@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import LanguageToggler from '@/components/header/components/LanguageToggler/LanguageToggler';
-import LogoBlock from '@/components/header/components/LogoBlock/LogoBlock';
+import { Logo } from '@/components/header/components/Logo/Logo';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { theme } from '@/theme';
 import { useTranslations } from 'next-intl';
@@ -37,14 +37,14 @@ const Header = () => {
         boxShadow: !trigger ? 'none' : '',
       }}
     >
-      <Container className={styles.container}>
+      <Container className={styles.header__container}>
         <Stack
           direction='row'
           justifyContent='space-between'
           alignItems='center'
         >
-          <Link href={useLocalizedPath('/')}>
-            <LogoBlock />
+          <Link href={useLocalizedPath('/')} className={styles.header__logo}>
+            <Logo />
           </Link>
           <LanguageToggler />
           {/* <BurgerMenu /> */}

@@ -1,7 +1,4 @@
 {
-  "logo": {
-    "logo": "Лого"
-  },
   "headerBtns": {
     "signIn": "Вход",
     "signUp": "Регистрация"
