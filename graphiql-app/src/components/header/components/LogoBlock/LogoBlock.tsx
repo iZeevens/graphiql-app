@@ -11,7 +11,7 @@ const LogoBlock = () => {
   return (
     <Stack direction='row' className={styles.logo}>
       <Logo />
-      <Typography variant='h2'>{t('logo')}</Typography>
+      <Typography variant='h3'>{t('logo')}</Typography>
     </Stack>
   );
 };

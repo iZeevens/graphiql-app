@@ -13,9 +13,7 @@ export function ProjectInfo() {
   return (
     <Box className={styles.projectInfo} component='section'>
       <Container>
-        <Typography className={styles.projectInfo__title} variant='h2'>
-          {t('title')}
-        </Typography>
+        <Typography variant='h2'>{t('title')}</Typography>
         {infoLines.map((line, index) => (
           <Typography
             className={styles.projectInfo__text}

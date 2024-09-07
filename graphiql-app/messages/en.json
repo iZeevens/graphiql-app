@@ -24,10 +24,10 @@
   },
   "footer": {
     "copyright": "© 2024 You've reached the end! Extra points for you!",
+    "joinCommunity": "Join our community",
     "Denis": "Denis",
     "Kirill": "Kirill",
-    "Nastia": "Nastia",
-    "joinCommunity": "Join our community"
+    "Nastia": "Nastia"
   },
   "greeting": {
     "greetingAuth": "Welcome back,",
@@ -43,8 +43,17 @@
     "message": "Oops! The page you are looking for does not exist...",
     "button": "Return Home"
   },
-    "projectInfo": {
-      "title": "Project: What and Why",
-      "info":  "We are pleased to introduce a powerful and user-friendly application that combines the functionalities of Postman and GraphiQL. This tool is designed for developers who need flexible and easy-to-use resources for working with APIs.\n\nWith our application, you can effortlessly send requests to RESTful and GraphQL APIs, select methods, configure headers, and instantly view responses.\n\nThe built-in request history will help you revisit and manage previously executed operations.\n\nAccess to the application is secured with authorization and authentication, ensuring a safe working environment.\n\nUse our application to streamline your API work and make the process more convenient and efficient!"
-    }
+  "projectInfo": {
+    "title": "Project: What and Why",
+    "info":  "We are pleased to introduce a powerful and user-friendly application that combines the functionalities of Postman and GraphiQL. This tool is designed for developers who need flexible and easy-to-use resources for working with APIs.\n\nWith our application, you can effortlessly send requests to RESTful and GraphQL APIs, select methods, configure headers, and instantly view responses.\n\nThe built-in request history will help you revisit and manage previously executed operations.\n\nAccess to the application is secured with authorization and authentication, ensuring a safe working environment.\n\nUse our application to streamline your API work and make the process more convenient and efficient!"
+  },
+  "team": {
+    "title": "Our Team",
+    "Denis": "Denis",
+    "Kirill": "Kirill",
+    "Nastia": "Nastia",
+    "KirillDesc": "Experienced developer focused on creating efficient web applications. Confidently tackles complex problems and helps streamline team processes",
+    "DenisDesc": "Creative engineer with deep knowledge of modern technologies. Capable of finding innovative solutions and enhancing user experience",
+    "NastiaDesc": "Frontend specialist with a great sense of design and attention to detail. Creates intuitive interfaces and enhances user interactions"
+  }
 }

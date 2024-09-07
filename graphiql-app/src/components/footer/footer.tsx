@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 
 import GitHub from '@/components/UI/icons/GitHub';
 import RSSchool from '@/components/UI/icons/RSSchool';
-import { developers } from '@/components/footer/developers';
 import { getGithubName } from '@/components/footer/getGithubName';
+import { TEAM } from '@/constants/TEAM';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
@@ -20,20 +20,20 @@ const Footer = () => {
     <Box component='footer' className={styles.footer}>
       <Container className={styles.footer__container}>
         <List className={styles.footer__list}>
-          {developers.map(developer => (
-            <ListItem className={styles.footer__item} key={developer.name}>
+          {TEAM.map(teamMember => (
+            <ListItem className={styles.footer__item} key={teamMember.name}>
               <Typography className={styles.footer__title}>
-                {t(developer.name)}
+                {t(teamMember.name)}
               </Typography>
               <Link
                 className={styles.footer__link}
-                href={developer.github}
+                href={teamMember.github}
                 target='_blank'
               >
                 <ListItemIcon className={styles.footer__icon}>
                   <GitHub />
                 </ListItemIcon>
-                {getGithubName(developer.github)}
+                {getGithubName(teamMember.github)}
               </Link>
             </ListItem>
           ))}

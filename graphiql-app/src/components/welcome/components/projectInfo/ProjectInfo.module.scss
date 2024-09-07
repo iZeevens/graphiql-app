@@ -9,15 +9,6 @@
     padding: 1rem 0;
   }
 
-  & &__title {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-
-    @media(max-width: 768px) {
-      margin-bottom: 1rem;
-    }
-  }
-
   & &__text {
     margin-left: 40px;
     margin-bottom: 30px;
