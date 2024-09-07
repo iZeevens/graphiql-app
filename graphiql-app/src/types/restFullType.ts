@@ -1,5 +1,7 @@
 import { Control, FieldErrors } from 'react-hook-form';
 
+import { IGraphiQlFormData } from './graphiQlType';
+
 interface IHeader {
   key: string;
   value: string;
@@ -10,6 +12,11 @@ interface IVariables {
   value: string;
 }
 
+type ControlType = Control<IRestFullFormData> | Control<IGraphiQlFormData>;
+type FieldType =
+  | FieldErrors<IRestFullFormData>
+  | FieldErrors<IGraphiQlFormData>;
+
 interface IRestFullFormData {
   method: string;
   url: string;
@@ -19,13 +26,13 @@ interface IRestFullFormData {
 }
 
 interface IHeadersRestfull {
-  control: Control<IRestFullFormData>;
-  urlChanged: () => void;
-  errors: FieldErrors<IRestFullFormData>;
+  control: ControlType;
+  urlChanged?: () => void;
+  errors: FieldType;
 }
 
 interface IVariablesFormData {
-  control: Control<IRestFullFormData>;
+  control: ControlType;
 }
 
 export type {

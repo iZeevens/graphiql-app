@@ -5,8 +5,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphiQlType';
 
+import HeadersRestfull from '../RESTfull/components/HeadersRESTfull/HeadersRESTfull';
+
 const GraphQl = () => {
-  const { register, handleSubmit } = useForm<IGraphiQlFormData>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IGraphiQlFormData>({
     mode: 'onChange',
   });
 
@@ -40,6 +47,8 @@ const GraphQl = () => {
                   {...register('sdlUrl')}
                 />
               </Grid>
+
+              <HeadersRestfull control={control} errors={errors} />
               {/* Headers RESTFULL & CodeMirror & variables  will be here */}
 
               <Grid item>

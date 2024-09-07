@@ -51,7 +51,9 @@ const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
                 sx={{ mb: 2 }}
                 onBlur={() => {
                   field.onBlur();
-                  urlChanged();
+                  if (urlChanged) {
+                    urlChanged();
+                  }
                 }}
               />
             )}
@@ -68,7 +70,9 @@ const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
                 sx={{ mb: 2 }}
                 onBlur={() => {
                   field.onBlur();
-                  urlChanged();
+                  if (urlChanged) {
+                    urlChanged();
+                  }
                 }}
               />
             )}
