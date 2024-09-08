@@ -1,0 +1,11 @@
+.graphiql-client {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.graphiql-client__url-container {
+  flex-direction: column !important;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+}

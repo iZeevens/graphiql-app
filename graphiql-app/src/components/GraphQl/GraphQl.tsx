@@ -1,14 +1,23 @@
 'use client';
 
-import { Box, Button, Card, Grid, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
 
-// import styles from '@/components/GraphQl/GraphQl.module.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
 
 import HeadersRestfull from '../Headers/Headers';
 import VariablesSection from '../Variables/Variables';
+
+import styles from '@/components/GraphQl/GraphQl.module.scss';
 
 const GraphQl = () => {
   const {
@@ -25,42 +34,49 @@ const GraphQl = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3 }} className={styles['graphiql-client']}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Card component='form' onSubmit={handleSubmit(onSubmit)}>
-            <Typography variant='h6' gutterBottom>
-              GraphQl Client
-            </Typography>
+            <CardContent>
+              <Typography variant='h6' gutterBottom>
+                GraphQl Client
+              </Typography>
 
-            <Grid container>
-              <Grid item>
-                <TextField
-                  label='Endpoint URL'
-                  fullWidth
-                  variant='outlined'
-                  {...register('url')}
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  label='SDL URL'
-                  fullWidth
-                  variant='outlined'
-                  {...register('sdlUrl')}
-                />
-              </Grid>
+              <Grid
+                container
+                className={styles['graphiql-client__url-container']}
+              >
+                <Grid item>
+                  <TextField
+                    label='Endpoint URL'
+                    fullWidth
+                    variant='outlined'
+                    {...register('url')}
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    label='SDL URL'
+                    fullWidth
+                    variant='outlined'
+                    {...register('sdlUrl')}
+                  />
+                </Grid>
 
-              <HeadersRestfull control={control} errors={errors} />
-              <VariablesSection control={control} />
-              {/* Headers RESTFULL & CodeMirror & variables  will be here */}
+                <HeadersRestfull control={control} errors={errors} />
 
-              <Grid item>
-                <Button variant='contained' color='primary' type='submit'>
-                  Send Request
-                </Button>
+                <VariablesSection control={control} />
+
+                {/* CodeMirror will be here */}
+
+                <Grid item>
+                  <Button variant='contained' color='primary' type='submit'>
+                    Send Request
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
+            </CardContent>
           </Card>
         </Grid>
       </Grid>
