@@ -2,8 +2,8 @@
 
 import Container from '@mui/material/Container';
 
+import { BaseInfo } from '@/components/welcome/components/baseInfo/BaseInfo';
 import Greeting from '@/components/welcome/components/greeting/Greeting';
-import { ProjectInfo } from '@/components/welcome/components/projectInfo/ProjectInfo';
 import { Team } from '@/components/welcome/components/team/Team';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -17,8 +17,9 @@ export function Welcome() {
       ) : (
         <Greeting user={user} />
       )}
-      <ProjectInfo />
+      <BaseInfo translations='projectInfo' theme='dark' />
       <Team />
+      <BaseInfo translations='courseInfo' theme='light' />
     </>
   );
 }

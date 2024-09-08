@@ -50,5 +50,9 @@
     "KirillDesc": "Experienced developer focused on creating efficient web applications. Confidently tackles complex problems and helps streamline team processes",
     "DenisDesc": "Creative engineer with deep knowledge of modern technologies. Capable of finding innovative solutions and enhancing user experience",
     "NastiaDesc": "Frontend specialist with a great sense of design and attention to detail. Creates intuitive interfaces and enhances user interactions"
+  },
+  "courseInfo": {
+    "title": "RS School: React Course",
+    "info": "The NFS application is the final group project of the React course offered by RS School.\n\nThis course is designed for individuals who have completed Stage #2 of RS School and for new participants with solid skills in JavaScript, TypeScript, Git, and other key technologies.\n\nThe course covers a wide range of topics, from the basics of web development using HTML5, CSS3, and JavaScript to working with tools like Git, Webpack, Chrome DevTools, and Figma. It also includes principles of working with REST APIs and modern approaches to development using React.\n\nAll course materials are available on YouTube and GitHub, providing open access to learning. RS School offers free education, allowing anyone to share their knowledge and experience.\n\nUpon successful completion of the course and all assignments, including the final project, an electronic certificate is awarded, recognizing the skills and knowledge gained."
   }
 }

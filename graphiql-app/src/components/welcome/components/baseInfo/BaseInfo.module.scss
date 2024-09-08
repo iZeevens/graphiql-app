@@ -1,9 +1,7 @@
 @import '@/styles/variables.scss';
 
-.projectInfo {
+.info {
   padding: 2rem 0;
-  background-color: $primary-color;
-  color: $light-color;
 
   @media(max-width: 768px) {
     padding: 1rem 0;
@@ -38,6 +36,15 @@
         display: none;
       }
     }
+  }
 
+  &.dark {
+    background-color: $primary-color;
+    color: $light-color;
+  }
+
+  &.light {
+    background-color: $light-color;
+    color: $primary-color;
   }
 }
