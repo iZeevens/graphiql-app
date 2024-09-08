@@ -1,16 +1,27 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 
-import { Controller, useFieldArray } from 'react-hook-form';
+import {
+  ArrayPath,
+  Controller,
+  FieldArray,
+  FieldValues,
+  Path,
+  useFieldArray,
+} from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 
-import { IHeadersRestfull } from '@/types/restFullType';
+import { IHeadersFormData } from '@/types/restFulgraphQlType';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
-const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
-  const { fields, append, remove } = useFieldArray({
+const HeadersRestfull = <T extends FieldValues>({
+  control,
+  urlChanged,
+  errors,
+}: IHeadersFormData<T>) => {
+  const { fields, append, remove } = useFieldArray<T>({
     control,
-    name: 'headers',
+    name: 'headers' as ArrayPath<T>,
   });
 
   return (
@@ -20,11 +31,17 @@ const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
         <Button
           variant='contained'
           color='primary'
-          onClick={() => append({ key: '', value: '' })}
+          onClick={() =>
+            append({ key: '', value: '' } as
+              | FieldArray<T, ArrayPath<T>>
+              | FieldArray<T, ArrayPath<T>>[])
+          }
         >
           Add Header
         </Button>
-        <span className={styles.error}>{errors.headers?.message}</span>
+        <span className={styles.error}>
+          {errors.headers?.message ? String(errors.headers?.message) : ''}
+        </span>
       </Box>
 
       {fields.map((header, index) => (
@@ -40,7 +57,7 @@ const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
         >
           <IoMdClose onClick={() => remove(index)} />
           <Controller
-            name={`headers.${index}.key`}
+            name={`headers.${index}.key` as Path<T>}
             control={control}
             render={({ field }) => (
               <TextField
@@ -59,7 +76,7 @@ const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
             )}
           />
           <Controller
-            name={`headers.${index}.value`}
+            name={`headers.${index}.value` as Path<T>}
             control={control}
             render={({ field }) => (
               <TextField

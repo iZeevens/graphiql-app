@@ -17,13 +17,13 @@ import {
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { IRestFullFormData, IVariables } from '@/types/restFullType';
+import { IRestFullFormData, IVariables } from '@/types/restFulgraphQlType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
-import HeadersRestfull from './components/HeadersRESTfull/HeadersRESTfull';
+import HeadersRestfull from '../Headers/Headers';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 

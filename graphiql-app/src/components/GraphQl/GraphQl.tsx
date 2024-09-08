@@ -1,11 +1,13 @@
+'use client';
+
 import { Box, Button, Card, Grid, TextField, Typography } from '@mui/material';
 
 // import styles from '@/components/GraphQl/GraphQl.module.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { IGraphiQlFormData } from '@/types/graphiQlType';
+import { IGraphiQlFormData } from '@/types/graphQlType';
 
-import HeadersRestfull from '../RESTfull/components/HeadersRESTfull/HeadersRESTfull';
+import HeadersRestfull from '../Headers/Headers';
 
 const GraphQl = () => {
   const {
