@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IGraphiQlFormData } from '@/types/graphQlType';
 
 import HeadersRestfull from '../Headers/Headers';
+import VariablesSection from '../Variables/Variables';
 
 const GraphQl = () => {
   const {
@@ -51,6 +52,7 @@ const GraphQl = () => {
               </Grid>
 
               <HeadersRestfull control={control} errors={errors} />
+              <VariablesSection control={control} />
               {/* Headers RESTFULL & CodeMirror & variables  will be here */}
 
               <Grid item>

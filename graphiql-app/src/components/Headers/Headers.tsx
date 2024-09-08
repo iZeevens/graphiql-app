@@ -14,7 +14,7 @@ import { IHeadersFormData } from '@/types/restFulgraphQlType';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
-const HeadersRestfull = <T extends FieldValues>({
+const HeadersSection = <T extends FieldValues>({
   control,
   urlChanged,
   errors,
@@ -100,4 +100,4 @@ const HeadersRestfull = <T extends FieldValues>({
   );
 };
 
-export default HeadersRestfull;
+export default HeadersSection;
