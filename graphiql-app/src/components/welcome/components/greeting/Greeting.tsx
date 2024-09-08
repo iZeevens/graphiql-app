@@ -3,19 +3,19 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { BACKGROUND_COLORS } from '@/components/greeting/backgroundColors';
-import GreetingLink from '@/components/greeting/components/GreetingLink/GreetingLink';
-import { formatName } from '@/components/greeting/formatName';
+import GreetingLink from '@/components/welcome/components/greeting/GreetingLink';
+import { BACKGROUND_COLORS } from '@/components/welcome/components/greeting/backgroundColors';
+import { formatName } from '@/components/welcome/components/greeting/formatName';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath';
 import { User } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 
-import styles from '@/components/greeting/Greeting.module.scss';
+import styles from '@/components/welcome/components/greeting/Greeting.module.scss';
 
 const Greeting = ({ user }: { user: User | null }) => {
-  const t = useTranslations('main');
+  const t = useTranslations('greeting');
   return (
-    <Container>
+    <Container component='section'>
       <Stack
         component='section'
         className={`${styles.greeting} ${styles.greeting__wrapper}`}

@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 
 import Link from 'next/link';
 
-import styles from '@/components/greeting/components/GreetingLink/GreetingLink.module.scss';
+import styles from '@/components/welcome/components/greeting/GreetingLink.module.scss';
 
 interface GreetingLinkProps {
   text: string;

@@ -1,9 +1,13 @@
-interface IDeveloper {
+export interface ITeamMember {
   name: string;
   github: string;
 }
 
-export const developers: IDeveloper[] = [
+export const TEAM: ITeamMember[] = [
+  {
+    name: 'Nastia',
+    github: 'https://github.com/kovalkl',
+  },
   {
     name: 'Denis',
     github: 'https://github.com/maybe-skiff',
@@ -11,9 +15,5 @@ export const developers: IDeveloper[] = [
   {
     name: 'Kirill',
     github: 'https://github.com/izeevens',
-  },
-  {
-    name: 'Nastia',
-    github: 'https://github.com/kovalkl',
   },
 ];
