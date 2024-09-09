@@ -79,6 +79,27 @@ const GraphQl = () => {
             </CardContent>
           </Card>
         </Grid>
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant='h6' gutterBottom>
+                Response
+              </Typography>
+
+              <TextField
+                label='Status'
+                fullWidth
+                variant='outlined'
+                sx={{ mb: 3 }}
+                InputProps={{
+                  readOnly: true,
+                }}
+                // value={status ?? ''}
+              />
+              {/* <CodePreview body={response} readonly /> */}
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Box>
   );
