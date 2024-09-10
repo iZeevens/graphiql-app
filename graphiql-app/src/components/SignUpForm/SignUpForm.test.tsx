@@ -39,7 +39,6 @@ jest.mock('next-intl', () => ({
 describe('Sign Up form tests', () => {
   test('sign up form should be have title', () => {
     render(<SignUpForm />);
-    // expect(screen.getAllByText('Sign Up')).toBeInTheDocument();
     expect(screen.getByRole('heading')).toHaveTextContent('Sign Up');
   });
 });
