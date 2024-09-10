@@ -3,6 +3,12 @@
   margin: 0 auto;
 }
 
+.graphiql-query-contriner {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
 .graphiql-client__url-container {
   flex-direction: column !important;
   align-items: flex-start;

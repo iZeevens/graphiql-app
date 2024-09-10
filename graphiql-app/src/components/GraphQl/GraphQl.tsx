@@ -74,7 +74,7 @@ const GraphQl = () => {
                 <HeadersRestfull control={control} errors={errors} />
                 <VariablesSection control={control} />
 
-                <Grid item>
+                <Grid item className={styles['graphiql-query-contriner']}>
                   <GraphiQLProvider fetcher={fetcher}>
                     <DocExplorer />
                     <QueryEditor />
