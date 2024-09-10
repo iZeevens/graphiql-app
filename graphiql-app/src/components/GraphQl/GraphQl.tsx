@@ -32,6 +32,7 @@ const GraphQl = () => {
   const {
     register,
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<IGraphiQlFormData>({
@@ -103,9 +104,11 @@ const GraphQl = () => {
                         <DocExplorer />
                       </div>
                       <span>Query Editor:</span>
-                      <QueryEditor />
+                      <QueryEditor onEdit={value => setValue('query', value)} />
                       <span>Variable Editor:</span>
-                      <VariableEditor />
+                      <VariableEditor
+                        onEdit={value => setValue('variables', value)}
+                      />
                     </div>
                   </GraphiQLProvider>
                 </Grid>

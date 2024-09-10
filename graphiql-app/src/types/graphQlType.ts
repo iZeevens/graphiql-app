@@ -1,11 +1,11 @@
-import { IHeader, IVariables } from './restFulgraphQlType';
+import { IHeader } from './restFulgraphQlType';
 
 interface IGraphiQlFormData {
   url: string;
   sdlUrl: string;
-  headers: IHeader[];
-  query?: string;
-  variables: IVariables[];
+  headers?: IHeader[];
+  query: string;
+  variables?: string;
 }
 
 export type { IGraphiQlFormData };
