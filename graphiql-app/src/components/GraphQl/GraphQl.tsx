@@ -13,12 +13,16 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
-import { DocExplorer, GraphiQLProvider, QueryEditor } from '@graphiql/react';
+import {
+  DocExplorer,
+  GraphiQLProvider,
+  QueryEditor,
+  VariableEditor,
+} from '@graphiql/react';
 import '@graphiql/react/dist/style.css';
 import { createGraphiQLFetcher } from '@graphiql/toolkit';
 
 import HeadersRestfull from '../Headers/Headers';
-import VariablesSection from '../Variables/Variables';
 
 import styles from '@/components/GraphQl/GraphQl.module.scss';
 
@@ -71,15 +75,20 @@ const GraphQl = () => {
                   />
                 </Grid>
 
-                <HeadersRestfull control={control} errors={errors} />
-                <VariablesSection control={control} />
-
                 <Grid item className={styles['graphiql-query-contriner']}>
                   <GraphiQLProvider fetcher={fetcher}>
-                    <DocExplorer />
-                    <QueryEditor />
+                    <div
+                      className={`${styles['graphiql-container']} graphiql-container`}
+                    >
+                      <DocExplorer />
+                      <span>Query Editor:</span>
+                      <QueryEditor />
+                      <span>Variable Editor:</span>
+                      <VariableEditor />
+                    </div>
                   </GraphiQLProvider>
                 </Grid>
+                <HeadersRestfull control={control} errors={errors} />
 
                 <Grid item>
                   <Button variant='contained' color='primary' type='submit'>
