@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
+import { IHeader } from '@/types/restFulgraphQlType';
 import {
   DocExplorer,
   GraphiQLProvider,
@@ -41,17 +42,23 @@ const GraphQl = () => {
   const [result, setResult] = useState<string>();
   const [status, setStatus] = useState<string>();
 
-  const fetcher = async (graphQLParams: FetcherParams) => {
-    const response = await fetch(
-      'https://swapi-graphql.netlify.app/.netlify/functions/index',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+  const fetcher = async (
+    graphQLParams: FetcherParams,
+    url: string,
+    headers?: IHeader[],
+  ) => {
+    console.log(JSON.stringify(graphQLParams));
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers?.reduce(
+        (acc, { key, value }) => {
+          if (key) acc[key] = value;
+          return acc;
         },
-        body: JSON.stringify(graphQLParams),
-      },
-    );
+        { 'Content-Type': 'application/json' } as Record<string, string>,
+      ),
+      body: JSON.stringify(graphQLParams),
+    });
 
     const result = (await response.json()) as object;
     setStatus(String(response.status));
@@ -61,7 +68,16 @@ const GraphQl = () => {
   };
 
   const onSubmit: SubmitHandler<IGraphiQlFormData> = data => {
-    console.log(data);
+    const { url, headers, query, variables } = data;
+
+    fetcher(
+      {
+        query: query || '',
+        variables: variables ? (JSON.parse(variables) as object) : '',
+      },
+      url,
+      headers,
+    ).catch(error => console.error(error));
   };
 
   return (
@@ -96,7 +112,7 @@ const GraphQl = () => {
                 </Grid>
 
                 <Grid item className={styles['graphiql-query-contriner']}>
-                  <GraphiQLProvider fetcher={fetcher}>
+                  <GraphiQLProvider fetcher={params => fetcher(params, '')}>
                     <div
                       className={`${styles['graphiql-container']} graphiql-container`}
                     >
