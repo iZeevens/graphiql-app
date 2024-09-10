@@ -18,6 +18,7 @@ import { IHeader } from '@/types/restFulgraphQlType';
 import {
   DocExplorer,
   GraphiQLProvider,
+  HeaderEditor,
   QueryEditor,
   VariableEditor,
 } from '@graphiql/react';
@@ -25,16 +26,14 @@ import '@graphiql/react/dist/style.css';
 import { FetcherParams } from '@graphiql/toolkit';
 
 import CodePreview from '../CodeMirror/CodeMirror';
-import HeadersRestfull from '../Headers/Headers';
 
 import styles from '@/components/GraphQl/GraphQl.module.scss';
 
 const GraphQl = () => {
   const {
     register,
-    control,
     setValue,
-    setError,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<IGraphiQlFormData>({
@@ -42,13 +41,14 @@ const GraphQl = () => {
   });
   const [result, setResult] = useState<string>();
   const [status, setStatus] = useState<string>();
+  const [isOpenVariables, setOpenVariables] = useState(false);
+  const [isOpenHeaders, setOpenHeaders] = useState(false);
 
   const fetcher = async (
     graphQLParams: FetcherParams,
     url: string,
     headers?: IHeader[],
   ) => {
-    console.log(JSON.stringify(graphQLParams));
     const response = await fetch(url, {
       method: 'POST',
       headers: headers?.reduce(
@@ -69,23 +69,7 @@ const GraphQl = () => {
   };
 
   const onSubmit: SubmitHandler<IGraphiQlFormData> = data => {
-    const { url, headers, query, variables } = data;
-
-    fetcher(
-      {
-        query: query || '',
-        variables: variables ? (JSON.parse(variables) as object) : '',
-      },
-      url,
-      headers,
-    ).catch(err => {
-      if (err instanceof Error) {
-        setError('root', {
-          message:
-            'An error occurred while sending data, check the data, please try again',
-        });
-      }
-    });
+    return data;
   };
 
   return (
@@ -120,7 +104,11 @@ const GraphQl = () => {
                 </Grid>
 
                 <Grid item className={styles['graphiql-query-contriner']}>
-                  <GraphiQLProvider fetcher={params => fetcher(params, '')}>
+                  <GraphiQLProvider
+                    fetcher={params =>
+                      fetcher(params, getValues('url'), getValues('headers'))
+                    }
+                  >
                     <div
                       className={`${styles['graphiql-container']} graphiql-container`}
                     >
@@ -129,14 +117,37 @@ const GraphQl = () => {
                       </div>
                       <span>Query Editor:</span>
                       <QueryEditor onEdit={value => setValue('query', value)} />
-                      <span>Variable Editor:</span>
-                      <VariableEditor
-                        onEdit={value => setValue('variables', value)}
-                      />
+
+                      <Box
+                        className={styles['graphiql-variables-header-section']}
+                      >
+                        <Box>
+                          <span>Variable Editor:</span>
+                          <Button
+                            onClick={() => setOpenVariables(prev => !prev)}
+                          >
+                            {isOpenVariables
+                              ? 'Close Variable'
+                              : 'Open Variable'}
+                          </Button>
+                          {isOpenVariables && (
+                            <VariableEditor
+                              onEdit={value => setValue('variables', value)}
+                            />
+                          )}
+                        </Box>
+
+                        <Box>
+                          <span>Header Editor</span>
+                          <Button onClick={() => setOpenHeaders(prev => !prev)}>
+                            {isOpenHeaders ? 'Close Header' : 'Open Header'}
+                          </Button>
+                          {isOpenHeaders && <HeaderEditor />}
+                        </Box>
+                      </Box>
                     </div>
                   </GraphiQLProvider>
                 </Grid>
-                <HeadersRestfull control={control} errors={errors} />
                 <Grid item>
                   <Button variant='contained' color='primary' type='submit'>
                     Send Request
