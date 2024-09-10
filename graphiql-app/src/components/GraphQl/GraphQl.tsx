@@ -33,7 +33,7 @@ const GraphQl = () => {
   const {
     register,
     setValue,
-    getValues,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm<IGraphiQlFormData>({
@@ -44,11 +44,14 @@ const GraphQl = () => {
   const [isOpenVariables, setOpenVariables] = useState(false);
   const [isOpenHeaders, setOpenHeaders] = useState(false);
 
+  const dummyFetcher = () => ({ data: null });
+
   const fetcher = async (
     graphQLParams: FetcherParams,
     url: string,
     headers?: IHeader[],
   ) => {
+    console.log(graphQLParams);
     const response = await fetch(url, {
       method: 'POST',
       headers: headers?.reduce(
@@ -57,7 +60,7 @@ const GraphQl = () => {
           return acc;
         },
         { 'Content-Type': 'application/json' } as Record<string, string>,
-      ),
+      ) ?? { 'Content-Type': 'application/json' },
       body: JSON.stringify(graphQLParams),
     });
 
@@ -69,7 +72,22 @@ const GraphQl = () => {
   };
 
   const onSubmit: SubmitHandler<IGraphiQlFormData> = data => {
-    return data;
+    const { query, variables, url, headers } = data;
+    fetcher(
+      {
+        query: query || '',
+        variables: variables ? (JSON.parse(variables) as object) : {},
+      },
+      url,
+      headers,
+    ).catch(err => {
+      if (err instanceof Error) {
+        setError('root', {
+          message:
+            'An error occurred while sending data, check the data, please try again',
+        });
+      }
+    });
   };
 
   return (
@@ -104,11 +122,7 @@ const GraphQl = () => {
                 </Grid>
 
                 <Grid item className={styles['graphiql-query-contriner']}>
-                  <GraphiQLProvider
-                    fetcher={params =>
-                      fetcher(params, getValues('url'), getValues('headers'))
-                    }
-                  >
+                  <GraphiQLProvider fetcher={dummyFetcher}>
                     <div
                       className={`${styles['graphiql-container']} graphiql-container`}
                     >
