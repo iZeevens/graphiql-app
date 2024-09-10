@@ -34,6 +34,7 @@ const GraphQl = () => {
     register,
     control,
     setValue,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm<IGraphiQlFormData>({
@@ -77,7 +78,14 @@ const GraphQl = () => {
       },
       url,
       headers,
-    ).catch(error => console.error(error));
+    ).catch(err => {
+      if (err instanceof Error) {
+        setError('root', {
+          message:
+            'An error occurred while sending data, check the data, please try again',
+        });
+      }
+    });
   };
 
   return (
@@ -129,12 +137,12 @@ const GraphQl = () => {
                   </GraphiQLProvider>
                 </Grid>
                 <HeadersRestfull control={control} errors={errors} />
-
                 <Grid item>
                   <Button variant='contained' color='primary' type='submit'>
                     Send Request
                   </Button>
                 </Grid>
+                <span className='error'>{errors.root?.message}</span>
               </Grid>
             </CardContent>
           </Card>
