@@ -13,6 +13,9 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
+import { DocExplorer, GraphiQLProvider, QueryEditor } from '@graphiql/react';
+import '@graphiql/react/dist/style.css';
+import { createGraphiQLFetcher } from '@graphiql/toolkit';
 
 import HeadersRestfull from '../Headers/Headers';
 import VariablesSection from '../Variables/Variables';
@@ -32,6 +35,10 @@ const GraphQl = () => {
   const onSubmit: SubmitHandler<IGraphiQlFormData> = data => {
     console.log(data);
   };
+
+  const fetcher = createGraphiQLFetcher({
+    url: 'https://my.graphql.api/graphql',
+  });
 
   return (
     <Box sx={{ p: 3 }} className={styles['graphiql-client']}>
@@ -65,10 +72,14 @@ const GraphQl = () => {
                 </Grid>
 
                 <HeadersRestfull control={control} errors={errors} />
-
                 <VariablesSection control={control} />
 
-                {/* CodeMirror will be here */}
+                <Grid item>
+                  <GraphiQLProvider fetcher={fetcher}>
+                    <DocExplorer />
+                    <QueryEditor />
+                  </GraphiQLProvider>
+                </Grid>
 
                 <Grid item>
                   <Button variant='contained' color='primary' type='submit'>
