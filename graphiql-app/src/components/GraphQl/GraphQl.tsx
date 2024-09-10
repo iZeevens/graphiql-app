@@ -24,7 +24,6 @@ import '@graphiql/react/dist/style.css';
 import { FetcherParams } from '@graphiql/toolkit';
 
 import CodePreview from '../CodeMirror/CodeMirror';
-// import { createGraphiQLFetcher } from '@graphiql/toolkit';
 import HeadersRestfull from '../Headers/Headers';
 
 import styles from '@/components/GraphQl/GraphQl.module.scss';
@@ -38,7 +37,8 @@ const GraphQl = () => {
   } = useForm<IGraphiQlFormData>({
     mode: 'onChange',
   });
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<string>();
+  const [status, setStatus] = useState<string>();
 
   const fetcher = async (graphQLParams: FetcherParams) => {
     const response = await fetch(
@@ -53,6 +53,7 @@ const GraphQl = () => {
     );
 
     const result = (await response.json()) as object;
+    setStatus(String(response.status));
     setResult(JSON.stringify(result, null, 2));
     console.log(result);
     return result;
@@ -134,7 +135,7 @@ const GraphQl = () => {
                 InputProps={{
                   readOnly: true,
                 }}
-                // value={status ?? ''}
+                value={status ?? ''}
               />
 
               <div className={styles['graphiql-result']}>
