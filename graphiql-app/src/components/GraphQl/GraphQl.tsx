@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
@@ -20,8 +21,10 @@ import {
   VariableEditor,
 } from '@graphiql/react';
 import '@graphiql/react/dist/style.css';
-import { createGraphiQLFetcher } from '@graphiql/toolkit';
+import { FetcherParams } from '@graphiql/toolkit';
 
+import CodePreview from '../CodeMirror/CodeMirror';
+// import { createGraphiQLFetcher } from '@graphiql/toolkit';
 import HeadersRestfull from '../Headers/Headers';
 
 import styles from '@/components/GraphQl/GraphQl.module.scss';
@@ -35,14 +38,29 @@ const GraphQl = () => {
   } = useForm<IGraphiQlFormData>({
     mode: 'onChange',
   });
+  const [result, setResult] = useState<string | null>(null);
+
+  const fetcher = async (graphQLParams: FetcherParams) => {
+    const response = await fetch(
+      'https://swapi-graphql.netlify.app/.netlify/functions/index',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(graphQLParams),
+      },
+    );
+
+    const result = (await response.json()) as object;
+    setResult(JSON.stringify(result, null, 2));
+    console.log(result);
+    return result;
+  };
 
   const onSubmit: SubmitHandler<IGraphiQlFormData> = data => {
     console.log(data);
   };
-
-  const fetcher = createGraphiQLFetcher({
-    url: 'https://my.graphql.api/graphql',
-  });
 
   return (
     <Box sx={{ p: 3 }} className={styles['graphiql-client']}>
@@ -80,7 +98,9 @@ const GraphQl = () => {
                     <div
                       className={`${styles['graphiql-container']} graphiql-container`}
                     >
-                      <DocExplorer />
+                      <div className={styles['graphiql-result']}>
+                        <DocExplorer />
+                      </div>
                       <span>Query Editor:</span>
                       <QueryEditor />
                       <span>Variable Editor:</span>
@@ -116,7 +136,10 @@ const GraphQl = () => {
                 }}
                 // value={status ?? ''}
               />
-              {/* <CodePreview body={response} readonly /> */}
+
+              <div className={styles['graphiql-result']}>
+                <CodePreview body={result ?? undefined} readonly />
+              </div>
             </CardContent>
           </Card>
         </Grid>
