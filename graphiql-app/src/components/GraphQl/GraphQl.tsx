@@ -36,6 +36,7 @@ const GraphQl = () => {
   });
   const pathname = usePathname();
   const [url, setUrl] = useState<string>('');
+  const [headers, setHeaders] = useState<string>('');
   const [query, setQuery] = useState<string>('');
 
   const [result, setResult] = useState<string>();
@@ -48,7 +49,8 @@ const GraphQl = () => {
     const encodedBody = btoa(query);
 
     console.log(newUrl, encodedUrl, encodedBody);
-  }, [getValues, pathname, query]);
+    console.log('headers:', headers);
+  }, [getValues, pathname, query, headers]);
 
   const fetcher = useCallback(
     async (graphQLParams: FetcherParams, opts?: FetcherOpts) => {
@@ -124,7 +126,7 @@ const GraphQl = () => {
                         className={styles['graphiql-variables-header-section']}
                       >
                         <VariableSection />
-                        <HeaderSection />
+                        <HeaderSection onChange={setHeaders} />
                       </Box>
                     </div>
                   </GraphiQLProvider>
