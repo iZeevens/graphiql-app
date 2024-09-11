@@ -7,7 +7,7 @@ import { HeaderEditor, VariableEditor } from '@graphiql/react';
 const VariableSection = ({
   onChange,
 }: {
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,7 +21,11 @@ const VariableSection = ({
   );
 };
 
-const HeaderSection = ({ onChange }: { onChange: (value: string) => void }) => {
+const HeaderSection = ({
+  onChange,
+}: {
+  onChange?: (value: string) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

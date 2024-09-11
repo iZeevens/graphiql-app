@@ -10,8 +10,8 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useCallback, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
 import { DocExplorer, GraphiQLProvider, QueryEditor } from '@graphiql/react';
@@ -26,60 +26,45 @@ import styles from '@/components/GraphQl/GraphQl.module.scss';
 const GraphQl = () => {
   const {
     register,
-    setValue,
     // setError,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<IGraphiQlFormData>({
     mode: 'onChange',
   });
+  const [url, setUrl] = useState<string>('');
+  const [headers, setHeaders] = useState<string>('');
+
   const [result, setResult] = useState<string>();
   const [status, setStatus] = useState<string>();
 
-  const fetcher = async (
-    graphQLParams: FetcherParams,
-    url: string,
-    headers?: string,
-  ) => {
-    const parsedHeaders = headers
-      ? {
-          ...(JSON.parse(headers) as object),
-          'Content-Type': 'application/json',
-        }
-      : { 'Content-Type': 'application/json' };
+  const fetcher = useCallback(
+    async (graphQLParams: FetcherParams) => {
+      const parsedHeaders = headers
+        ? {
+            ...(JSON.parse(headers) as object),
+            'Content-Type': 'application/json',
+          }
+        : { 'Content-Type': 'application/json' };
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: parsedHeaders,
-      body: JSON.stringify(graphQLParams),
-    });
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: parsedHeaders,
+        body: JSON.stringify(graphQLParams),
+      });
 
-    const result = (await response.json()) as object;
-    setStatus(String(response.status));
-    setResult(JSON.stringify(result, null, 2));
-    console.log(result);
-    return result;
-  };
+      const result = (await response.json()) as object;
+      setStatus(String(response.status));
+      setResult(JSON.stringify(result, null, 2));
+      console.log(result);
+      return result;
+    },
+    [url, headers],
+  );
 
-  const onSubmit: SubmitHandler<IGraphiQlFormData> = data => {
-    console.log(data);
-    // const { query, variables, url, headers } = data;
-    // fetcher(
-    //   {
-    //     query: query || '',
-    //     variables: variables ? (JSON.parse(variables) as object) : {},
-    //   },
-    //   url,
-    //   headers,
-    // ).catch(err => {
-    //   if (err instanceof Error) {
-    //     setError('root', {
-    //       message:
-    //         'An error occurred while sending data, check the data, please try again',
-    //     });
-    //   }
-    // });
+  const onSubmit = (data: IGraphiQlFormData) => {
+    setUrl(data.url);
+    setHeaders(data.headers ?? '');
   };
 
   return (
@@ -114,11 +99,7 @@ const GraphQl = () => {
                 </Grid>
 
                 <Grid item className={styles['graphiql-query-contriner']}>
-                  <GraphiQLProvider
-                    fetcher={val =>
-                      fetcher(val, getValues('url'), getValues('headers'))
-                    }
-                  >
+                  <GraphiQLProvider fetcher={fetcher}>
                     <div
                       className={`${styles['graphiql-container']} graphiql-container`}
                     >
@@ -126,41 +107,13 @@ const GraphQl = () => {
                         <DocExplorer />
                       </div>
                       <span>Query Editor:</span>
-                      <QueryEditor onEdit={value => setValue('query', value)} />
+                      <QueryEditor />
 
                       <Box
                         className={styles['graphiql-variables-header-section']}
                       >
-                        {/* <Box>
-                          <span>Variable Editor:</span>
-                          <Button
-                            onClick={() => setOpenVariables(prev => !prev)}
-                          >
-                            {isOpenVariables
-                              ? 'Close Variable'
-                              : 'Open Variable'}
-                          </Button>
-                          {isOpenVariables && (
-                            <VariableEditor
-                              onEdit={value => setValue('variables', value)}
-                            />
-                          )}
-                        </Box>
-                      
-
-                        <Box>
-                          <span>Header Editor</span>
-                          <Button onClick={() => setOpenHeaders(prev => !prev)}>
-                            {isOpenHeaders ? 'Close Header' : 'Open Header'}
-                          </Button>
-                          {isOpenHeaders && <HeaderEditor />}
-                        </Box> */}
-                        <VariableSection
-                          onChange={value => setValue('variables', value)}
-                        />
-                        <HeaderSection
-                          onChange={value => setValue('headers', value)}
-                        />
+                        <VariableSection />
+                        <HeaderSection onChange={setHeaders} />
                       </Box>
                     </div>
                   </GraphiQLProvider>
