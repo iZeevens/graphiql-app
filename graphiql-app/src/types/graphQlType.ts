@@ -1,9 +1,7 @@
-import { IHeader } from './restFulgraphQlType';
-
 interface IGraphiQlFormData {
   url: string;
   sdlUrl: string;
-  headers?: IHeader[];
+  headers?: string;
   query: string;
   variables?: string;
 }
