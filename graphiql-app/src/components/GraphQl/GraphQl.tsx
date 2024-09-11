@@ -10,13 +10,14 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
 import { DocExplorer, GraphiQLProvider, QueryEditor } from '@graphiql/react';
 import '@graphiql/react/dist/style.css';
-import { FetcherParams } from '@graphiql/toolkit';
+import { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
+import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
 import { HeaderSection, VariableSection } from './components/headersVariables';
@@ -27,29 +28,36 @@ const GraphQl = () => {
   const {
     register,
     // setError,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<IGraphiQlFormData>({
     mode: 'onChange',
   });
+  const pathname = usePathname();
   const [url, setUrl] = useState<string>('');
-  const [headers, setHeaders] = useState<string>('');
+  const [query, setQuery] = useState<string>('');
 
   const [result, setResult] = useState<string>();
   const [status, setStatus] = useState<string>();
 
-  const fetcher = useCallback(
-    async (graphQLParams: FetcherParams) => {
-      const parsedHeaders = headers
-        ? {
-            ...(JSON.parse(headers) as object),
-            'Content-Type': 'application/json',
-          }
-        : { 'Content-Type': 'application/json' };
+  const urlChanged = useCallback(() => {
+    const newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
+    const { url } = getValues();
+    const encodedUrl = btoa(url);
+    const encodedBody = btoa(query);
 
+    console.log(newUrl, encodedUrl, encodedBody);
+  }, [getValues, pathname, query]);
+
+  const fetcher = useCallback(
+    async (graphQLParams: FetcherParams, opts?: FetcherOpts) => {
       const response = await fetch(url, {
         method: 'POST',
-        headers: parsedHeaders,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(opts ? opts.headers : ''),
+        },
         body: JSON.stringify(graphQLParams),
       });
 
@@ -59,13 +67,16 @@ const GraphQl = () => {
       console.log(result);
       return result;
     },
-    [url, headers],
+    [url],
   );
 
   const onSubmit = (data: IGraphiQlFormData) => {
     setUrl(data.url);
-    setHeaders(data.headers ?? '');
   };
+
+  useEffect(() => {
+    urlChanged();
+  }, [urlChanged]);
 
   return (
     <Box sx={{ p: 3 }} className={styles['graphiql-client']}>
@@ -107,13 +118,13 @@ const GraphQl = () => {
                         <DocExplorer />
                       </div>
                       <span>Query Editor:</span>
-                      <QueryEditor />
+                      <QueryEditor onEdit={val => setQuery(val)} />
 
                       <Box
                         className={styles['graphiql-variables-header-section']}
                       >
                         <VariableSection />
-                        <HeaderSection onChange={setHeaders} />
+                        <HeaderSection />
                       </Box>
                     </div>
                   </GraphiQLProvider>
