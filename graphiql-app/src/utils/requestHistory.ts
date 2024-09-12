@@ -1,3 +1,5 @@
+'use client';
+
 import { IHeader, IVariables } from '@/types/restFullType';
 import { store } from '@/utils/localStorage';
 

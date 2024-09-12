@@ -1,3 +1,5 @@
+'use client';
+
 export const store = {
   hasItem: (key: string): boolean => {
     return Boolean(localStorage.getItem(key));
