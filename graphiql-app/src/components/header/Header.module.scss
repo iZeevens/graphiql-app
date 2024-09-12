@@ -6,12 +6,14 @@
 
   &__container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    gap: 20px;
     height: 100%;
   }
 
   &__logo {
+    margin-right: auto;
     width: 60px;
   }
 }
