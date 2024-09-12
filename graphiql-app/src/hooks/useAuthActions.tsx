@@ -9,13 +9,13 @@ interface IActions {
   name: string;
   authOnly: boolean;
   path?: string;
-  onClick?: () => void;
+  onClick?: () => Promise<void> | void;
 }
 
 const actions: IActions[] = [
   { name: 'signIn', path: '/signin', authOnly: false },
   { name: 'signUp', path: '/signup', authOnly: false },
-  { name: 'signOut', onClick: () => logout, authOnly: true },
+  { name: 'signOut', onClick: logout, authOnly: true },
 ];
 
 export const useAuthActions = (): IActions[] => {

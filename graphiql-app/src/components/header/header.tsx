@@ -3,7 +3,6 @@
 import { Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 import { useState } from 'react';
@@ -48,27 +47,21 @@ const Header = () => {
       }}
     >
       <Container className={styles.header__container}>
-        <Stack
-          direction='row'
-          justifyContent='space-between'
-          alignItems='center'
+        <Link href={useLocalizedPath('/')} className={styles.header__logo}>
+          <Logo />
+        </Link>
+        <LanguageToggler />
+        <BurgerMenu
+          handleCloseNavMenu={handleCloseNavMenu}
+          anchorElNav={anchorElNav}
+          handleOpenNavMenu={handleOpenNavMenu}
+        />
+        <Box
+          component='div'
+          sx={{ columnGap: '10px', display: { xs: 'none', md: 'flex' } }}
         >
-          <Link href={useLocalizedPath('/')} className={styles.header__logo}>
-            <Logo />
-          </Link>
-          <LanguageToggler />
-          <BurgerMenu
-            handleCloseNavMenu={handleCloseNavMenu}
-            anchorElNav={anchorElNav}
-            handleOpenNavMenu={handleOpenNavMenu}
-          />
-          <Box
-            component='div'
-            sx={{ columnGap: '10px', display: { xs: 'none', md: 'flex' } }}
-          >
-            <AuthButtons />
-          </Box>
-        </Stack>
+          <AuthButtons />
+        </Box>
       </Container>
     </AppBar>
   );
