@@ -1,30 +1,13 @@
 'use client';
 
-import { IHeader, IVariables } from '@/types/restFullType';
-import { store } from '@/utils/localStorage';
+import { store } from '@/store/localStorage';
+import { RestQuery } from '@/store/types';
+import { RequestHistory } from '@/store/types';
 
 const LOCAL_STORAGE_KEY = 'rss-nfs-request-history';
 
-interface RestQuery {
-  url: string;
-  method: string;
-  body?: {
-    type?: string;
-    value?: string;
-  };
-  headers?: IHeader[];
-  variables?: IVariables[];
-}
-
-interface RestQueryData extends RestQuery {
-  date: Date;
-}
-
-type RequestHistory = RestQueryData[];
-
 export const requestHistory = {
   setStory: (data: RestQuery): void => {
-    const date = new Date();
     let parsedData: RequestHistory = [];
 
     if (store.hasItem(LOCAL_STORAGE_KEY)) {
@@ -32,9 +15,8 @@ export const requestHistory = {
       parsedData = JSON.parse(LocalStorageData!) as RequestHistory;
     }
 
-    parsedData.push({ ...data, date });
+    parsedData.push({ ...data, date: new Date().getTime().toString() });
     store.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsedData));
-    console.log(parsedData);
   },
 
   getStory: (): RequestHistory => {
@@ -43,5 +25,9 @@ export const requestHistory = {
     }
 
     return JSON.parse(store.getItem(LOCAL_STORAGE_KEY)!) as RequestHistory;
+  },
+
+  removeStore: (): void => {
+    store.removeItem(LOCAL_STORAGE_KEY);
   },
 };

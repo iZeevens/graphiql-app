@@ -58,6 +58,7 @@
   "history": {
     "noRequests": "It's empty here... Try those options:",
     "restLink": "REST Client",
-    "graphiqlLink": "GraphiQL Client"
+    "graphiqlLink": "GraphiQL Client",
+    "title": "History Requests"
   }
 }

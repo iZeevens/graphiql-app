@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 
 import { useAuth } from '@/hooks/useAuth';
+import { requestHistory } from '@/store/requestHistory';
 import { logout } from '@/utils/auth';
 
 interface IActions {
@@ -12,10 +13,15 @@ interface IActions {
   onClick?: () => Promise<void> | void;
 }
 
+const signOut = async () => {
+  requestHistory.removeStore();
+  await logout();
+};
+
 const actions: IActions[] = [
   { name: 'signIn', path: '/signin', authOnly: false },
   { name: 'signUp', path: '/signup', authOnly: false },
-  { name: 'signOut', onClick: logout, authOnly: true },
+  { name: 'signOut', onClick: signOut, authOnly: true },
 ];
 
 export const useAuthActions = (): IActions[] => {

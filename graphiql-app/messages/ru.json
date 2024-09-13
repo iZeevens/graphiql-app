@@ -61,6 +61,7 @@
   "history": {
     "noRequests": "Тут пока пусто... Попробуйте варианты:",
     "restLink": "REST Клиент",
-    "graphiqlLink": "GraphiQL Клиент"
+    "graphiqlLink": "GraphiQL Клиент",
+    "title": "История запросов"
   }
 }

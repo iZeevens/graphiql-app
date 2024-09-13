@@ -17,8 +17,8 @@ import {
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { requestHistory } from '@/store/requestHistory';
 import { IRestFullFormData, IVariables } from '@/types/restFullType';
-import { requestHistory } from '@/utils/requestHistory';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname } from 'next/navigation';
@@ -120,6 +120,7 @@ const Restfull = () => {
         setResponse(JSON.stringify(dataJson, null, 2));
 
         requestHistory.setStory({
+          type: 'rest',
           url,
           method,
           ...(body && { body: { type: lang, value: body } }),
