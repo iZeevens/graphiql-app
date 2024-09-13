@@ -1,6 +1,12 @@
 import { Button, Grid, TextField } from '@mui/material';
 
-import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 
 import { IntrospectionQuery, getIntrospectionQuery } from 'graphql';
 
@@ -11,19 +17,25 @@ const SdlUrl = ({
   url: string;
   setSchema: Dispatch<SetStateAction<IntrospectionQuery | null>>;
 }) => {
-  const sdlUrl = useRef(`${url}?sdl`);
+  const [sdlUrl, setSdlUrl] = useState('');
   const [error, setError] = useState('');
 
   const handleSdlUrl = (e: ChangeEvent<HTMLInputElement>) => {
     setError('');
-    sdlUrl.current = e.target.value;
+    setSdlUrl(e.target.value);
   };
+
+  useEffect(() => {
+    if (url) {
+      setSdlUrl(`${url}?sdl`);
+    }
+  }, [url]);
 
   const submitSchema = async () => {
     try {
-      console.log(sdlUrl.current);
+      console.log(sdlUrl);
       const introspectionQuery = getIntrospectionQuery();
-      const response = await fetch('https://graphql-pokemon2.vercel.app/', {
+      const response = await fetch(sdlUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +57,7 @@ const SdlUrl = ({
         label='SDL URL'
         fullWidth
         variant='outlined'
+        value={sdlUrl ?? ''}
         onChange={handleSdlUrl}
       />
       <Button onClick={submitSchema}>Get Schema</Button>

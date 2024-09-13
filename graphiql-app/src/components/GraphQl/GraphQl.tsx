@@ -64,9 +64,6 @@ const GraphQl = () => {
       console.error('Error format');
     }
 
-    console.log(encodedBody);
-    console.log(encodedUrl);
-
     if (encodedUrl) {
       newUrl += `/${encodedUrl}`;
     }
@@ -78,7 +75,7 @@ const GraphQl = () => {
     }
 
     window.history.pushState({}, '', newUrl);
-  }, [pathname, headers]);
+  }, [pathname, headers, url]);
 
   const fetcher = useCallback(
     async (graphQLParams: FetcherParams, opts?: FetcherOpts) => {
@@ -94,10 +91,9 @@ const GraphQl = () => {
       const result = (await response.json()) as object;
       setStatus(String(response.status));
       setResult(JSON.stringify(result, null, 2));
-      console.log(result);
       return result;
     },
-    [],
+    [url],
   );
 
   const onSubmit = (data: IGraphiQlFormData) => {
