@@ -44,8 +44,8 @@ const GraphQl = () => {
   const urlChanged = useCallback(() => {
     let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
     const { url } = getValues();
-    const encodedUrl = url ? btoa(url) : '';
-    const encodedBody = query.current ? btoa(query.current) : '';
+    let encodedUrl = '';
+    let encodedBody = '';
     let parsedHeaders = '';
 
     if (headers.current) {
@@ -55,6 +55,13 @@ const GraphQl = () => {
       } catch {
         console.error('Invalid JSON format in headers');
       }
+    }
+
+    try {
+      encodedUrl = url ? btoa(url) : '';
+      encodedBody = query.current ? btoa(query.current) : '';
+    } catch {
+      console.error('Error format');
     }
 
     console.log(encodedBody);
