@@ -82,7 +82,16 @@ export const theme = createTheme({
       fontSize: '1.6rem',
     },
     h2: {
-      fontSize: '1.4rem',
+      fontSize: '2.5rem',
+      marginBottom: '2rem',
+
+      '@media (max-width: 768px)': {
+        fontSize: '2rem',
+        marginBottom: '1rem',
+      },
+    },
+    h3: {
+      fontSize: '2rem',
     },
   },
 });

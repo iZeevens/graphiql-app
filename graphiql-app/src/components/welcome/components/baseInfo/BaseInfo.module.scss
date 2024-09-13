@@ -1,0 +1,50 @@
+@import '@/styles/variables.scss';
+
+.info {
+  padding: 2rem 0;
+
+  @media(max-width: 768px) {
+    padding: 1rem 0;
+  }
+
+  & &__text {
+    margin-left: 40px;
+    margin-bottom: 30px;
+    width: 50%;
+    font-size: 0.8rem;
+    font-weight: 100;
+    line-height: 1rem;
+    letter-spacing: 0.08rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: -40px;
+      top: 0px;
+      width: 30px;
+      height: 1px;
+      background-color: $accent-color;
+    }
+
+    @media(max-width: 768px) {
+      width: 100%;
+      margin-left: 0px;
+      margin-bottom: 20px;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  &.dark {
+    background-color: $primary-color;
+    color: $light-color;
+  }
+
+  &.light {
+    background-color: $light-color;
+    color: $primary-color;
+  }
+}

@@ -1,0 +1,17 @@
+@import '@/styles/variables.scss';
+
+.teamMember {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 30px;
+  background-color: $light-color;
+  border-radius: 20px;
+  transition: box-shadow 0.3s;
+
+  @media (any-hover: hover) {
+    &:hover {
+      box-shadow: 0 0 15px 0 rgba(255, 60, 130, 0.5);
+    }
+  }
+}

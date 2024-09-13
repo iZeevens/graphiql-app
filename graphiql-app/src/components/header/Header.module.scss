@@ -3,11 +3,17 @@
   justify-content: center;
   min-height: 60px;
   transition: 0.3s;
-}
 
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
+  &__container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+  }
+
+  &__logo {
+    margin-right: auto;
+    width: 60px;
+  }
 }
