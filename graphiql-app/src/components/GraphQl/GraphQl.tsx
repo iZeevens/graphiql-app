@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { IGraphiQlFormData } from '@/types/graphQlType';
@@ -35,8 +35,8 @@ const GraphQl = () => {
     mode: 'onChange',
   });
   const pathname = usePathname();
-  const [headers, setHeaders] = useState<string>('');
-  const [query, setQuery] = useState<string>('');
+  const headers = useRef<string>('');
+  const query = useRef<string>('');
 
   const [result, setResult] = useState<string>();
   const [status, setStatus] = useState<string>();
@@ -45,14 +45,13 @@ const GraphQl = () => {
     let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
     const { url } = getValues();
     const encodedUrl = url ? btoa(url) : '';
-    const encodedBody = query ? btoa(query) : '';
+    const encodedBody = query.current ? btoa(query.current) : '';
     let parsedHeaders = '';
 
-    if (headers) {
+    if (headers.current) {
       try {
-        const headerObj = JSON.parse(headers) as string[][];
+        const headerObj = JSON.parse(headers.current) as string[][];
         parsedHeaders = new URLSearchParams(headerObj).toString();
-        console.log('headers:', parsedHeaders);
       } catch {
         console.error('Invalid JSON format in headers');
       }
@@ -72,7 +71,7 @@ const GraphQl = () => {
     }
 
     window.history.pushState({}, '', newUrl);
-  }, [getValues, pathname, query, headers]);
+  }, [getValues, pathname, headers]);
 
   const fetcher = useCallback(
     async (graphQLParams: FetcherParams, opts?: FetcherOpts) => {
@@ -97,7 +96,6 @@ const GraphQl = () => {
 
   const onSubmit = (data: IGraphiQlFormData) => {
     return data;
-    console.log(data);
   };
 
   return (
@@ -142,19 +140,19 @@ const GraphQl = () => {
                       </div>
                       <span>Query Editor:</span>
                       <QueryEditor
-                        onEdit={val => {
+                        onEdit={value => {
+                          query.current = value;
                           urlChanged();
-                          setQuery(val);
                         }}
                       />
 
                       <Box
                         className={styles['graphiql-variables-header-section']}
                       >
-                        <VariableSection onBlur={urlChanged} />
+                        <VariableSection onEdit={urlChanged} />
                         <HeaderSection
-                          onChange={setHeaders}
-                          onBlur={urlChanged}
+                          onChange={value => (headers.current = value)}
+                          onEdit={urlChanged}
                         />
                       </Box>
                     </div>

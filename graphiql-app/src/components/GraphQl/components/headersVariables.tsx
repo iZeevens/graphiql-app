@@ -6,10 +6,10 @@ import { HeaderEditor, VariableEditor } from '@graphiql/react';
 
 const VariableSection = ({
   onChange,
-  onBlur,
+  onEdit,
 }: {
   onChange?: (value: string) => void;
-  onBlur?: () => void;
+  onEdit: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,9 +21,9 @@ const VariableSection = ({
       {isOpen && (
         <VariableEditor
           onEdit={val => {
-            if (onChange && onBlur) {
+            if (onChange) {
               onChange(val);
-              onBlur();
+              onEdit();
             }
           }}
         />
@@ -34,10 +34,10 @@ const VariableSection = ({
 
 const HeaderSection = ({
   onChange,
-  onBlur,
+  onEdit,
 }: {
   onChange?: (value: string) => void;
-  onBlur?: () => void;
+  onEdit: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,9 +49,9 @@ const HeaderSection = ({
       {isOpen && (
         <HeaderEditor
           onEdit={val => {
-            if (onChange && onBlur) {
+            if (onChange) {
               onChange(val);
-              onBlur();
+              onEdit();
             }
           }}
         />
