@@ -70,7 +70,6 @@ const GraphQl = () => {
     if (!sdlUrl) return;
 
     try {
-      console.log(sdlUrl);
       const introspectionQuery = getIntrospectionQuery();
       const response = await fetch(sdlUrl, {
         method: 'POST',
@@ -149,7 +148,9 @@ const GraphQl = () => {
                     fullWidth
                     variant='outlined'
                     onChange={e => {
-                      setSdlUrl(`${e.target.value}?sdl`);
+                      if (e.target.value.length > 0) {
+                        setSdlUrl(`${e.target.value}?sdl`);
+                      }
                       url.current = e.target.value;
                     }}
                     onBlur={urlChanged}
