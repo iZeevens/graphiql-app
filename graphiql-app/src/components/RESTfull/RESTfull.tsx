@@ -72,18 +72,10 @@ const Restfull = () => {
       )
       .join('&');
 
-    if (method) {
-      newUrl += `/${method}`;
-    }
-    if (encodedUrl) {
-      newUrl += `/${encodedUrl}`;
-    }
-    if (encodedBody) {
-      newUrl += `/${encodedBody}`;
-    }
-    if (queryParams) {
-      newUrl += `?${queryParams}`;
-    }
+    if (method) newUrl += `/${method}`;
+    if (encodedUrl) newUrl += `/${encodedUrl}`;
+    if (encodedBody) newUrl += `/${encodedBody}`;
+    if (queryParams) newUrl += `?${queryParams}`;
 
     window.history.pushState({}, '', newUrl);
   };
