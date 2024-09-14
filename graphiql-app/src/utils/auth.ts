@@ -1,5 +1,4 @@
 import { ISignInFormData, ISignUpFormData } from '@/types/formsType';
-import { FirebaseError } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -38,7 +37,7 @@ const logInWithEmailAndPassword = async (
 
     document.cookie = `userid=${res.user.uid}`;
   } catch (err) {
-    if (err instanceof FirebaseError) {
+    if (err instanceof Error) {
       setError(err.message);
     }
   }

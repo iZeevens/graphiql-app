@@ -38,7 +38,10 @@ const HeadersRestfull = ({ control, urlChanged, errors }: IHeadersRestfull) => {
             justifyContent: 'space-between',
           }}
         >
-          <IoMdClose onClick={() => remove(index)} />
+          <IoMdClose
+            data-testid='headerBtnClosed'
+            onClick={() => remove(index)}
+          />
           <Controller
             name={`headers.${index}.key`}
             control={control}
