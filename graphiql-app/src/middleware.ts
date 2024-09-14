@@ -17,7 +17,7 @@ export function middleware(req: NextRequest) {
   }
 
   const authPathsRegex = /^\/(en|ru)\/(signup|signin)\/$/;
-  const restGraphqlRegex = /^\/(en|ru)\/(rest|graphql)(\/.*)?$/;
+  const restGraphqlRegex = /^\/(en|ru)\/(rest|graphql|history)(\/.*)?$/;
 
   if (userId?.value && authPathsRegex.test(pathname)) {
     return NextResponse.redirect(new URL('/', req.url));
