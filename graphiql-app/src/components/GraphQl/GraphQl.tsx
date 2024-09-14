@@ -38,7 +38,6 @@ const GraphQl = () => {
   const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
 
   const urlChanged = useCallback(() => {
-    setErrors([]);
     let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
     let encodedUrl = '';
     let encodedBody = '';
@@ -92,6 +91,7 @@ const GraphQl = () => {
   };
 
   const fetcher = useCallback(async () => {
+    setErrors([]);
     try {
       const response = await fetch(url.current, {
         method: 'POST',
