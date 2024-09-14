@@ -1,6 +1,6 @@
 import { Control } from 'react-hook-form';
 
-import { IRestFullFormData } from './restFulgraphQlType';
+import { IRestFullFormData } from './restFullType';
 
 interface ICodePreviewProps {
   body?: string;

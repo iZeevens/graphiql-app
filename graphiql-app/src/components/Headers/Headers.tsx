@@ -10,7 +10,7 @@ import {
 } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 
-import { IHeadersFormData } from '@/types/restFulgraphQlType';
+import { IHeadersFormData } from '@/types/restFullType';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 

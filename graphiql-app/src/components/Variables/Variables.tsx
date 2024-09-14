@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 
-import { IVariablesFormData } from '@/types/restFulgraphQlType';
+import { IVariablesFormData } from '@/types/restFullType';
 
 const VariablesSection = <T extends FieldValues>({
   control,

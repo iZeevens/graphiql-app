@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { requestHistory } from '@/store/requestHistory';
-import { IRestFullFormData, IVariables } from '@/types/restFulgraphQlType';
+import { IRestFullFormData, IVariables } from '@/types/restFullType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname } from 'next/navigation';
