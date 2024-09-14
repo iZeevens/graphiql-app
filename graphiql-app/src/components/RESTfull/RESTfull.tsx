@@ -17,6 +17,7 @@ import {
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { requestHistory } from '@/store/requestHistory';
 import { IRestFullFormData, IVariables } from '@/types/restFulgraphQlType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -63,7 +64,7 @@ const Restfull = () => {
     const encodedUrl = btoa(url);
     const encodedBody = body ? btoa(JSON.stringify(body)) : '';
 
-    const quearyParams = headers
+    const queryParams = headers
       ?.filter(header => header.key && header.value)
       .map(
         header =>
@@ -80,8 +81,8 @@ const Restfull = () => {
     if (encodedBody) {
       newUrl += `/${encodedBody}`;
     }
-    if (quearyParams) {
-      newUrl += `?${quearyParams}`;
+    if (queryParams) {
+      newUrl += `?${queryParams}`;
     }
 
     window.history.pushState({}, '', newUrl);
@@ -117,6 +118,15 @@ const Restfull = () => {
 
         setStatus(String(response.status));
         setResponse(JSON.stringify(dataJson, null, 2));
+
+        requestHistory.setStory({
+          type: 'rest',
+          url,
+          method,
+          ...(body && { body: { type: lang, value: body } }),
+          ...(headers && { headers }),
+        });
+
         reset();
       } catch (err) {
         if (err instanceof Error) {

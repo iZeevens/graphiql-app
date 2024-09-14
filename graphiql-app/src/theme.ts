@@ -44,6 +44,7 @@ export const theme = createTheme({
         root: {
           alignItems: 'start',
           paddingLeft: '0px',
+          paddingRight: '0px',
           width: 'auto',
         },
       },

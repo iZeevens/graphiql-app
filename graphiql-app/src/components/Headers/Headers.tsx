@@ -55,7 +55,10 @@ const HeadersSection = <T extends FieldValues>({
             justifyContent: 'space-between',
           }}
         >
-          <IoMdClose onClick={() => remove(index)} />
+          <IoMdClose
+            data-testid='headerBtnClosed'
+            onClick={() => remove(index)}
+          />
           <Controller
             name={`headers.${index}.key` as Path<T>}
             control={control}
