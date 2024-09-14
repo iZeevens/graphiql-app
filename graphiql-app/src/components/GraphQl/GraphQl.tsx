@@ -11,31 +11,24 @@ import {
 } from '@mui/material';
 
 import { useCallback, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { ChangeEvent } from 'react';
 
-import { IGraphiQlFormData } from '@/types/graphQlType';
 import { DocExplorer, GraphiQLProvider, QueryEditor } from '@graphiql/react';
 import '@graphiql/react/dist/style.css';
-import { FetcherOpts, FetcherParams } from '@graphiql/toolkit';
-import { IntrospectionQuery } from 'graphql';
+import { IntrospectionQuery, getIntrospectionQuery } from 'graphql';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
 import { HeaderSection, VariableSection } from './components/headersVariables';
-import SdlUrl from './components/sdlUrl';
 
 import styles from '@/components/GraphQl/GraphQl.module.scss';
 
 const GraphQl = () => {
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IGraphiQlFormData>({
-    mode: 'onChange',
-  });
   const pathname = usePathname();
   const url = useRef<string>('');
+  const [sdlUrl, setSdlUrl] = useState('');
   const headers = useRef<string>('');
+  const variables = useRef<string>('');
   const query = useRef<string>('');
 
   const [result, setResult] = useState<string>();
@@ -64,47 +57,69 @@ const GraphQl = () => {
       console.error('Error format');
     }
 
-    if (encodedUrl) {
-      newUrl += `/${encodedUrl}`;
-    }
-    if (encodedBody) {
-      newUrl += `/${encodedBody}`;
-    }
-    if (parsedHeaders) {
-      newUrl += `/${parsedHeaders}`;
-    }
+    if (encodedUrl) newUrl += `/${encodedUrl}`;
+    if (encodedBody) newUrl += `/${encodedBody}`;
+    if (parsedHeaders) newUrl += `/${parsedHeaders}`;
 
     window.history.pushState({}, '', newUrl);
-  }, [pathname, headers, url]);
+  }, [pathname]);
 
-  const fetcher = useCallback(
-    async (graphQLParams: FetcherParams, opts?: FetcherOpts) => {
-      const response = await fetch(url.current, {
+  const submitSchema = useCallback(async () => {
+    if (!sdlUrl) return;
+
+    try {
+      console.log(sdlUrl);
+      const introspectionQuery = getIntrospectionQuery();
+      const response = await fetch(sdlUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(opts ? opts.headers : ''),
         },
-        body: JSON.stringify(graphQLParams),
+        body: JSON.stringify({ query: introspectionQuery }),
       });
+      const data = (await response.json()) as { data: IntrospectionQuery };
+      setSchema(data.data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [sdlUrl]);
 
-      const result = (await response.json()) as object;
-      setStatus(String(response.status));
-      setResult(JSON.stringify(result, null, 2));
-      return result;
-    },
-    [url],
-  );
-
-  const onSubmit = (data: IGraphiQlFormData) => {
-    return data;
+  const handleSdlUrl = (e: ChangeEvent<HTMLInputElement>) => {
+    setSdlUrl(e.target.value);
   };
+
+  const fetcher = useCallback(async () => {
+    const response = await fetch(url.current, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(headers.current ? (JSON.parse(headers.current) as object) : {}),
+      },
+      body: JSON.stringify({
+        query: query.current,
+        variables: variables.current,
+      }),
+    });
+
+    const result = (await response.json()) as object;
+    setStatus(String(response.status));
+    setResult(JSON.stringify(result, null, 2));
+    submitSchema().catch(err => console.error(err));
+
+    return result;
+  }, [url, submitSchema]);
 
   return (
     <Box sx={{ p: 3 }} className={styles['graphiql-client']}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Card component='form' onSubmit={handleSubmit(onSubmit)}>
+          <Card
+            component='form'
+            onSubmit={e => {
+              e.preventDefault();
+              fetcher().catch(err => console.error(err));
+            }}
+          >
             <CardContent>
               <Typography variant='h6' gutterBottom>
                 GraphQl Client
@@ -119,20 +134,41 @@ const GraphQl = () => {
                     label='Endpoint URL'
                     fullWidth
                     variant='outlined'
-                    onChange={e => (url.current = e.target.value)}
+                    onChange={e => {
+                      setSdlUrl(`${e.target.value}?sdl`);
+                      url.current = e.target.value;
+                    }}
                     onBlur={urlChanged}
                   />
+                  <TextField
+                    label='SDL URL'
+                    fullWidth
+                    variant='outlined'
+                    value={sdlUrl ?? ''}
+                    onChange={handleSdlUrl}
+                  />
                 </Grid>
-                <SdlUrl url={url.current} setSchema={setSchema} />
 
                 <Grid item className={styles['graphiql-query-contriner']}>
-                  <GraphiQLProvider fetcher={fetcher} schema={schema}>
-                    <div
-                      className={`${styles['graphiql-container']} graphiql-container`}
+                  <div
+                    className={`${styles['graphiql-container']} graphiql-container`}
+                  >
+                    <GraphiQLProvider
+                      fetcher={() => {
+                        return { data: null };
+                      }}
+                      schema={schema}
                     >
                       <div className={styles['graphiql-result']}>
                         <DocExplorer />
                       </div>
+                    </GraphiQLProvider>
+
+                    <GraphiQLProvider
+                      fetcher={() => {
+                        return { data: null };
+                      }}
+                    >
                       <span>Query Editor:</span>
                       <QueryEditor
                         onEdit={value => {
@@ -144,21 +180,23 @@ const GraphQl = () => {
                       <Box
                         className={styles['graphiql-variables-header-section']}
                       >
-                        <VariableSection onEdit={urlChanged} />
+                        <VariableSection
+                          onChange={value => (variables.current = value)}
+                          onEdit={urlChanged}
+                        />
                         <HeaderSection
                           onChange={value => (headers.current = value)}
                           onEdit={urlChanged}
                         />
                       </Box>
-                    </div>
-                  </GraphiQLProvider>
+                    </GraphiQLProvider>
+                  </div>
                 </Grid>
                 <Grid item>
                   <Button variant='contained' color='primary' type='submit'>
                     Send Request
                   </Button>
                 </Grid>
-                <span className='error'>{errors.root?.message}</span>
               </Grid>
             </CardContent>
           </Card>
