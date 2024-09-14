@@ -175,15 +175,21 @@ const GraphQl = () => {
                       }}
                     >
                       <span>Query Editor:</span>
-                      <QueryEditor
-                        onEdit={value => {
-                          query.current = value;
-                          urlChanged();
-                        }}
-                      />
+                      <Box
+                        className={styles['graphiql-query-editor-container']}
+                      >
+                        <QueryEditor
+                          onEdit={value => {
+                            query.current = value;
+                            urlChanged();
+                          }}
+                        />
+                      </Box>
 
                       <Box
-                        className={styles['graphiql-variables-header-section']}
+                        className={
+                          styles['graphiql-variables-header-container']
+                        }
                       >
                         <VariableSection
                           onChange={value => (variables.current = value)}
