@@ -1,9 +1,2 @@
-interface IGraphiQlFormData {
-  url: string;
-  sdlUrl: string;
-  headers?: string;
-  query: string;
-  variables?: string;
-}
-
-export type { IGraphiQlFormData };
+type Error = { name: string; msg: string; id: number }[];
+export type { Error };

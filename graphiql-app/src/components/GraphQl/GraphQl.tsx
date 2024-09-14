@@ -10,9 +10,9 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useCallback, useRef, useState } from 'react';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
 
+import { Error } from '@/types/graphQlType';
 import { DocExplorer, GraphiQLProvider, QueryEditor } from '@graphiql/react';
 import '@graphiql/react/dist/style.css';
 import { IntrospectionQuery, getIntrospectionQuery } from 'graphql';
@@ -31,11 +31,13 @@ const GraphQl = () => {
   const variables = useRef<string>('');
   const query = useRef<string>('');
 
+  const [errors, setErrors] = useState<Error>([]);
   const [result, setResult] = useState<string>();
   const [status, setStatus] = useState<string>();
   const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
 
   const urlChanged = useCallback(() => {
+    setErrors([]);
     let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
     let encodedUrl = '';
     let encodedBody = '';
@@ -89,24 +91,35 @@ const GraphQl = () => {
   };
 
   const fetcher = useCallback(async () => {
-    const response = await fetch(url.current, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(headers.current ? (JSON.parse(headers.current) as object) : {}),
-      },
-      body: JSON.stringify({
-        query: query.current,
-        variables: variables.current,
-      }),
-    });
+    try {
+      const response = await fetch(url.current, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(headers.current ? (JSON.parse(headers.current) as object) : {}),
+        },
+        body: JSON.stringify({
+          query: query.current,
+          variables: variables.current,
+        }),
+      });
 
-    const result = (await response.json()) as object;
-    setStatus(String(response.status));
-    setResult(JSON.stringify(result, null, 2));
-    submitSchema().catch(err => console.error(err));
+      const result = (await response.json()) as object;
+      setStatus(String(response.status));
+      setResult(JSON.stringify(result, null, 2));
+      submitSchema().catch(err => console.error(err));
 
-    return result;
+      return result;
+    } catch {
+      setErrors(prevErrors => [
+        ...prevErrors,
+        {
+          name: 'fetcher',
+          msg: 'Error during request, please try again',
+          id: Date.now(),
+        },
+      ]);
+    }
   }, [url, submitSchema]);
 
   return (
@@ -197,6 +210,13 @@ const GraphQl = () => {
                     Send Request
                   </Button>
                 </Grid>
+                {errors
+                  ? errors.map(error => (
+                      <span className='error' key={error.id}>
+                        {error.name}: {error.msg}
+                      </span>
+                    ))
+                  : ''}
               </Grid>
             </CardContent>
           </Card>
