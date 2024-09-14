@@ -1,2 +1,8 @@
+import { IntrospectionQuery } from 'graphql';
+
 type Error = { name: string; msg: string; id: number }[];
-export type { Error };
+
+interface DocExplorerQlProps {
+  schema: IntrospectionQuery | null;
+}
+export type { DocExplorerQlProps, Error };

@@ -13,12 +13,13 @@ import {
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 
 import { Error } from '@/types/graphQlType';
-import { DocExplorer, GraphiQLProvider, QueryEditor } from '@graphiql/react';
+import { GraphiQLProvider, QueryEditor } from '@graphiql/react';
 import '@graphiql/react/dist/style.css';
 import { IntrospectionQuery, getIntrospectionQuery } from 'graphql';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
+import DocExplorerQl from './components/docExplorerQl';
 import { HeaderSection, VariableSection } from './components/headersVariables';
 
 import styles from '@/components/GraphQl/GraphQl.module.scss';
@@ -166,16 +167,7 @@ const GraphQl = () => {
                   <div
                     className={`${styles['graphiql-container']} graphiql-container`}
                   >
-                    <GraphiQLProvider
-                      fetcher={() => {
-                        return { data: null };
-                      }}
-                      schema={schema}
-                    >
-                      <div className={styles['graphiql-result']}>
-                        <DocExplorer />
-                      </div>
-                    </GraphiQLProvider>
+                    <DocExplorerQl schema={schema} />
 
                     <GraphiQLProvider
                       fetcher={() => {
