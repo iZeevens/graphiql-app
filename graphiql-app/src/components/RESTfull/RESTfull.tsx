@@ -18,13 +18,13 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { requestHistory } from '@/store/requestHistory';
-import { IRestFullFormData, IVariables } from '@/types/restFullType';
+import { IRestFullFormData, IVariables } from '@/types/restFulgraphQlType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
-import HeadersRestfull from './components/HeadersRESTfull/HeadersRESTfull';
+import HeadersRestfull from '../Headers/Headers';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
@@ -183,9 +183,7 @@ const Restfull = () => {
                         </MenuItem>
                       ))}
                     </Select>
-                    <span className={styles.error}>
-                      {errors.method?.message}
-                    </span>
+                    <span className='error'>{errors.method?.message}</span>
                   </FormControl>
                 </Grid>
                 <Grid className={styles['restfull-client__url']} item xs>
@@ -195,7 +193,7 @@ const Restfull = () => {
                     variant='outlined'
                     {...register('url', { onBlur: urlChanged })}
                   />
-                  <span className={styles.error}>{errors.url?.message}</span>
+                  <span className='error'>{errors.url?.message}</span>
                 </Grid>
                 <Grid item>
                   <Button
@@ -224,7 +222,7 @@ const Restfull = () => {
                   lang={lang}
                   urlChanged={urlChanged}
                 />
-                <span className={styles.error}>{errors.body?.message}</span>
+                <span className='error'>{errors.body?.message}</span>
               </Box>
             </CardContent>
           </Card>

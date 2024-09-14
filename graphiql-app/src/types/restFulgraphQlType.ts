@@ -1,4 +1,4 @@
-import { Control, FieldErrors } from 'react-hook-form';
+import { Control, FieldErrors, FieldValues } from 'react-hook-form';
 
 interface IHeader {
   key: string;
@@ -18,19 +18,19 @@ interface IRestFullFormData {
   body?: string;
 }
 
-interface IHeadersRestfull {
-  control: Control<IRestFullFormData>;
-  urlChanged: () => void;
-  errors: FieldErrors<IRestFullFormData>;
+interface IHeadersFormData<T extends FieldValues> {
+  control: Control<T>;
+  urlChanged?: () => void;
+  errors: FieldErrors<T>;
 }
 
-interface IVariablesFormData {
-  control: Control<IRestFullFormData>;
+interface IVariablesFormData<T extends FieldValues> {
+  control: Control<T>;
 }
 
 export type {
   IRestFullFormData,
-  IHeadersRestfull,
+  IHeadersFormData,
   IVariablesFormData,
   IVariables,
   IHeader,

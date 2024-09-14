@@ -16,7 +16,7 @@ import { linter } from '@codemirror/lint';
 import CodeMirror from '@uiw/react-codemirror';
 import { basicSetup } from 'codemirror';
 
-import VariablesSection from '../RESTfull/components/VariablesSection/VariablesSection';
+import VariablesSection from '../Variables/Variables';
 
 const CodePreview = ({
   body,

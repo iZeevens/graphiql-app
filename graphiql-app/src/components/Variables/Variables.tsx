@@ -1,15 +1,24 @@
 import { Box, Button, TextField } from '@mui/material';
 
 import { useState } from 'react';
-import { Controller, useFieldArray } from 'react-hook-form';
+import {
+  ArrayPath,
+  Controller,
+  FieldArray,
+  FieldValues,
+  Path,
+  useFieldArray,
+} from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 
-import { IVariablesFormData } from '@/types/restFullType';
+import { IVariablesFormData } from '@/types/restFulgraphQlType';
 
-const VariablesSection = ({ control }: IVariablesFormData) => {
+const VariablesSection = <T extends FieldValues>({
+  control,
+}: IVariablesFormData<T>) => {
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'variables',
+    name: 'variables' as ArrayPath<T>,
   });
 
   const [hide, setHide] = useState(true);
@@ -40,14 +49,14 @@ const VariablesSection = ({ control }: IVariablesFormData) => {
               <IoMdClose onClick={() => remove(index)} />
 
               <Controller
-                name={`variables.${index}.name`}
+                name={`variables.${index}.name` as Path<T>}
                 control={control}
                 render={({ field }) => (
                   <TextField {...field} fullWidth label='Name' sx={{ mb: 2 }} />
                 )}
               />
               <Controller
-                name={`variables.${index}.value`}
+                name={`variables.${index}.value` as Path<T>}
                 control={control}
                 render={({ field }) => (
                   <TextField {...field} fullWidth label='Value' />
@@ -59,7 +68,11 @@ const VariablesSection = ({ control }: IVariablesFormData) => {
             variant='contained'
             color='primary'
             sx={{ mt: '10px' }}
-            onClick={() => append({ name: '', value: '' })}
+            onClick={() =>
+              append({ name: '', value: '' } as
+                | FieldArray<T, ArrayPath<T>>
+                | FieldArray<T, ArrayPath<T>>[])
+            }
           >
             Add variables
           </Button>
