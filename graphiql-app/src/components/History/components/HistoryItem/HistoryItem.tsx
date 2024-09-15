@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 
 import { itemHistory } from '@/store/itemHistory';
 import { RestData } from '@/store/types';
+import { restPathConnector } from '@/utils/restHelpers';
 
 import styles from '@/components/History/components/HistoryItem/HistoryItem.module.scss';
 
@@ -13,13 +14,27 @@ interface HistoryItemProps {
 }
 
 export const HistoryItem = ({ item }: HistoryItemProps) => {
+  const handlerLinkHref = () => {
+    const { type, url, method, body, headers, variables } = item;
+    const startString = `/${type}`;
+
+    return restPathConnector({
+      startString,
+      url,
+      method,
+      body: body?.value,
+      headers,
+      variables,
+    });
+  };
+
   return (
     <ListItem
       className={styles.historyItem}
       id={item.date}
       onClick={() => itemHistory.setItem(item)}
     >
-      <Link className={styles.historyItem__link} href={`/${item.type}`}>
+      <Link className={styles.historyItem__link} href={handlerLinkHref()}>
         <Card className={styles.historyItem__card}>
           <Typography className={styles.historyItem__method} variant='body1'>
             {item.method}

@@ -16,9 +16,9 @@ const registerWithEmailAndPassword = async (
     const res = await createUserWithEmailAndPassword(auth, email, password);
 
     await updateProfile(res.user, { displayName: name });
-    return true;
-
     document.cookie = `userid=${res.user.uid}`;
+
+    return true;
   } catch (err) {
     if (err instanceof Error) {
       setError(err.message);

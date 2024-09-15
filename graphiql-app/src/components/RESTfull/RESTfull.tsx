@@ -18,7 +18,9 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { requestHistory } from '@/store/requestHistory';
-import { IRestFullFormData, IVariables } from '@/types/restFullType';
+import { IRestFullFormData } from '@/types/restFullType';
+import { restPathConnector } from '@/utils/restHelpers';
+import { interpolateVariables } from '@/utils/restHelpers';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname } from 'next/navigation';
@@ -46,36 +48,19 @@ const Restfull = () => {
   const [lang, setLang] = useState('text');
   const pathname = usePathname();
 
-  const interpolateVariables = (body: string, variables: IVariables[]) => {
-    let interpolatedBody = body;
-    variables.forEach(({ name, value }) => {
-      const regex = new RegExp(`{{${name}}}`, 'g');
-      interpolatedBody = interpolatedBody.replace(regex, value);
-    });
-    return interpolatedBody;
-  };
-
-  const urlChanged = () => {
+  const handlerUrlChanger = () => {
     setError('body', { message: '' });
-
-    const { url, body, method, headers } = getValues();
-
-    let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
-    const encodedUrl = btoa(url);
-    const encodedBody = body ? btoa(JSON.stringify(body)) : '';
-
-    const queryParams = headers
-      ?.filter(header => header.key && header.value)
-      .map(
-        header =>
-          `${encodeURIComponent(header.key)}=${encodeURIComponent(header.value)}`,
-      )
-      .join('&');
-
-    if (method) newUrl += `/${method}`;
-    if (encodedUrl) newUrl += `/${encodedUrl}`;
-    if (encodedBody) newUrl += `/${encodedBody}`;
-    if (queryParams) newUrl += `?${queryParams}`;
+    const { url, body, variables, method, headers } = getValues();
+    const startString = `${pathname.split('/').slice(0, 3).join('/')}`;
+    console.log(method);
+    const newUrl = restPathConnector({
+      startString,
+      url,
+      method,
+      body,
+      variables,
+      headers,
+    });
 
     window.history.pushState({}, '', newUrl);
   };
@@ -158,7 +143,7 @@ const Restfull = () => {
                       fullWidth
                       variant='outlined'
                       defaultValue=''
-                      {...register('method', { onBlur: urlChanged })}
+                      {...register('method', { onBlur: handlerUrlChanger })}
                     >
                       {[
                         'GET',
@@ -183,7 +168,7 @@ const Restfull = () => {
                     label='Endpoint URL'
                     fullWidth
                     variant='outlined'
-                    {...register('url', { onBlur: urlChanged })}
+                    {...register('url', { onBlur: handlerUrlChanger })}
                   />
                   <span className='error'>{errors.url?.message}</span>
                 </Grid>
@@ -200,7 +185,7 @@ const Restfull = () => {
               </Grid>
 
               <HeadersRestfull
-                urlChanged={urlChanged}
+                urlChanged={handlerUrlChanger}
                 control={control}
                 errors={errors}
               />
@@ -212,7 +197,7 @@ const Restfull = () => {
                   control={control}
                   onLang={setLang}
                   lang={lang}
-                  urlChanged={urlChanged}
+                  urlChanged={handlerUrlChanger}
                 />
                 <span className='error'>{errors.body?.message}</span>
               </Box>
