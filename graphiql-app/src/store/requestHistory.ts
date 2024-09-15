@@ -1,10 +1,10 @@
 'use client';
 
 import { store } from '@/store/localStorage';
-import { RestQuery } from '@/store/types';
-import { RequestHistory } from '@/store/types';
+import { RequestHistory, RestData, RestQuery } from '@/store/types';
 
 const LOCAL_STORAGE_KEY = 'rss-nfs-request-history';
+const LOCAL_STORAGE_ITEM_KEY = 'rss-nfs-item-history';
 
 export const requestHistory = {
   setStory: (data: RestQuery): void => {
@@ -25,6 +25,14 @@ export const requestHistory = {
     }
 
     return JSON.parse(store.getItem(LOCAL_STORAGE_KEY)!) as RequestHistory;
+  },
+
+  getItemStory: (): RestData => {
+    return JSON.parse(store.getItem(LOCAL_STORAGE_ITEM_KEY)!) as RestData;
+  },
+
+  removeItemStore: (): void => {
+    store.removeItem(LOCAL_STORAGE_ITEM_KEY);
   },
 
   removeStore: (): void => {

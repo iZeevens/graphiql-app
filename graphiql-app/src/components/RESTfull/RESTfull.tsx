@@ -14,8 +14,8 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { requestHistory } from '@/store/requestHistory';
 import { IRestFullFormData } from '@/types/restFullType';
@@ -36,6 +36,8 @@ const Restfull = () => {
     handleSubmit,
     control,
     getValues,
+    watch,
+    setValue,
     setError,
     reset,
     formState: { errors },
@@ -47,6 +49,19 @@ const Restfull = () => {
   const [response, setResponse] = useState<string>();
   const [lang, setLang] = useState('text');
   const pathname = usePathname();
+
+  useEffect(() => {
+    const item = requestHistory.getItemStory();
+    watch('body');
+
+    if (item) {
+      if (item.method) setValue('method', item.method);
+      if (item.url) setValue('url', item.url);
+      if (item.body) setValue('body', item.body.value);
+      if (item.headers) setValue('headers', item.headers);
+      requestHistory.removeItemStore();
+    }
+  }, [setValue, watch]);
 
   const handlerUrlChanger = () => {
     setError('body', { message: '' });
@@ -135,33 +150,40 @@ const Restfull = () => {
                 className={styles['restfull-client__url-container']}
               >
                 <Grid item xs={2}>
-                  <FormControl fullWidth variant='outlined'>
-                    <InputLabel id='method-label'>Method</InputLabel>
-                    <Select
-                      labelId='method-label'
-                      label='Method'
-                      fullWidth
-                      variant='outlined'
-                      defaultValue=''
-                      {...register('method', { onBlur: handlerUrlChanger })}
-                    >
-                      {[
-                        'GET',
-                        'PUT',
-                        'POST',
-                        'DELETE',
-                        'PATCH',
-                        'HEAD',
-                        'OPTIONS',
-                        'TRACE',
-                      ].map(option => (
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <span className='error'>{errors.method?.message}</span>
-                  </FormControl>
+                  <Controller
+                    name='method'
+                    control={control}
+                    render={({ field }) => (
+                      <FormControl fullWidth variant='outlined'>
+                        <InputLabel id='method-label'>Method</InputLabel>
+                        <Select
+                          labelId='method-label'
+                          label='Method'
+                          fullWidth
+                          variant='outlined'
+                          {...field}
+                          value={field.value || ''}
+                          onBlur={handlerUrlChanger}
+                        >
+                          {[
+                            'GET',
+                            'PUT',
+                            'POST',
+                            'DELETE',
+                            'PATCH',
+                            'HEAD',
+                            'OPTIONS',
+                            'TRACE',
+                          ].map(option => (
+                            <MenuItem key={option} value={option}>
+                              {option}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        <span className='error'>{errors.method?.message}</span>
+                      </FormControl>
+                    )}
+                  />
                 </Grid>
                 <Grid className={styles['restfull-client__url']} item xs>
                   <TextField
