@@ -2,10 +2,9 @@
 
 import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useAuth } from '@/hooks/useAuth';
 import { ISignUpFormData } from '@/types/formsType';
 import { registerWithEmailAndPassword } from '@/utils/auth';
 import { schemaSignUp } from '@/utils/validationSchema';
@@ -29,7 +28,6 @@ const SignUpForm = () => {
   });
 
   const router = useRouter();
-  const { user } = useAuth();
   const password = watch('password');
   const t = useTranslations('signUp');
 
@@ -43,12 +41,6 @@ const SignUpForm = () => {
 
     if (userCredential === true) router.push('/');
   };
-
-  useEffect(() => {
-    if (user) {
-      router.push('/');
-    }
-  }, [router, user]);
 
   return (
     <Box
