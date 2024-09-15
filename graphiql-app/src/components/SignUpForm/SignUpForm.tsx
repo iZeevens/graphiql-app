@@ -12,7 +12,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
-import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import PasswordStrength from '../passwordStrength/passwordStrength';
 
 const SignUpForm = () => {
@@ -96,8 +95,8 @@ const SignUpForm = () => {
         {error && (
           <Alert severity='error' sx={{ mt: 2 }}>
             {error === 'Firebase: Error (auth/wrong-password).'
-              ? SERVICE_MESSAGES.wrongPassword
-              : SERVICE_MESSAGES.wrongEmail}
+              ? t('wrongPassword')
+              : t('wrongEmail')}
           </Alert>
         )}
       </Box>

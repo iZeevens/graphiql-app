@@ -9,13 +9,17 @@
     "signUpBtn": "Sign Up",
     "userNamePlaceholder": "UserName",
     "emailPlaceholder": "Email",
-    "passwordPlaceholder": "Password"
+    "passwordPlaceholder": "Password",
+    "wrongPassword": "Wrong password",
+    "wrongEmail": "Wrong email"
   },
   "signIn": {
     "title": "Sign In",
     "signInBtn": "Sign In",
     "emailPlaceholder": "Email",
-    "passwordPlaceholder": "Password"
+    "passwordPlaceholder": "Password",
+    "wrongPassword": "Wrong password",
+    "wrongEmail": "Wrong email"
   },
   "footer": {
     "copyright": "© 2024 You've reached the end! Extra points for you!",
@@ -60,5 +64,31 @@
     "restLink": "REST Client",
     "graphiqlLink": "GraphiQL Client",
     "title": "History Requests"
+  },
+  "rest": {
+    "title": "REST Client",
+    "method": "Method",
+    "url": "Endpoint URL",
+    "sendBtn": "Send Request",
+    "body": "Body",
+    "response": "Response",
+    "headers": "Headers",
+    "addHeaderBtn": "Add Header",
+    "headerValue": "Value",
+    "headerKey": "Key",
+    "language": "Language",
+    "text": "Text",
+    "json": "Json",
+    "addVariableBtn": "Add variables"
+  },
+  "qraphql": {
+    "title": "GraphiQL Client",
+    "query": "Query Editor",
+    "response": "Response",
+    "sendBtn": "Send Request",
+    "closeVariable": "Close Variable",
+    "openVariable": "Open Variable",
+    "closeHeader": "Close Header",
+    "openHeader": "Open Header"
   }
 }

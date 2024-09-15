@@ -11,6 +11,7 @@ import {
 import { IoMdClose } from 'react-icons/io';
 
 import { IHeadersFormData } from '@/types/restFullType';
+import { useTranslations } from 'next-intl';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
@@ -24,10 +25,12 @@ const HeadersSection = <T extends FieldValues>({
     name: 'headers' as ArrayPath<T>,
   });
 
+  const t = useTranslations('rest');
+
   return (
     <>
       <Box mt={3}>
-        <Typography variant='subtitle1'>Headers:</Typography>
+        <Typography variant='subtitle1'>{`${t('headers')}:`}</Typography>
         <Button
           variant='contained'
           color='primary'
@@ -37,7 +40,7 @@ const HeadersSection = <T extends FieldValues>({
               | FieldArray<T, ArrayPath<T>>[])
           }
         >
-          Add Header
+          {t('addHeaderBtn')}
         </Button>
         <span className={styles.error}>
           {errors.headers?.message ? String(errors.headers?.message) : ''}
@@ -65,7 +68,7 @@ const HeadersSection = <T extends FieldValues>({
             render={({ field }) => (
               <TextField
                 {...field}
-                label='Header Key'
+                label={t('headerKey')}
                 fullWidth
                 variant='outlined'
                 sx={{ mb: 2 }}
@@ -84,7 +87,7 @@ const HeadersSection = <T extends FieldValues>({
             render={({ field }) => (
               <TextField
                 {...field}
-                label='Header Value'
+                label={t('headerValue')}
                 fullWidth
                 variant='outlined'
                 sx={{ mb: 2 }}

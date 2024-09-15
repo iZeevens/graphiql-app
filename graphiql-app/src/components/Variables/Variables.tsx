@@ -12,6 +12,7 @@ import {
 import { IoMdClose } from 'react-icons/io';
 
 import { IVariablesFormData } from '@/types/restFullType';
+import { useTranslations } from 'next-intl';
 
 const VariablesSection = <T extends FieldValues>({
   control,
@@ -22,6 +23,8 @@ const VariablesSection = <T extends FieldValues>({
   });
 
   const [hide, setHide] = useState(true);
+
+  const t = useTranslations('rest');
 
   return (
     <>
@@ -74,7 +77,7 @@ const VariablesSection = <T extends FieldValues>({
                 | FieldArray<T, ArrayPath<T>>[])
             }
           >
-            Add variables
+            {t('addVariableBtn')}
           </Button>
         </>
       )}
