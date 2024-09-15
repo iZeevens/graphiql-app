@@ -9,7 +9,6 @@ import { useAuth } from '@/hooks/useAuth';
 
 export function Welcome() {
   const { user, loading } = useAuth();
-
   return (
     <>
       {loading ? (

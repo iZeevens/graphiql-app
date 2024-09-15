@@ -14,11 +14,13 @@ import {
   Typography,
 } from '@mui/material';
 
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { requestHistory } from '@/store/requestHistory';
-import { IRestFullFormData, IVariables } from '@/types/restFulgraphQlType';
+import { IRestFullFormData } from '@/types/restFullType';
+import { restPathConnector } from '@/utils/restHelpers';
+import { interpolateVariables } from '@/utils/restHelpers';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
@@ -35,6 +37,8 @@ const Restfull = () => {
     handleSubmit,
     control,
     getValues,
+    watch,
+    setValue,
     setError,
     reset,
     formState: { errors },
@@ -49,44 +53,32 @@ const Restfull = () => {
 
   const t = useTranslations('rest');
 
-  const interpolateVariables = (body: string, variables: IVariables[]) => {
-    let interpolatedBody = body;
-    variables.forEach(({ name, value }) => {
-      const regex = new RegExp(`{{${name}}}`, 'g');
-      interpolatedBody = interpolatedBody.replace(regex, value);
-    });
-    return interpolatedBody;
-  };
+  useEffect(() => {
+    const item = requestHistory.getItemStory();
+    watch('body');
 
-  const urlChanged = () => {
+    if (item) {
+      if (item.method) setValue('method', item.method);
+      if (item.url) setValue('url', item.url);
+      if (item.body) setValue('body', item.body.value);
+      if (item.headers) setValue('headers', item.headers);
+      requestHistory.removeItemStore();
+    }
+  }, [setValue, watch]);
+
+  const handlerUrlChanger = () => {
     setError('body', { message: '' });
-
-    const { url, body, method, headers } = getValues();
-
-    let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
-    const encodedUrl = btoa(url);
-    const encodedBody = body ? btoa(JSON.stringify(body)) : '';
-
-    const queryParams = headers
-      ?.filter(header => header.key && header.value)
-      .map(
-        header =>
-          `${encodeURIComponent(header.key)}=${encodeURIComponent(header.value)}`,
-      )
-      .join('&');
-
-    if (method) {
-      newUrl += `/${method}`;
-    }
-    if (encodedUrl) {
-      newUrl += `/${encodedUrl}`;
-    }
-    if (encodedBody) {
-      newUrl += `/${encodedBody}`;
-    }
-    if (queryParams) {
-      newUrl += `?${queryParams}`;
-    }
+    const { url, body, variables, method, headers } = getValues();
+    const startString = `${pathname.split('/').slice(0, 3).join('/')}`;
+    console.log(method);
+    const newUrl = restPathConnector({
+      startString,
+      url,
+      method,
+      body,
+      variables,
+      headers,
+    });
 
     window.history.pushState({}, '', newUrl);
   };
@@ -161,40 +153,47 @@ const Restfull = () => {
                 className={styles['restfull-client__url-container']}
               >
                 <Grid item xs={2}>
-                  <FormControl fullWidth variant='outlined'>
-                    <InputLabel id='method-label'>{t('method')}</InputLabel>
-                    <Select
-                      labelId='method-label'
-                      label={t('method')}
-                      fullWidth
-                      variant='outlined'
-                      defaultValue=''
-                      {...register('method', { onBlur: urlChanged })}
-                    >
-                      {[
-                        'GET',
-                        'PUT',
-                        'POST',
-                        'DELETE',
-                        'PATCH',
-                        'HEAD',
-                        'OPTIONS',
-                        'TRACE',
-                      ].map(option => (
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <span className='error'>{errors.method?.message}</span>
-                  </FormControl>
+                  <Controller
+                    name='method'
+                    control={control}
+                    render={({ field }) => (
+                      <FormControl fullWidth variant='outlined'>
+                        <InputLabel id='method-label'>{t('method')}</InputLabel>
+                        <Select
+                          labelId='method-label'
+                          label={t('method')}
+                          fullWidth
+                          variant='outlined'
+                          {...field}
+                          value={field.value || ''}
+                          onBlur={handlerUrlChanger}
+                        >
+                          {[
+                            'GET',
+                            'PUT',
+                            'POST',
+                            'DELETE',
+                            'PATCH',
+                            'HEAD',
+                            'OPTIONS',
+                            'TRACE',
+                          ].map(option => (
+                            <MenuItem key={option} value={option}>
+                              {option}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                        <span className='error'>{errors.method?.message}</span>
+                      </FormControl>
+                    )}
+                  />
                 </Grid>
                 <Grid className={styles['restfull-client__url']} item xs>
                   <TextField
                     label={t('url')}
                     fullWidth
                     variant='outlined'
-                    {...register('url', { onBlur: urlChanged })}
+                    {...register('url', { onBlur: handlerUrlChanger })}
                   />
                   <span className='error'>{errors.url?.message}</span>
                 </Grid>
@@ -211,7 +210,7 @@ const Restfull = () => {
               </Grid>
 
               <HeadersRestfull
-                urlChanged={urlChanged}
+                urlChanged={handlerUrlChanger}
                 control={control}
                 errors={errors}
               />
@@ -223,7 +222,7 @@ const Restfull = () => {
                   control={control}
                   onLang={setLang}
                   lang={lang}
-                  urlChanged={urlChanged}
+                  urlChanged={handlerUrlChanger}
                 />
                 <span className='error'>{errors.body?.message}</span>
               </Box>
