@@ -9,7 +9,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
-import { SERVICE_MESSAGES } from '../../constants/SERVICE_MESSAGES';
 import { ISignInFormData } from '../../types/formsType';
 import { logInWithEmailAndPassword } from '../../utils/auth';
 import { schemaSignIn } from '../../utils/validationSchema';
@@ -83,8 +82,8 @@ const SignInForm = () => {
         {error && (
           <Alert severity='error' sx={{ mt: 2 }}>
             {error === 'Firebase: Error (auth/invalid-email).'
-              ? SERVICE_MESSAGES.wrongEmail
-              : SERVICE_MESSAGES.wrongPassword}
+              ? translation('wrongEmail')
+              : translation('wrongPassword')}
           </Alert>
         )}
       </Box>

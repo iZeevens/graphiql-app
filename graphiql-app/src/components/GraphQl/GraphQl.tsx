@@ -16,6 +16,7 @@ import { Error } from '@/types/graphQlType';
 import { GraphiQLProvider, QueryEditor } from '@graphiql/react';
 import '@graphiql/react/dist/style.css';
 import { IntrospectionQuery, getIntrospectionQuery } from 'graphql';
+import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
@@ -25,6 +26,7 @@ import { HeaderSection, VariableSection } from './components/headersVariables';
 import styles from '@/components/GraphQl/GraphQl.module.scss';
 
 const GraphQl = () => {
+  const t = useTranslations('qraphql');
   const pathname = usePathname();
   const url = useRef<string>('');
   const [sdlUrl, setSdlUrl] = useState('');
@@ -135,7 +137,7 @@ const GraphQl = () => {
           >
             <CardContent>
               <Typography variant='h6' gutterBottom>
-                GraphQl Client
+                {t('title')}
               </Typography>
 
               <Grid
@@ -175,7 +177,7 @@ const GraphQl = () => {
                         return { data: null };
                       }}
                     >
-                      <span>Query Editor:</span>
+                      <span>{`${t('query')}:`}</span>
                       <Box
                         className={styles['graphiql-query-editor-container']}
                       >
@@ -206,7 +208,7 @@ const GraphQl = () => {
                 </Grid>
                 <Grid item>
                   <Button variant='contained' color='primary' type='submit'>
-                    Send Request
+                    {t('sendBtn')}
                   </Button>
                 </Grid>
                 {errors
@@ -224,7 +226,7 @@ const GraphQl = () => {
           <Card>
             <CardContent>
               <Typography variant='h6' gutterBottom>
-                Response
+                {t('response')}
               </Typography>
 
               <TextField
