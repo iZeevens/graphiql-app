@@ -39,7 +39,27 @@ const GraphQl = () => {
   const [status, setStatus] = useState<string>();
   const [schema, setSchema] = useState<IntrospectionQuery | null>(null);
 
+  const setterErrors = (errorMessage: string, errorId: string) => {
+    setErrors(prevErrors => {
+      const isDuplicate = prevErrors.some(err => err.id === errorId);
+
+      if (!isDuplicate) {
+        return [
+          ...prevErrors,
+          {
+            name: 'fetcher',
+            msg: errorMessage,
+            id: errorId,
+          },
+        ];
+      }
+
+      return prevErrors;
+    });
+  };
+
   const urlChanged = useCallback(() => {
+    setErrors([]);
     let newUrl = `${pathname.split('/').slice(0, 3).join('/')}`;
     let encodedUrl = '';
     let encodedBody = '';
@@ -50,7 +70,7 @@ const GraphQl = () => {
         const headerObj = JSON.parse(headers.current) as string[][];
         parsedHeaders = new URLSearchParams(headerObj).toString();
       } catch {
-        console.error('Invalid JSON format in headers');
+        setterErrors('Invalid JSON format in headers', 'Headers');
       }
     }
 
@@ -58,7 +78,7 @@ const GraphQl = () => {
       encodedUrl = url ? btoa(url.current) : '';
       encodedBody = query.current ? btoa(query.current) : '';
     } catch {
-      console.error('Error format');
+      setterErrors('Error encoding URL or query', 'Query');
     }
 
     if (encodedUrl) newUrl += `/${encodedUrl}`;
@@ -82,8 +102,8 @@ const GraphQl = () => {
       });
       const data = (await response.json()) as { data: IntrospectionQuery };
       setSchema(data.data);
-    } catch (err) {
-      console.error(err);
+    } catch {
+      setterErrors('Error during request, please try again', 'Fetcher');
     }
   }, [sdlUrl]);
 
@@ -113,14 +133,7 @@ const GraphQl = () => {
 
       return result;
     } catch {
-      setErrors(prevErrors => [
-        ...prevErrors,
-        {
-          name: 'fetcher',
-          msg: 'Error during request, please try again',
-          id: Date.now(),
-        },
-      ]);
+      setterErrors('Error during request, please try again', 'Fetcher');
     }
   }, [url, submitSchema]);
 

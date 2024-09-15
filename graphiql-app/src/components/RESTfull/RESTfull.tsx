@@ -33,7 +33,6 @@ import styles from '@/components/RESTfull/RESTfull.module.scss';
 
 const Restfull = () => {
   const {
-    register,
     handleSubmit,
     control,
     getValues,
@@ -188,11 +187,18 @@ const Restfull = () => {
                   />
                 </Grid>
                 <Grid className={styles['restfull-client__url']} item xs>
-                  <TextField
-                    label={t('url')}
-                    fullWidth
-                    variant='outlined'
-                    {...register('url', { onBlur: handlerUrlChanger })}
+                  <Controller
+                    name='url'
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        label={t('url')}
+                        fullWidth
+                        variant='outlined'
+                        {...field}
+                        value={field.value || ''}
+                      />
+                    )}
                   />
                   <span className='error'>{errors.url?.message}</span>
                 </Grid>
