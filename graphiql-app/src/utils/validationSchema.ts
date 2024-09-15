@@ -1,4 +1,3 @@
-// import { IHeader } from '@/types/formsType';
 import * as yup from 'yup';
 
 const schemaSignIn = yup.object({

@@ -20,7 +20,6 @@ export function middleware(req: NextRequest) {
   const restGraphqlRegex = /^\/(en|ru)\/(rest|graphql|history)(\/.*)?$/;
 
   if (userId?.value && authPathsRegex.test(pathname)) {
-    console.log(userId.value);
     return NextResponse.redirect(new URL('/', req.url));
   } else if (!userId?.value && restGraphqlRegex.test(pathname)) {
     return NextResponse.redirect(new URL('/', req.url));
