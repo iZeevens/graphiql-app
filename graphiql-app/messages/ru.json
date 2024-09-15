@@ -12,13 +12,17 @@
     "signUpBtn": "Регистрация",
     "userNamePlaceholder": "Имя Пользователя",
     "emailPlaceholder": "Электронная почта",
-    "passwordPlaceholder": "Пароль"
+    "passwordPlaceholder": "Пароль",
+    "wrongPassword": "Неверный пароль",
+    "wrongEmail": "Неверный email"
   },
   "signIn": {
     "title": "Вход",
     "signInBtn": "Вход",
     "emailPlaceholder": "Электронная почта",
-    "passwordPlaceholder": "Пароль"
+    "passwordPlaceholder": "Пароль",
+    "wrongPassword": "Неверный пароль",
+    "wrongEmail": "Неверный email"
   },
   "footer": {
     "copyright": "© 2024 Спасибо, что дошли до конца! Надеемся, вам понравилось!",
@@ -63,5 +67,31 @@
     "restLink": "REST Клиент",
     "graphiqlLink": "GraphiQL Клиент",
     "title": "История запросов"
+  },
+  "rest": {
+    "title": "REST клиент",
+    "method": "Метод",
+    "url": "URL-адрес",
+    "sendBtn": "Отправить",
+    "body": "Тело",
+    "response": "Ответ",
+    "headers": "Заголовки",
+    "addHeaderBtn": "Добавить заголовок",
+    "headerValue": "Значение",
+    "headerKey": "Ключ",
+    "language": "Язык",
+    "text": "Tекст",
+    "json": "Json",
+    "addVariableBtn": "Добавить переменные"
+  },
+  "qraphql": {
+    "title": "GraphiQL Клиент",
+    "query": "Редактор запросов",
+    "response": "Ответ",
+    "sendBtn": "Отправить",
+    "closeVariable": "Закрыть переменную",
+    "openVariable": "Добавить переменную",
+    "closeHeader": "Закрыть заголовок",
+    "openHeader": "Добавить заголовок"
   }
 }

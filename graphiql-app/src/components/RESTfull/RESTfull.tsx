@@ -21,6 +21,7 @@ import { requestHistory } from '@/store/requestHistory';
 import { IRestFullFormData, IVariables } from '@/types/restFulgraphQlType';
 import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
@@ -45,6 +46,8 @@ const Restfull = () => {
   const [response, setResponse] = useState<string>();
   const [lang, setLang] = useState('text');
   const pathname = usePathname();
+
+  const t = useTranslations('rest');
 
   const interpolateVariables = (body: string, variables: IVariables[]) => {
     let interpolatedBody = body;
@@ -150,7 +153,7 @@ const Restfull = () => {
           <Card component='form' onSubmit={handleSubmit(onSumbit)}>
             <CardContent>
               <Typography variant='h6' gutterBottom>
-                REST Client
+                {t('title')}
               </Typography>
 
               <Grid
@@ -159,10 +162,10 @@ const Restfull = () => {
               >
                 <Grid item xs={2}>
                   <FormControl fullWidth variant='outlined'>
-                    <InputLabel id='method-label'>Method</InputLabel>
+                    <InputLabel id='method-label'>{t('method')}</InputLabel>
                     <Select
                       labelId='method-label'
-                      label='Method'
+                      label={t('method')}
                       fullWidth
                       variant='outlined'
                       defaultValue=''
@@ -188,7 +191,7 @@ const Restfull = () => {
                 </Grid>
                 <Grid className={styles['restfull-client__url']} item xs>
                   <TextField
-                    label='Endpoint URL'
+                    label={t('url')}
                     fullWidth
                     variant='outlined'
                     {...register('url', { onBlur: urlChanged })}
@@ -202,7 +205,7 @@ const Restfull = () => {
                     color='primary'
                     type='submit'
                   >
-                    Send Request
+                    {t('sendBtn')}
                   </Button>
                 </Grid>
               </Grid>
@@ -214,7 +217,7 @@ const Restfull = () => {
               />
 
               <Box mt={3}>
-                <Typography variant='subtitle1'>Body:</Typography>
+                <Typography variant='subtitle1'>{`${t('body')}:`}</Typography>
                 <CodePreview
                   body={getValues('body')}
                   control={control}
@@ -232,7 +235,7 @@ const Restfull = () => {
           <Card>
             <CardContent>
               <Typography variant='h6' gutterBottom>
-                Response
+                {t('response')}
               </Typography>
 
               <TextField
