@@ -70,7 +70,6 @@ const Restfull = () => {
     setError('body', { message: '' });
     const { url, body, variables, method, headers } = getValues();
     const startString = `${pathname.split('/').slice(0, 3).join('/')}`;
-    console.log(method);
     const newUrl = restPathConnector({
       startString,
       url,
