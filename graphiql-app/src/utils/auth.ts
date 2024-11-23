@@ -26,21 +26,18 @@ const registerWithEmailAndPassword = async (
   }
 };
 
-const logInWithEmailAndPassword = async (
-  { email, password }: ISignInFormData,
-  setError: React.Dispatch<React.SetStateAction<string | null>>,
-) => {
-  try {
-    const res = await signInWithEmailAndPassword(auth, email, password);
+const logInWithEmailAndPassword = async ({
+  email,
+  password,
+}: ISignInFormData) => {
+  const res = await signInWithEmailAndPassword(auth, email, password);
 
-    if (auth.currentUser) return true;
-
+  if (auth.currentUser) {
     document.cookie = `userid=${res.user.uid}`;
-  } catch (err) {
-    if (err instanceof Error) {
-      setError(err.message);
-    }
+    return true;
   }
+
+  return false;
 };
 
 const logout = async () => {

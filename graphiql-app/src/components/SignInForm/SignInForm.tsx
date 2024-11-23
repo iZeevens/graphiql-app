@@ -28,13 +28,21 @@ const SignInForm = () => {
 
   const onSubmit: SubmitHandler<ISignInFormData> = async data => {
     setError(null);
-    const { email, password } = data;
-    const userCredential = await logInWithEmailAndPassword(
-      { email, password },
-      setError,
-    );
+    try {
+      const { email, password } = data;
+      const userCredential = await logInWithEmailAndPassword({
+        email,
+        password,
+      });
 
-    if (userCredential === true) router.push('/');
+      if (userCredential === true) router.push('/');
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred');
+      }
+    }
   };
 
   return (

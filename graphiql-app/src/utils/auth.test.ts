@@ -86,7 +86,7 @@ describe('test auth functions', () => {
         user: mockUserId,
       });
 
-      await logInWithEmailAndPassword(mockUserLoginCredentials, setError);
+      await logInWithEmailAndPassword(mockUserLoginCredentials);
 
       expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
         expect.anything(),
@@ -102,7 +102,7 @@ describe('test auth functions', () => {
         mockError,
       );
 
-      await logInWithEmailAndPassword(mockUserLoginCredentials, setError);
+      await logInWithEmailAndPassword(mockUserLoginCredentials);
 
       expect(setError).toHaveBeenCalledWith('error');
     });
