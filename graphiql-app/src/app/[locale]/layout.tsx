@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
 import '@/app/globals.scss';
-import Footer from '@/components/footer/footer';
+import Footer from '@/components/Footer/Footer';
 import Header from '@/components/header/header';
 import { theme } from '@/theme';
 import type { Metadata } from 'next';

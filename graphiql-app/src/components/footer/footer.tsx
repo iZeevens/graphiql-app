@@ -5,9 +5,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
 
+import { getGithubName } from '@/components/Footer/getGithubName';
 import GitHub from '@/components/UI/icons/GitHub';
 import RSSchool from '@/components/UI/icons/RSSchool';
-import { getGithubName } from '@/components/footer/getGithubName';
 import { TEAM } from '@/constants/TEAM';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
