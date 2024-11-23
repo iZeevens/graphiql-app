@@ -1,0 +1,45 @@
+.graphiql-client {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.graphiql-query-contriner {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 20px 0 !important;
+
+  .graphiql-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .graphiql-variables-header-container {
+    display: flex;
+    justify-content: space-between;
+    min-height: 250px;
+    width: 100%;
+    padding: 20px 0;
+  }
+}
+
+.graphiql-query-editor-container {
+  min-height: 400px;
+}
+
+.graphiql-editor {
+  min-height: 400px;
+}
+
+.graphiql-client__url-container {
+  flex-direction: column !important;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+}
+
+.graphiql-result {
+  max-height: 300px;
+  overflow: auto;
+}

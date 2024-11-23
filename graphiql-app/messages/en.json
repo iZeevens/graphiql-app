@@ -1,0 +1,94 @@
+{
+  "header": {
+    "signInBtn": "Sign In",
+    "signUpBtn": "Sign Up",
+    "signOutBtn": "Sign Out"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "signUpBtn": "Sign Up",
+    "userNamePlaceholder": "UserName",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "wrongPassword": "Wrong password",
+    "wrongEmail": "Wrong email"
+  },
+  "signIn": {
+    "title": "Sign In",
+    "signInBtn": "Sign In",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "wrongPassword": "Wrong password",
+    "wrongEmail": "Wrong email"
+  },
+  "footer": {
+    "copyright": "© 2024 You've reached the end! Extra points for you!",
+    "joinCommunity": "Join our community",
+    "Denis": "Denis",
+    "Kirill": "Kirill",
+    "Nastia": "Nastia"
+  },
+  "greeting": {
+    "greetingAuth": "Welcome back,",
+    "greetingUnAuth": "Welcome! Explore",
+    "greetingAccent": "APIs",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "rest": "REST Client",
+    "graphiql": "GraphiQL Client",
+    "history": "History"
+  },
+  "notFound": {
+    "message": "Oops! The page you are looking for does not exist...",
+    "button": "Return Home"
+  },
+  "projectInfo": {
+    "title": "Project: What and Why",
+    "info":  "We are pleased to introduce a powerful and user-friendly application that combines the functionalities of Postman and GraphiQL. This tool is designed for developers who need flexible and easy-to-use resources for working with APIs.\n\nWith our application, you can effortlessly send requests to RESTful and GraphQL APIs, select methods, configure headers, and instantly view responses.\n\nThe built-in request history will help you revisit and manage previously executed operations.\n\nAccess to the application is secured with authorization and authentication, ensuring a safe working environment.\n\nUse our application to streamline your API work and make the process more convenient and efficient!"
+  },
+  "team": {
+    "title": "Our Team",
+    "Denis": "Denis",
+    "Kirill": "Kirill",
+    "Nastia": "Nastia",
+    "KirillDesc": "Experienced developer focused on creating efficient web applications. Confidently tackles complex problems and helps streamline team processes",
+    "DenisDesc": "Creative engineer with deep knowledge of modern technologies. Capable of finding innovative solutions and enhancing user experience",
+    "NastiaDesc": "Frontend specialist with a great sense of design and attention to detail. Creates intuitive interfaces and enhances user interactions"
+  },
+  "courseInfo": {
+    "title": "RS School: React Course",
+    "info": "The NFS application is the final group project of the React course offered by RS School.\n\nThis course is designed for individuals who have completed Stage #2 of RS School and for new participants with solid skills in JavaScript, TypeScript, Git, and other key technologies.\n\nThe course covers a wide range of topics, from the basics of web development using HTML5, CSS3, and JavaScript to working with tools like Git, Webpack, Chrome DevTools, and Figma. It also includes principles of working with REST APIs and modern approaches to development using React.\n\nAll course materials are available on YouTube and GitHub, providing open access to learning. RS School offers free education, allowing anyone to share their knowledge and experience.\n\nUpon successful completion of the course and all assignments, including the final project, an electronic certificate is awarded, recognizing the skills and knowledge gained."
+  },
+  "history": {
+    "noRequests": "It's empty here... Try those options:",
+    "restLink": "REST Client",
+    "graphiqlLink": "GraphiQL Client",
+    "title": "History Requests"
+  },
+  "rest": {
+    "title": "REST Client",
+    "method": "Method",
+    "url": "Endpoint URL",
+    "sendBtn": "Send Request",
+    "body": "Body",
+    "response": "Response",
+    "headers": "Headers",
+    "addHeaderBtn": "Add Header",
+    "headerValue": "Value",
+    "headerKey": "Key",
+    "language": "Language",
+    "text": "Text",
+    "json": "Json",
+    "addVariableBtn": "Add variables"
+  },
+  "qraphql": {
+    "title": "GraphiQL Client",
+    "query": "Query Editor",
+    "response": "Response",
+    "sendBtn": "Send Request",
+    "closeVariable": "Close Variable",
+    "openVariable": "Open Variable",
+    "closeHeader": "Close Header",
+    "openHeader": "Open Header"
+  }
+}
