@@ -74,9 +74,7 @@ const HeadersSection = <T extends FieldValues>({
                 sx={{ mb: 2 }}
                 onBlur={() => {
                   field.onBlur();
-                  if (urlChanged) {
-                    urlChanged();
-                  }
+                  urlChanged();
                 }}
               />
             )}

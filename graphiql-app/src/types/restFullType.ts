@@ -20,7 +20,7 @@ interface IRestFullFormData {
 
 interface IHeadersFormData<T extends FieldValues> {
   control: Control<T>;
-  urlChanged?: () => void;
+  urlChanged: () => void;
   errors: FieldErrors<T>;
 }
 

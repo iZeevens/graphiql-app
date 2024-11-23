@@ -9,7 +9,7 @@ const VariableSection = ({
   onChange,
   onEdit,
 }: {
-  onChange?: (value: string) => void;
+  onChange: (value: string) => void;
   onEdit: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,10 +23,8 @@ const VariableSection = ({
       {isOpen && (
         <VariableEditor
           onEdit={val => {
-            if (onChange) {
-              onChange(val);
-              onEdit();
-            }
+            onChange(val);
+            onEdit();
           }}
         />
       )}
@@ -38,7 +36,7 @@ const HeaderSection = ({
   onChange,
   onEdit,
 }: {
-  onChange?: (value: string) => void;
+  onChange: (value: string) => void;
   onEdit: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,10 +50,8 @@ const HeaderSection = ({
       {isOpen && (
         <HeaderEditor
           onEdit={val => {
-            if (onChange) {
-              onChange(val);
-              onEdit();
-            }
+            onChange(val);
+            onEdit();
           }}
         />
       )}

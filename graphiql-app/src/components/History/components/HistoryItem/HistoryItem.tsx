@@ -14,7 +14,7 @@ interface HistoryItemProps {
 }
 
 export const HistoryItem = ({ item }: HistoryItemProps) => {
-  const handlerLinkHref = () => {
+  const getHrefLink = () => {
     const { type, url, method, body, headers, variables } = item;
     const startString = `/${type}`;
 
@@ -34,7 +34,7 @@ export const HistoryItem = ({ item }: HistoryItemProps) => {
       id={item.date}
       onClick={() => itemHistory.setItem(item)}
     >
-      <Link className={styles.historyItem__link} href={handlerLinkHref()}>
+      <Link className={styles.historyItem__link} href={getHrefLink()}>
         <Card className={styles.historyItem__card}>
           <Typography className={styles.historyItem__method} variant='body1'>
             {item.method}

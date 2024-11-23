@@ -56,13 +56,12 @@ const Restfull = () => {
     const item = requestHistory.getItemStory();
     watch('body');
 
-    if (item) {
-      if (item.method) setValue('method', item.method);
-      if (item.url) setValue('url', item.url);
-      if (item.body) setValue('body', item.body.value);
-      if (item.headers) setValue('headers', item.headers);
-      requestHistory.removeItemStore();
-    }
+    if (!item) return;
+    if (item.method) setValue('method', item.method);
+    if (item.url) setValue('url', item.url);
+    if (item.body) setValue('body', item.body.value);
+    if (item.headers) setValue('headers', item.headers);
+    requestHistory.removeItemStore();
   }, [setValue, watch]);
 
   const handlerUrlChanger = () => {
