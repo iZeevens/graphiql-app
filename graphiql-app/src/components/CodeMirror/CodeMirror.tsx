@@ -78,7 +78,6 @@ const CodePreview = ({
       ) : (
         <CodeMirror
           value={body ?? ''}
-          onChange={value => console.log(value)}
           extensions={
             lang === 'json' ? [json(), linter(jsonParseLinter())] : [basicSetup]
           }

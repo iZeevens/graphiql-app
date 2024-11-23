@@ -5,8 +5,6 @@ import { notFound } from 'next/navigation';
 export default getRequestConfig(async ({ locale }) => {
   if (!routing.locales.includes(locale as 'en' | 'ru')) notFound();
 
-  console.log(`Locale: ${locale}`);
-
   const messages =
     locale === 'en'
       ? (await import('../../messages/en.json')).default

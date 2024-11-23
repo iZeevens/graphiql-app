@@ -16,7 +16,7 @@
     cursor: pointer;
     transition: color 0.3s;
 
-    @media(any-hover: hover) {
+    @media (any-hover: hover) {
       &:hover {
         color: $accent-color;
       }
