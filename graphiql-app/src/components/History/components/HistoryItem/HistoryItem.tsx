@@ -3,9 +3,9 @@ import Link from '@mui/material/Link';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 
+import { restPathConnector } from '@/components/RESTfull/helpers/restHelpers';
 import { itemHistory } from '@/store/itemHistory';
 import { RestData } from '@/store/types';
-import { restPathConnector } from '@/utils/restHelpers';
 
 import styles from '@/components/History/components/HistoryItem/HistoryItem.module.scss';
 

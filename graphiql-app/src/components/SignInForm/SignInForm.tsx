@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 
 import { ISignInFormData } from '../../types/formsType';
 import { logInWithEmailAndPassword } from '../../utils/auth';
-import { schemaSignIn } from '../../utils/validationSchema';
+import { schemaSignIn } from './helpers/signInSchema';
 
 const SignInForm = () => {
   const [error, setError] = useState<string | null>(null);

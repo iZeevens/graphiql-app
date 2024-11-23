@@ -1,11 +1,6 @@
 import * as yup from 'yup';
 
-const schemaSignIn = yup.object({
-  email: yup.string().required('Please Enter your email'),
-  password: yup.string().required('Please Enter your password'),
-});
-
-const schemaSignUp = schemaSignIn.shape({
+const schemaSignUp = yup.object({
   name: yup.string().required('Please Enter your name'),
   email: yup
     .string()
@@ -26,10 +21,4 @@ const schemaSignUp = schemaSignIn.shape({
     .min(8, 'Password must be at least 8 characters long'),
 });
 
-const schemaRestFull = yup.object({
-  method: yup.string().required('Please Enter Method'),
-  url: yup.string().required('Please Enter Endpoint URL'),
-  headers: yup.array().max(5, 'Maximum headers can be 5'),
-});
-
-export { schemaSignIn, schemaSignUp, schemaRestFull };
+export { schemaSignUp };

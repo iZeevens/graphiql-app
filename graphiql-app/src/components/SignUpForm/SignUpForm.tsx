@@ -7,12 +7,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { ISignUpFormData } from '@/types/formsType';
 import { registerWithEmailAndPassword } from '@/utils/auth';
-import { schemaSignUp } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 import PasswordStrength from '../passwordStrength/passwordStrength';
+import { schemaSignUp } from './helpers/SignUpSchema';
 
 const SignUpForm = () => {
   const [error, setError] = useState<string | null>(null);

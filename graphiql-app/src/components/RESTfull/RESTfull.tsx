@@ -17,17 +17,17 @@ import {
 import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
+import { restPathConnector } from '@/components/RESTfull/helpers/restHelpers';
+import { interpolateVariables } from '@/components/RESTfull/helpers/restHelpers';
 import { requestHistory } from '@/store/requestHistory';
 import { IRestFullFormData } from '@/types/restFullType';
-import { restPathConnector } from '@/utils/restHelpers';
-import { interpolateVariables } from '@/utils/restHelpers';
-import { schemaRestFull } from '@/utils/validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
 import CodePreview from '../CodeMirror/CodeMirror';
 import HeadersRestfull from '../Headers/Headers';
+import { schemaRestFull } from './helpers/restSchema';
 
 import styles from '@/components/RESTfull/RESTfull.module.scss';
 
