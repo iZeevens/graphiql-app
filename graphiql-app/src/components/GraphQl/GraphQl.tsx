@@ -157,7 +157,10 @@ const GraphQl = () => {
                 container
                 className={styles['graphiql-client__url-container']}
               >
-                <Grid item>
+                <Grid
+                  item
+                  className={styles['graphiql-client__url-endpoints-container']}
+                >
                   <TextField
                     label='Endpoint URL'
                     fullWidth

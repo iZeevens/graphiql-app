@@ -39,6 +39,12 @@
   height: 100%;
 }
 
+.graphiql-client__url-endpoints-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
 .graphiql-result {
   max-height: 300px;
   overflow: auto;
