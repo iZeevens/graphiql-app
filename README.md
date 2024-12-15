@@ -45,4 +45,4 @@ The GraphiQL App is a web application that allows users to interact with both RE
 - **@trivago/prettier-plugin-sort-imports** for import organization.
 
 ## Deployment
-You can access the deployed app here: [GraphiQL App](https://graphiql-btomrzxgm-izeevens-projects.vercel.app/en)
+You can access the deployed app here: [GraphiQL App](https://graphiql-app-nu-smoky.vercel.app/en)
